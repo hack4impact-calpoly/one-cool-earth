@@ -7,7 +7,7 @@ const User = require('./model/user');
 /*
 	POST user's email and password to login endpoint
 */
-app.post('/api/login', async(req, res) => {
+router.post('/api/login', async(req, res) => {
 	//Pass in user email
 	email = User.find({title:email});
 	if(typeof email === undefined || email.length === 0){
@@ -20,6 +20,7 @@ app.post('/api/login', async(req, res) => {
 		res.send('ERROR: NO PASSWORD FOUND');
 	}
 	
+
 	res.status(200);
 	//Placeholder -- will replace with actual POST request
 	res.send('POST user email and password');
