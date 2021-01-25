@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //User Schema -- filename could be different
-const User = require('./model/user');
+const User = require('../model/user');
 
 /*
 	POST user's email and password to login endpoint
