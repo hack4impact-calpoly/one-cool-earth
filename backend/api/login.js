@@ -5,25 +5,28 @@ const router = express.Router();
 const User = require('../model/user');
 
 /*
-	POST user's email and password to login endpoint
+	Query database and return User object with matching email/password
+*/
+const getUser = async(email, password) => {
+	return await User.find({
+		email: email
+		password: password
+	)}
+}
+
+/*
+	POST User object to /api/login endpoint
 */
 router.post('/api/login', async(req, res) => {
-	//Pass in user email
-	email = User.find({title:email});
-	if(typeof email === undefined || email.length === 0){
-		res.send('ERROR: NO EMAIL FOUND');
-	}
+	const email = req.body.email
+	const password = req.body.password
 	
-	//Pass in user password
-	pass = User.find({title:password});
-	if(typeof pass === undefined || pass.length === 0){
-		res.send('ERROR: NO PASSWORD FOUND');
-	}
+	let user
+	user = await getUser(email, password)
 	
-
-	res.status(200);
-	//Placeholder -- will replace with actual POST request
-	res.send('POST user email and password');
+	res.status(200)
+	res.json(user)
+	res.send('POST user email and password')
 })
 
 
