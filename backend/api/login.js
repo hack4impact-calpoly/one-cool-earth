@@ -9,7 +9,7 @@ const User = require('../model/user');
 */
 const getUser = async(email, password) => {
 	return await User.find({
-		email: email
+		email: email,
 		password: password
 	)}
 }
