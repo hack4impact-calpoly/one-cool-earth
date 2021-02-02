@@ -1,6 +1,5 @@
 const express = require('experss');
 const User = require('../models/User');
-const DB = require('../database/recipeDataase.js');
 
 const router = express.Router();
 
