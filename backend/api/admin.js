@@ -14,5 +14,5 @@ router.post("/", async (req, res) => {
 		users = await User.find(queryFilter);
 	}
 	res.status(200);
-	res.send(users);
+	res.json(users);
 });
