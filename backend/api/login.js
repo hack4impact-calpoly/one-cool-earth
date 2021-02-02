@@ -7,11 +7,11 @@ const User = require('../model/user');
 /*
 	Query database and return User object with matching email/password
 */
-const getUser = async(email, password) => {
+const getUser = async (email, password) => {
 	return await User.find({
 		email: email,
 		password: password
-	)}
+	})
 }
 
 /*
