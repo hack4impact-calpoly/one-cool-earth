@@ -2,22 +2,22 @@ const mongoose = require('mongoose');
 const dataBase = require('./database/database.js') 
 
 const UserSchema = new mongoose.Schema({
-  "Admin": Boolean,
-  "Name": {
-    "First": String,
-    "Last": String
+  admin : Boolean,
+  name : {
+    first : String,
+    last : String
   },
-  "Password": String,
-  "Email": String,
-  "AvailableDates": [{
-    "Date": {
-      "Month": Number,
-      "Day": Number,
-      "Year": Number
+  password : String,
+  email : String,
+  availableDates : [{
+    date : {
+      month : Number,
+      day : Number,
+      year: Number
     }
   }],
-  "Location": String,
-  "VolunteerPreferences": [String]
+  location : String,
+  volunteerPreferences : [String]
 })
 
 const User = mongoose.model('User', UserSchema);
