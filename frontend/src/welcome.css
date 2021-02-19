@@ -1,24 +1,103 @@
 .returnHome{
     grid-area: returnHome;
     display: flex;
+    padding-right: 5vh;
+}
+
+.logout{
+    padding-right: 5vh;
+    padding-left: 2vh;
 }
 .returnHome button{
-    background-color: #FFFFFF;
     border: 1px solid #4E5E9A;
+    background-color: white;
+    color: #4E5E9A;
     margin-top: 3vh;
     margin-left: 3vh;
-    height: 40%;
-    width: 5%;
+    height: 100%;
+    width: 100%;
+}
+.logout button{
+    border: 1px solid #4E5E9A;
+    background-color: white;
+    color: #4E5E9A;
+    margin-top: 3vh;
+    margin-left: 3vh;
+    height: 100%;
+    width: 100%;
 }
 
 header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    padding: 0 15px;
 }
 
 h1{
     color: #4E5E9A
+}
+main{
+    display:flex;
+
+}
+
+.planning{
+    align-items: left;
+    padding-right: 10vh;
+}
+.banner{
+    display: flex;
+    margin-top: 1vh;
+    margin-left: 1vh;
+    margin-right: 1vh;
+    margin-bottom: 1vh;
+
+    height: 200px;
+    width: auto;
+    text-align: center;
+    background-color: aqua;
+
+}
+
+.engagements{
+    display: flex;
+    flex-direction: column;
+    background-color:aquamarine;
+    
+    margin-left: 20vh;
+    margin-top: 10vh;
+}
+
+.engagements button{
+    border: 1px solid #4E5E9A;
+    background-color: white;
+    color: #4E5E9A;
+    margin-top: 3vh;
+    margin-left: 3vh;
+
+    width: 50%;
+}
+
+.calendar{
+    display: flex;
+    align-items: center;
+    background-color:blueviolet;
+    margin-top:8vh;
+    margin-left:20vh;
+
+}
+.calendar button{
+    border: 1px solid #4E5E9A;
+    background-color: white;
+    color: #4E5E9A;
+    margin-top: 3vh;
+    margin-left: 3vh;
+
+    width: 50%;
+}
+
+.news{
+    display: flex;
+    position: relative;
+    background-color:cornflowerblue;
 }
