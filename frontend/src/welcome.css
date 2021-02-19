@@ -1,0 +1,24 @@
+.returnHome{
+    grid-area: returnHome;
+    display: flex;
+}
+.returnHome button{
+    background-color: #FFFFFF;
+    border: 1px solid #4E5E9A;
+    margin-top: 3vh;
+    margin-left: 3vh;
+    height: 40%;
+    width: 5%;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 15px;
+}
+
+h1{
+    color: #4E5E9A
+}
