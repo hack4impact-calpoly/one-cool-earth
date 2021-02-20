@@ -38,11 +38,19 @@ h1{
 }
 main{
     display:flex;
+    background-color: beige;
 
+    padding-left: 5vh;
+    padding-right: 5vh;
+    margin-left: 2vh;
+    margin-right: 2vh;
+    align-items: center;
 }
 
 .planning{
-    align-items: left;
+    flex: 1;
+    float: left;
+    align-items: center;
     padding-right: 10vh;
 }
 .banner{
@@ -63,6 +71,7 @@ main{
     display: flex;
     flex-direction: column;
     background-color:aquamarine;
+    align-items: center;
     
     margin-left: 20vh;
     margin-top: 10vh;
@@ -73,7 +82,6 @@ main{
     background-color: white;
     color: #4E5E9A;
     margin-top: 3vh;
-    margin-left: 3vh;
 
     width: 50%;
 }
@@ -81,6 +89,7 @@ main{
 .calendar{
     display: flex;
     align-items: center;
+    flex-direction: column;
     background-color:blueviolet;
     margin-top:8vh;
     margin-left:20vh;
@@ -91,13 +100,19 @@ main{
     background-color: white;
     color: #4E5E9A;
     margin-top: 3vh;
-    margin-left: 3vh;
-
+    
     width: 50%;
 }
 
 .news{
-    display: flex;
+    flex: 1;
+    float: right;
+    display: grid;
     position: relative;
     background-color:cornflowerblue;
+}
+
+.news > img{
+    width: auto;
+    height: auto;
 }
