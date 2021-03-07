@@ -1,0 +1,49 @@
+.box1{
+  grid-area: box1;
+  display: flex;
+}
+.box1 button{
+  margin-top: 3vh;
+  margin-left: 3vh;
+  height: 40%;
+  width: 5%
+}
+.box2{
+  grid-area: box2;
+  display: flex;
+  font-family: serif;
+  justify-content: center;
+}
+.box2 p{
+  margin-top:4vh;
+  font-size: 9vh;
+  color:#4b61a3;
+}
+.box3{
+  grid-area: box3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5vh;
+}
+.box3 input{
+  height: 5vh;
+  width: 50vh;
+  margin-bottom: 3vh;
+}
+#email-div, #password-div{
+  display: flex;
+  flex-direction: column;
+  font-family: serif;
+}
+.box3 button{
+  margin-top: 8vh;
+}
+body{
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 3fr;
+  grid-template-areas: 'box1 .' 'box2 .' 'box3 .';
+}
