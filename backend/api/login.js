@@ -1,9 +1,7 @@
 const express = require('express');
+const User = require('../models/User');
+
 const router = express.Router();
-
-//User Schema -- filename could be different
-const User = require('../model/user');
-
 /*
 	Query database and return User object with matching email/password
 */
@@ -29,4 +27,5 @@ router.post('/api/login', async(req, res) => {
 	res.send('POST user email and password')
 })
 
+module.exports = router;
 

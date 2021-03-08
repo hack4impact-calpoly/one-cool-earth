@@ -2,7 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const passport = require('passport')
 require('dotenv').config()
-require('./auth/config-passport.js')   // import passport configuration for google authentication
+require('./config/passport-setup')   // import passport configuration for google authentication
+require('./database/connection')    // connectino to database
 const cookieSession = require('cookie-session')
 
 const app = express();
@@ -12,19 +13,22 @@ app.use(bodyParser.json())
 
 // cookie session
 app.use(cookieSession({
-    name: 'test-sesion',
-    keys: ['key1', 'key2']
+    maxAge: 60 * 60 * 1000,
+    name: 'test-session',
+    keys: ['test-session-key']
 }))
 
-// const loginEndpoint = require('./api/login.js')
-// const signUpEndpoint = require('./api/signup.js')
-const authEndpoint = require('./api/auth.js')
-
+// initialize passport
 app.use(passport.initialize())
 app.use(passport.session())
 
-// app.use('api/login', loginEndpoint)
-// app.use('api/sign-up', signUpEndpoint)
+const loginEndpoint = require('./api/login.js')
+const signUpEndpoint = require('./api/signup.js')
+const authEndpoint = require('./api/auth')
+
+
+app.use('api/login', loginEndpoint)
+app.use('api/signup', signUpEndpoint)
 app.use('/api/auth', authEndpoint)
 
 app.listen(3001)
