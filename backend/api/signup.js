@@ -8,7 +8,7 @@ router.post('/', asynch (req, res) => {
 
    if (Recipe.findOne({'email': req.body.email})) {
       const user = await User.updateOne({email: req.body.email}, 
-                                       {admin: req.body.email, name: req.body.name, password: req.body.password, dates: req.body.dates, location: req.body.location, preferences: req.body.preferences},
+                                       {name: req.body.name, password: req.body.password, dates: req.body.dates, location: req.body.location, preferences: req.body.preferences},
                                        {upsert: true});
       res.send('Welcome ' + req.body.name + '!\n Your account has been successfully created');
    }
