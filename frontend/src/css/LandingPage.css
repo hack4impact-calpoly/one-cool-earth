@@ -1,0 +1,55 @@
+body {
+	background-image: url("https://s-media-cache-ak0.pinimg.com/736x/7e/1b/ec/7e1bec3d3fc337050f7a7c6873d0342b.jpg");
+	height: 100%;
+	/*color: #1B1B1E;*/
+	font-family: sans-serif;
+
+	padding: 0px 10px;
+	justify-content: center;
+}
+
+#upperHalf {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 10% 30% 5% 30%;
+}
+
+.VolunteerOpportunities > img {
+	width: 70%;
+}
+
+.VolunteerOpportunities > h2 {
+	display: flex;
+ 	justify-content: center;
+ 	align-items: center;
+ 	font-size: 70px;
+ 	margin: 0px;
+}
+
+#buttons {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0px;
+}
+
+#buttons button {
+	height: 70px;
+	width: 250px;
+	font-size: 25px;
+	font-stretch: condensed;
+	background-color: transparent;
+	border: 1px solid black;
+}
+
+.signinBox {
+	justify-content: center;
+	padding: 22pc;
+}
+
+.loginBox {
+	justify-content: center;
+	padding: 22px;
+}

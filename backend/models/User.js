@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const dataBase = require('./database/database.js') 
 
 const UserSchema = new mongoose.Schema({
+  googleId: String,
   admin : Boolean,
   name : {
     first : String,
@@ -9,16 +9,12 @@ const UserSchema = new mongoose.Schema({
   },
   password : String,
   email : String,
-  availableDates : [{
-    date : {
-      month : Number,
-      day : Number,
-      year: Number
-    }
-  }],
+  availableDates : [Date],
   location : String,
   volunteerPreferences : [String]
+}, {
+  versionKey: false
 })
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('devs', UserSchema);
 module.exports = User;
