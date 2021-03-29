@@ -1,12 +1,14 @@
-import React from "react"
-import "./css/welcome.css"
+// import React from "react"
+// import "./css/welcome.css"
+require("react")
+require("./css/welcome.css")
 
-class Welcome extends React.Component {
-    render(){
+function Welcome (props){
+    // render(){
     return(
     <body>
         <header>
-            <div class='returnHome'>
+            {/* <div class='returnHome'>
                 <img src="./logo.svg" height="50" alt="Logo"/>
                 <button>RETURN HOME</button>
             </div>
@@ -14,7 +16,7 @@ class Welcome extends React.Component {
             <h1>Welcome, [VOLUNTEER]</h1>
             <div class='logout'>
                 <button>LOG OUT</button>
-            </div>
+            </div> */}
         </header>
 
         <div class='banner'>
@@ -26,6 +28,7 @@ class Welcome extends React.Component {
             <div class='planning'>
                 <div class='engagements'>
                     <p1>Current Engagements</p1>
+
                     <br/>
                     <button>EDIT</button>
                 </div>
@@ -38,12 +41,14 @@ class Welcome extends React.Component {
             <div class='news'>
                 <p1>Organization News / Highlighted Event</p1>
                 <br/>
-                <img src="./logo.svg" height="200" alt="Highlight"/>
+                <div class='showcase'>
+
+                </div>
             </div>
         </main>
         
     </body>
-    );}
+    );//}
 }
 
 export default Welcome;
