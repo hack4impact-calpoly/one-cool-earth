@@ -76,7 +76,6 @@ main{
     /* background-color:aquamarine; */
     align-items: center;
     
-    margin-left: 20vh;
     margin-top: 10vh;
 
     border-style: solid;
@@ -99,7 +98,6 @@ main{
     flex-direction: column;
     /* background-color:blueviolet; */
     margin-top:8vh;
-    margin-left:20vh;
     
     border-style: solid;
     border-color: gray;
