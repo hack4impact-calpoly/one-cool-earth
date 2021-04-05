@@ -8,34 +8,6 @@ body{
 	font-stretch: 1% 500%;
 }
 
-#header{
-	display: grid;
-	grid-template-columns: 50% 50%;
-	flex-direction: row;
-}
-
-#header button{
-	height: 35px;
-	font-stretch: condensed;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-#home{
-	display:flex;
-	justify-content: flex-start;
-	align-items: center;
-	padding-left: 30px;
-}
-
-#logout{
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	padding-right: 30px;
-
-}
-
 #main{
 	display: flex;
 	flex-direction: column;
