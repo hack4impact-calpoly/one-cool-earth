@@ -1,0 +1,133 @@
+.returnHome{
+    grid-area: returnHome;
+    display: flex;
+    padding-right: 5vh;
+}
+
+.logout{
+    padding-right: 5vh;
+    padding-left: 2vh;
+}
+.returnHome button{
+    border: 1px solid #4E5E9A;
+    background-color: white;
+    color: #4E5E9A;
+    margin-top: 3vh;
+    margin-left: 3vh;
+    height: 100%;
+    width: 100%;
+}
+.logout button{
+    border: 1px solid #4E5E9A;
+    background-color: white;
+    color: #4E5E9A;
+    margin-top: 3vh;
+    margin-left: 3vh;
+    height: 100%;
+    width: 100%;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1{
+    color: #4E5E9A
+}
+main{
+    display:flex;
+    /* background-color: beige; */
+
+    padding-left: 5vh;
+    padding-right: 5vh;
+    margin-left: 2vh;
+    margin-right: 2vh;
+    align-items: center;
+}
+
+.planning{
+    flex: 1;
+    float: left;
+    align-items: center;
+    padding-right: 10vh;
+}
+.banner{
+    display: flex;
+    margin-top: 1vh;
+    margin-left: 1vh;
+    margin-right: 1vh;
+    margin-bottom: 1vh;
+
+    height: 200px;
+    width: auto;
+    text-align: center;
+    /* background-color: aqua; */
+
+    border-style: solid;
+    border-color: gray;
+    border-width: 2px;
+}
+
+.engagements{
+    display: flex;
+    flex-direction: column;
+    /* background-color:aquamarine; */
+    align-items: center;
+    
+    margin-top: 10vh;
+
+    border-style: solid;
+    border-color: gray;
+    border-width: 2px;
+}
+
+.engagements button{
+    border: 1px solid #4E5E9A;
+    background-color: white;
+    color: #4E5E9A;
+    margin-top: 3vh;
+
+    width: 50%;
+}
+
+.calendar{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* background-color:blueviolet; */
+    margin-top:8vh;
+    
+    border-style: solid;
+    border-color: gray;
+    border-width: 2px;
+}
+.calendar button{
+    border: 1px solid #4E5E9A;
+    background-color: white;
+    color: #4E5E9A;
+    margin-top: 3vh;
+    
+    width: 50%;
+}
+
+.news{
+    flex: 1;
+    float: right;
+    display: grid;
+    position: relative;
+    /* background-color:cornflowerblue; */
+    border-style: solid;
+    border-color: gray;
+    border-width: 2px;
+}
+
+.news > img{
+    width: auto;
+    height: auto;
+}
+
+.news > .showcase{
+    height: 10vh;
+}
