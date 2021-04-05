@@ -1,14 +1,12 @@
 import './css/App.css';
-import Admin from './Admin';
-import LandingPage from './LandingPage'
-import Signup from './Signup'
-
+import Welcome from './welcome.js'
 function App() {
   return (
     <div className="App">
-      <LandingPage />
+      <Welcome />
     </div>
   );
 }
+
 
 export default App;
