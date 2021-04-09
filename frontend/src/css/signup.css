@@ -1,0 +1,99 @@
+h2  {
+    color: #4e5e9a;
+}
+
+input {
+    border: 1px solid black;
+}
+
+.title {
+    padding-top: 4%;
+    padding-bottom: 1%;
+    padding-left: 6%;
+    padding-right: 6%;
+}
+
+.fields {
+    display: flex;
+    justify-content: center;
+}
+
+.fields-column {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.input, .drop-down {
+    display: flex;
+    flex-direction: column;
+    width: 33vw;
+}
+
+.input {
+    margin-bottom: 7%;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-transform: uppercase;
+    color: black;
+}
+
+/* 
+* The following selectors overwrite the default styling 
+* of the Dropdown component defined in 'react-dropdown' 
+*/
+
+.Dropdown-control {
+    border: 1px solid black;
+    color: black;
+}
+
+.Dropdown-control:hover {
+    cursor: pointer;
+}
+
+.Dropdown-menu {
+    border: 1px solid black;
+}
+
+.Dropdown-menu .Dropdown-group > .Dropdown-title {
+    color: black;
+}
+
+.Dropdown-option {
+    color: black;
+    background-color: #d4d4d4;
+}
+
+.Dropdown-option:hover {
+    background-color: white;
+    color: black;
+}
+
+.Dropdown-option.is-selected {
+    background-color: white;
+    color: black;
+}
+
+.Dropdown-arrow {
+    border-color: black transparent transparent;
+}
+
+.is-open .Dropdown-arrow {
+    border-color: transparent transparent black;
+}
+
+/* The following selector modifies Google Chrome's default
+* autofill input background color to match the color scheme
+*/
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active
+{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
