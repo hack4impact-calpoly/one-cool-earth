@@ -1,4 +1,5 @@
 import './css/App.css';
+import Header from './Header';
 import Admin from './admin.js';
 import LandingPage from './LandingPage';
 import Signup from './signup.js';
@@ -7,7 +8,10 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 function App() {
   return (
+    <div>
+    <Header></Header>
     <BrowserRouter>
+
       <div className="App">
         <Switch>
           <Route exact path="/">
@@ -25,6 +29,7 @@ function App() {
         </Switch>
       </div>
     </BrowserRouter>
+    </div>
   );
 }
 

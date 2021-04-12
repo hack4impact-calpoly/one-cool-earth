@@ -10,7 +10,7 @@
     "@fullcalendar/react": "^5.5.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
-   "@testing-library/user-event": "^12.8.1",
+    "@testing-library/user-event": "^12.8.1",
     "bootstrap": "^4.6.0",
     "moment": "^2.29.1",
     "react": "^17.0.1",
