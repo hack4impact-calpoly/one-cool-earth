@@ -4,8 +4,10 @@ import '../src/css/spreadsheet.css';
 
 
 const data = [
-  [{ value: "Vanilla" }, { value: "Chocolate" }],
-  [{ value: "Strawberry" }, { value: "Cookies" }],
+  [{ value: "Vanilla" }, { value: "Chocolate" }, { value: "Value1" }, { value: "Vanilla" }, { value: "Chocolate" }, { value: "Value1" }, { value: "Vanilla" }, { value: "Chocolate" }, { value: "Value1" }, { value: "Vanilla" }, { value: "Chocolate" }, { value: "Value1" }],
+  [{ value: "Strawberry" }, { value: "Cookies" }, { value: "Value2" }],
+  [{ value: "Vanilla" }, { value: "Chocolate" }, { value: "Value1" }],
+  [{ value: "Strawberry" }, { value: "Cookies" }, { value: "Value2" }],
 ];
 
 class Spreadsheets extends React.Component{
@@ -19,18 +21,12 @@ class Spreadsheets extends React.Component{
             </header>
                 
             <main>
-            <div class="innertube">
-
-                <button>Return Home</button>
-                <button>Logout</button>
-                
-            </div>
-            <div>
-                <React_Datasheet 
-                    data={data}
-                    valueRenderer={cell => cell.value}
-                />
-            </div>
+                <div class="datasheet">
+                    <React_Datasheet 
+                        data={data}
+                        valueRenderer={cell => cell.value}
+                    />
+                </div>
             </main>
 
             <nav id="nav">
