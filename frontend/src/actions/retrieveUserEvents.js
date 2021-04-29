@@ -1,12 +1,10 @@
-const User = require('../models/User');
-
-const getDates = async () => {
-  const email = req.user.email
-
-  if (req.user) {
-    return await User.findOne({'email': req.user.email}).dates
-  }
-  else {
-    console.log("User not found")
-  }
+function getDates() {
+  console.log("testing")
+  fetch('http://localhost:3001/api/auth/dates/')
+           .then(res => res.json())
+           .then(data => {
+              console.log("this is data");
+              return data});
 }
+
+export default getDates;
