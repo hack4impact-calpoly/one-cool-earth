@@ -5,25 +5,26 @@ class LandingPage extends React.Component {
 
    render() {
       return (
-         <body>
-            <div id="upperHalf">
-               <div className="VolunteerOpportunities">
+         <div id='landing-page'>
+            <div id='welcome-banner'>
+               <div id='logo'>
                   <img src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/pastel-mint-green-color-garaga-designs.jpg" alt="This is a temp img and message"/>
                </div>
-               <div className="VolunteerOpportunities">
-                  <h2>Volunteer</h2><h2>Opportunities</h2>
+               <div id='title'>
+                  <h2 className='volunteer-opportunities'>Volunteer</h2>
+                  <h2 className='volunteer-opportunities'>Opportunities</h2>
                </div>
             </div>
 
             <div id="buttons">
                <div className="loginBox">
-                  <button>LOG IN</button>
+                  <button>Log In</button>
                </div>
                <div className="signupBox">
-                  <button>SIGN UP</button>
+                  <button>Sign Up</button>
                </div>
             </div>
-         </body>
+         </div>
       );
    }
 }
