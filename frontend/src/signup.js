@@ -1,7 +1,7 @@
 import React from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-import './css/Signup.css';
+import './css/signup.css';
 
 const volunteerOptions = [
     'Garden Workday Volunteer', 'Special Events Volunteer', 'Garden Educator Assistant', 

@@ -1,9 +1,34 @@
 import './css/App.css';
-import Welcome from './welcome.js'
+import Header from './Header';
+import Admin from './admin.js';
+import LandingPage from './LandingPage';
+import Signup from './signup.js';
+import Login from './login.js';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+
 function App() {
   return (
-    <div className="App">
-      <Welcome />
+    <div>
+    <Header></Header>
+    <BrowserRouter>
+
+      <div className="App">
+        <Switch>
+          <Route exact path="/">
+	    <LandingPage />
+          </Route>
+	  <Route path="/login">
+	    <Login />
+	  </Route>
+	  <Route path="/signup">
+	    <Signup />
+	  </Route>
+	  <Route path="/admin">
+	    <Admin />
+	  </Route>
+        </Switch>
+      </div>
+    </BrowserRouter>
     </div>
   );
 }
