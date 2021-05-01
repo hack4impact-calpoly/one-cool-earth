@@ -31,7 +31,6 @@ function App() {
       </div>
     </BrowserRouter>
     </div>
->>>>>>> main
   );
 }
 
