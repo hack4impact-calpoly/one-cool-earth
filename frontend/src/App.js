@@ -4,8 +4,8 @@ import Admin from './admin.js';
 import LandingPage from './LandingPage';
 import Signup from './signup.js';
 import Login from './login.js';
+// import Spreadsheets from './spreadsheets.js';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import Spreadsheets from './spreadsheets.js';
 
 function App() {
   return (
@@ -20,7 +20,9 @@ function App() {
           </Route>
 	  <Route path="/login">
 	    <Login />
-	  </Route>
+    {/* <Route path="/spreadsheets">
+      <Spreadsheets />
+	  </Route> */}
 	  <Route path="/signup">
 	    <Signup />
 	  </Route>
@@ -33,6 +35,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
