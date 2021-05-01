@@ -5,6 +5,7 @@ import LandingPage from './LandingPage';
 import Signup from './signup.js';
 import Login from './login.js';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import Spreadsheets from './spreadsheets.js';
 
 function App() {
   return (
