@@ -12,6 +12,8 @@ body{
 	display: grid;
 	grid-template-columns: 50% 50%;
 	flex-direction: row;
+	margin-top: 23px;
+	margin-left: 23px;
 }
 
 #header button{

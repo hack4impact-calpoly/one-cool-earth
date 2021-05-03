@@ -4,7 +4,6 @@ import "./css/Header.css";
 class Header extends React.Component {
 	render() {
 		return(
-			<body>
 				<div id="header">
 					<div id="home">
 						<button>RETURN HOME</button>
@@ -13,7 +12,6 @@ class Header extends React.Component {
 						<button>LOGOUT</button>
 					</div>
 				</div>
-			</body>
 		);
 	}
 }

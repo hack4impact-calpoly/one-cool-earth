@@ -25,10 +25,11 @@ app.use(passport.session())
 const loginEndpoint = require('./api/login.js')
 const signUpEndpoint = require('./api/signup.js')
 const authEndpoint = require('./api/auth')
-
+const datesEndpoint = require('./api/dates')
 
 app.use('api/login', loginEndpoint)
 app.use('api/signup', signUpEndpoint)
 app.use('/api/auth', authEndpoint)
+app.use('/api/user/events', datesEndpoint)
 
-app.listen(3001)
+app.listen(3001, "localhost")
