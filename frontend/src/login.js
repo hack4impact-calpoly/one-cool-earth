@@ -3,9 +3,9 @@ import './css/login.css';
 function Login() {
   return (
     <body>
-      <div className = 'box1'>
+      {/* <div className = 'box1'>
         <button>Return home</button>
-      </div>
+      </div> */}
       <div className = 'box2'>
         <p>Log In</p>
       </div>
