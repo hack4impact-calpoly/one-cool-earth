@@ -20,6 +20,7 @@ function App() {
           </Route>
 	  <Route path="/login">
 	    <Login />
+    </Route>
     {/* <Route path="/spreadsheets">
       <Spreadsheets />
 	  </Route> */}
