@@ -20,9 +20,9 @@ class Login extends React.Component{
       
       console.log(loginData);
       
-      fetch('http://localhost:3000/api/login', { //temporary URL
+      fetch('http://localhost:3001/api/login', { //temporary URL
         method: 'POST',
-        body: loginData
+        body: loginData 
       });
     }
 
