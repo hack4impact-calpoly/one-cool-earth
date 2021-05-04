@@ -22,8 +22,10 @@ class Login extends React.Component{
       
       fetch('http://localhost:3001/api/login', { //temporary URL
         method: 'POST',
-        body: loginData 
-      });
+        body: JSON.stringify(loginData),
+        headers: {'Content-Type': 'application/json'}
+      }).then(response => {console.log(response)})
+        .then(data => {console.log(data)});
     }
 
     clearFields(){
