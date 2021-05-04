@@ -11,6 +11,13 @@ const app = express();
 // json body parsing middleware
 app.use(bodyParser.json())
 
+//CORS Error workaround
+app.use((req, res, next) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+});
+
 // cookie session
 app.use(cookieSession({
     maxAge: 60 * 60 * 1000,
@@ -27,8 +34,8 @@ const signUpEndpoint = require('./api/signup.js')
 const authEndpoint = require('./api/auth')
 const datesEndpoint = require('./api/dates')
 
-app.use('api/login', loginEndpoint)
-app.use('api/signup', signUpEndpoint)
+app.use('/api/login', loginEndpoint)
+app.use('/api/signup', signUpEndpoint)
 app.use('/api/auth', authEndpoint)
 app.use('/api/user/events', datesEndpoint)
 
