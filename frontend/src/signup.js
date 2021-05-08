@@ -10,8 +10,8 @@ const volunteerOptions = [
     'South County', 'Coastal', 'San Luis Obispo', 'North County'
   ]
 
-  const selected = [  ]
-
+  var preference;
+  var loc;
   
 class Signup extends React.Component {
 
@@ -20,23 +20,27 @@ class Signup extends React.Component {
         this.state = {
           selected: ''
         }
-        console.log('new')
-        console.log(this)
-        this._onSelect = this._onSelect.bind(this)
       }
 
-      _onSelect (option, id) {
-          selected.push(option.label)
+      _onPreferenceSelect (option) {
+          preference = option.label;
+          console.log(preference);
       }
+
+      _onLocationSelect (option) {
+        loc = option.label;
+        console.log(loc);
+    }
+
 
 
     postSignUpData(){
         const first = document.getElementById("first-name").value;
         const last = document.getElementById("last-name").value;
-        const preferences = selected[0];
+        const preferences = preference;
         const phone = document.getElementById("phone-number").value;
         const email = document.getElementById("email").value;
-        const location = selected[1];
+        const location = loc;
 
       //Don't submit data unless both fields are non-empty
       if(first === "" || last === "" || preferences === "" || phone === "" || email === "" || location === ""){
@@ -58,10 +62,10 @@ class Signup extends React.Component {
     clear() {
         document.getElementById("first-name").value = '';
         document.getElementById("last-name").value = '';
-        vol_val = "";
+        preference = "";
         document.getElementById("phone-number").value = '' ;
         document.getElementById("email").value = '';
-        loc_val = "";
+        loc = "";
     }
 
 
@@ -83,7 +87,7 @@ class Signup extends React.Component {
                         </div>
                         <div id ='volunteer-preferences-field' className='drop-down'>
                             <label for='volunteer-preferences'>Volunteer Preferences</label>
-                            <Dropdown id = 'volunteer-preferences' onChange={this._onSelect} options={volunteerOptions} placeholder='Select'/>
+                            <Dropdown id = 'volunteer-preferences' onChange={this._onPreferenceSelect} options={volunteerOptions} placeholder='Select'/>
 
                         </div> 
                     </div>
@@ -98,7 +102,7 @@ class Signup extends React.Component {
                         </div>
                         <div id='location-preference-field' className='drop-down'>
                             <label for='location-preference'>Location Preference</label>
-                            <Dropdown id = 'location-preference' onChange={this._onSelect} options={locationOptions} placeholder='Select'/>
+                            <Dropdown id = 'location-preference' onChange={this._onLocationSelect} options={locationOptions} placeholder='Select'/>
                         </div>
                     </div>
                 </div>
