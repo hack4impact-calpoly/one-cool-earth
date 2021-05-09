@@ -4,6 +4,7 @@ import Admin from './admin.js';
 import LandingPage from './LandingPage';
 import Signup from './signup.js';
 import Login from './login.js';
+import Welcome from './welcome.js';
 import Spreadsheets from './spreadsheets.js';
 import CalendarPage from './calendar'
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
@@ -47,11 +48,35 @@ function App() {
 	  <Route path="/admin">
 	    <Admin />
 	  </Route>
-=======
->>>>>>> dbc384915d6085ee5de3a2ca356074b29b20c2f3
         </Switch>
       </div>
     </BrowserRouter>
+=======
+      <BrowserRouter>
+        <div className="App">
+          <Switch>
+            <Route exact path="/">
+	            <LandingPage />
+            </Route>
+	          <Route path="/login">
+	            <Login />
+            </Route>
+            {/* <Route path="/spreadsheets">
+              <Spreadsheets />
+            </Route> */}
+	          <Route path="/signup">
+	            <Signup />
+	          </Route>
+	          <Route path="/admin">
+	            <Admin />
+	          </Route>
+            <Route path='/welcome'>
+              <Welcome />
+            </Route>
+          </Switch>
+        </div>
+      </BrowserRouter>
+>>>>>>> main
     </div>
   );
 }

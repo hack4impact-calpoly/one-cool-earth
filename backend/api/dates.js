@@ -4,7 +4,7 @@ const User = require('../models/User');
 const router = express.Router();
 
 
-router.get('/', (req, res) => {
+router.get('/individual', (req, res) => {
    console.log("testing");
    console.log(req.user);
    const email = req.user.email;
@@ -18,5 +18,18 @@ router.get('/', (req, res) => {
       }
    })
 });
+
+router.get('/all', (req, res) => {
+   console.log(req.user);
+   if (req.user.admin) {
+      User.find({}).then(function(users) {
+         res.send(users)
+      })
+   }
+   else {
+      res.redirect()
+   }
+});
+
 
 module.exports = router;
