@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './css/Welcome.css';
+import {Button} from "react-bootstrap";
 
 function Welcome (props){
 
@@ -69,10 +70,10 @@ function Welcome (props){
                             </div>
                         ))}
                     <br/>
-                    <button>Edit</button>
+                    <Button>Edit</Button>
                 </div>
                 <div id='calendar'>
-                    <button>Calendar</button>
+                    <Button>Calendar</Button>
                 </div>
             </div>
             <div id='news'>

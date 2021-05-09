@@ -1,18 +1,15 @@
 import './css/Calendar.css';
-import 'bootstrap/dist/css/bootstrap.css';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import {Container} from "react-bootstrap";
 
 
 
 function CalendarPage() {
   return (
+    <Container>
     <body>
       <div className = 'header'>
-        <div className= 'buttons'>
-          <button id = 'home-button'>Home</button>
-          <button id = 'logout-button'>Log out</button>
-        </div>
         <div className = 'text'>
           <p id = 'main-text'> Calendar</p>
         </div>
@@ -27,6 +24,7 @@ function CalendarPage() {
         />
       </div>
     </body>
+    </Container>
   );
 }
 

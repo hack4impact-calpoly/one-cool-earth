@@ -2,6 +2,7 @@ import React from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import './css/SignUp.css';
+import {Button} from "react-bootstrap";
 
 const volunteerOptions = [
     'Garden Workday Volunteer', 'Special Events Volunteer', 'Garden Educator Assistant', 'Office/Remote Volunteer', 'Unsure or Interested in Multiple Opportunities'
@@ -75,7 +76,7 @@ class Signup extends React.Component {
                 <div className='title'>
                     <h2>New Volunteer? Sign Up Here!</h2>
                 </div>
-                <div className='fields'>
+                <div className='fields' style={{paddingBottom: "20px"}}>
                     <div className='fields-column'>
                         <div id='first-name-field' className='input'>
                             <label for='first-name'>First Name</label>
@@ -106,8 +107,7 @@ class Signup extends React.Component {
                         </div>
                     </div>
                 </div>
-
-                <button id = 'sign-up-button' onClick={() => {this.postSignUpData(); this.clear()}}> Sign Up</button>
+                <Button onClick={() => {this.postSignUpData(); this.clear()}}> Sign Up</Button>
             </div>
     );
   }

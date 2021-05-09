@@ -66,7 +66,7 @@
 	
 }
 
-#options button {
+/* #options button {
 	cursor: pointer;
 	text-transform: uppercase;
 	height: 50px;
@@ -76,12 +76,12 @@
 	background-color: transparent;
 	border: 2px solid white;
 	color: white;
-}
+} */
 
-/* .signup-box {
+.signup-box {
 	justify-content: center;
 	padding: 22pc;
-} */
+}
 
 #login-box {
 	justify-content: center;
