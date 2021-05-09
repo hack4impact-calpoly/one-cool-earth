@@ -13,31 +13,44 @@ function App() {
   return (
     <div>
     <Header></Header>
-      <BrowserRouter>
-        <div className="App">
-          <Switch>
-            <Route exact path="/">
-	            <LandingPage />
-            </Route>
-	          <Route path="/login">
-	            <Login />
-            </Route>
-            {/* <Route path="/spreadsheets">
-              <Spreadsheets />
-            </Route> */}
-	          <Route path="/signup">
-	            <Signup />
-	          </Route>
-	          <Route path="/admin">
-	            <Admin />
-	          </Route>
-            <Route path='/welcome'>
-              <Welcome />
-            </Route>
-          </Switch>
-        </div>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+
+   <div className="App">
+      <Switch>
+         <Route exact path="/">
+            <LandingPage />
+         </Route>
+         <Route path="/login">
+            <Login />
+         </Route>
+         <Route path="/spreadsheets">
+            <Spreadsheets />
+         </Route>
+         <Route path="/signup">
+            <Signup />
+         </Route>
+         <Route path="/admin">
+            <Admin />
+         </Route>
+         <Route path="/calendar">
+            <CalendarPage />
+         </Route>
+         <Route path="/login">
+            <Login />
+         </Route>
+         <Route path="/spreadsheets">
+            <Spreadsheets />
+         </Route>
+         <Route path="/signup">
+            <Signup />
+         </Route>
+         <Route path="/admin">
+	        <Admin />
+         </Route>
+      </Switch>
+   </div>
+   </BrowserRouter>
+   </div>
   );
 }
 

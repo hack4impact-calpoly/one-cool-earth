@@ -4,14 +4,71 @@ import 'react-dropdown/style.css';
 import './css/signup.css';
 
 const volunteerOptions = [
-    'Garden Workday Volunteer', 'Special Events Volunteer', 'Garden Educator Assistant', 
-    'Office/Remote Volunteer', 'Unsure or Interested in Multiple Opportunities' 
+    'Garden Workday Volunteer', 'Special Events Volunteer', 'Garden Educator Assistant', 'Office/Remote Volunteer', 'Unsure or Interested in Multiple Opportunities'
   ]
   const locationOptions = [
     'South County', 'Coastal', 'San Luis Obispo', 'North County'
   ]
 
+  var preference;
+  var loc;
+  
 class Signup extends React.Component {
+
+    constructor (props) {
+        super(props)
+        this.state = {
+          selected: ''
+        }
+      }
+
+      _onPreferenceSelect (option) {
+          preference = option.label;
+          console.log(preference);
+      }
+
+      _onLocationSelect (option) {
+        loc = option.label;
+        console.log(loc);
+    }
+
+
+
+    postSignUpData(){
+        const first = document.getElementById("first-name").value;
+        const last = document.getElementById("last-name").value;
+        const preferences = preference;
+        const phone = document.getElementById("phone-number").value;
+        const email = document.getElementById("email").value;
+        const location = loc;
+
+      //Don't submit data unless both fields are non-empty
+      if(first === "" || last === "" || preferences === "" || phone === "" || email === "" || location === ""){
+        return;
+      }
+
+      const SignUpData={
+        firstName: first,
+        lastName: last,
+        preferences: preferences,
+        phoneNum : phone,
+        email : email,
+        loc : location
+      }
+
+      console.log(SignUpData);
+    }
+
+    clear() {
+        document.getElementById("first-name").value = '';
+        document.getElementById("last-name").value = '';
+        preference = "";
+        document.getElementById("phone-number").value = '' ;
+        document.getElementById("email").value = '';
+        loc = "";
+    }
+
+
     render() {
         return (
             <div className = 'wrapper'>
@@ -30,7 +87,8 @@ class Signup extends React.Component {
                         </div>
                         <div id ='volunteer-preferences-field' className='drop-down'>
                             <label for='volunteer-preferences'>Volunteer Preferences</label>
-                            <Dropdown id = 'volunteer-preferences' options={volunteerOptions} placeholder='Select'/>
+                            <Dropdown id = 'volunteer-preferences' onChange={this._onPreferenceSelect} options={volunteerOptions} placeholder='Select'/>
+
                         </div> 
                     </div>
                     <div className='fields-column'>
@@ -44,10 +102,12 @@ class Signup extends React.Component {
                         </div>
                         <div id='location-preference-field' className='drop-down'>
                             <label for='location-preference'>Location Preference</label>
-                            <Dropdown id = 'location-preference' options={locationOptions} placeholder='Select'/>
+                            <Dropdown id = 'location-preference' onChange={this._onLocationSelect} options={locationOptions} placeholder='Select'/>
                         </div>
                     </div>
                 </div>
+
+                <button id = 'sign-up-button' onClick={() => {this.postSignUpData(); this.clear()}}> Sign Up</button>
             </div>
     );
   }
