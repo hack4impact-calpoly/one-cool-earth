@@ -1,6 +1,7 @@
 import React from 'react'
 import logo from './images/oce-logo.png'
 import './css/LandingPage.css';
+import {Button} from "react-bootstrap";
 
 class LandingPage extends React.Component {
 
@@ -18,10 +19,10 @@ class LandingPage extends React.Component {
             </div>
             <div id='options'>
                <div id='login-box'>
-                  <button>Log In</button>
+                  <Button variant="whiteLarge">Log In</Button>
                </div>
                <div id='signup-box'>
-                  <button>Sign Up</button>
+                  <Button variant="whiteLarge">Sign Up</Button>
                </div>
             </div>
          </div>

@@ -6,24 +6,7 @@
   grid-template-areas: 'buttons' 'text';
 
 }
-.buttons{
-  grid-area: buttons;
-  display: flex;
-  justify-content: space-between;
-}
-#home-button{
-  margin-top: 3vh;
-  margin-left: 3vh;
-  height: 30px;
-  width: 5%;
-}
-#logout-button{
-  margin-top: 3vh;
-  margin-right: 3vh;
-  height: 30px;
-  width: 5%;
-  justify-self: right;
-}
+
 .text{
   grid-area: text;
   display: flex;

@@ -1,11 +1,9 @@
-import './css/Login.css';
+import './css/login.css';
+import {Button} from "react-bootstrap";
 
 function Login() {
   return (
-    <body>
-      <div className = 'box1'>
-        <button>Return home</button>
-      </div>
+    <div>
       <div className = 'box2'>
         <p>Log In</p>
       </div>
@@ -18,9 +16,9 @@ function Login() {
           <label for = 'password'>PASSWORD</label>
           <input id = 'password' type = 'password'></input>
         </div>
-        <button id = 'log-in-button'> Log In</button>
+        <Button>Submit</Button>
       </div>
-    </body>
+    </div>
   );
 }
 
