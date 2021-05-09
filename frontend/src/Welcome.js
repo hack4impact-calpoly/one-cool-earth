@@ -1,5 +1,5 @@
-require("react")
-require("./css/Welcome.css")
+import React, { useState, useEffect } from "react";
+import './css/Welcome.css';
 
 function Welcome (props){
 
@@ -83,14 +83,9 @@ function Welcome (props){
                 </div>
             </div>
         </main>
-<<<<<<< HEAD:frontend/src/Welcome.js
-
-    </body>
-=======
 
     </div>
->>>>>>> 270f071c64d640c7f60276d7e56da003c401d470:frontend/src/welcome.js
-    );//}
+    );
 }
 
 export default Welcome;

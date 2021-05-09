@@ -1,13 +1,13 @@
 import './css/App.css';
 import Header from './Header';
-import Admin from './admin.js';
-import LandingPage from './LandingPage';
-import Signup from './signup.js';
-import Login from './login.js';
-import Welcome from './welcome.js';
-import Spreadsheets from './spreadsheets.js';
-import CalendarPage from './calendar'
+import Admin from './Admin.js';
+import Signup from './SignUp.js';
+import Login from './Login.js';
+import Welcome from './Welcome.js';
+import Spreadsheets from './Spreadsheets.js';
+import CalendarPage from './Calendar'
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import LandingPage from './LandingPage';
 
 function App() {
   return (
@@ -46,6 +46,9 @@ function App() {
          </Route>
          <Route path="/admin">
 	        <Admin />
+         </Route>
+         <Route path="/welcome">
+            <Welcome />
          </Route>
       </Switch>
    </div>
