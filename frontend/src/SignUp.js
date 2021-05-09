@@ -1,7 +1,7 @@
 import React from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-import './css/signup.css';
+import './css/SignUp.css';
 
 const volunteerOptions = [
     'Garden Workday Volunteer', 'Special Events Volunteer', 'Garden Educator Assistant', 'Office/Remote Volunteer', 'Unsure or Interested in Multiple Opportunities'
@@ -12,7 +12,7 @@ const volunteerOptions = [
 
   var preference;
   var loc;
-  
+
 class Signup extends React.Component {
 
     constructor (props) {
@@ -89,7 +89,7 @@ class Signup extends React.Component {
                             <label for='volunteer-preferences'>Volunteer Preferences</label>
                             <Dropdown id = 'volunteer-preferences' onChange={this._onPreferenceSelect} options={volunteerOptions} placeholder='Select'/>
 
-                        </div> 
+                        </div>
                     </div>
                     <div className='fields-column'>
                         <div id='phone-number-field' className='input'>

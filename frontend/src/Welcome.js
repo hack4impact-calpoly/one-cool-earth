@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import './css/welcome.css';
+require("react")
+require("./css/Welcome.css")
 
 function Welcome (props){
-    
+
     const [eventList, setEventList] = useState([]);
 
     useEffect(() => {
@@ -28,11 +28,11 @@ function Welcome (props){
         //             "date": new Date(),
         //             "location" : "Coastal",
         //             "volunteerPreference" : "Special Events Volunteer"
-                    
+
         //         }
         //     ]
-        // };  
-        
+        // };
+
         // setEventList(json.events);
 
         // console.log(json.events);
@@ -41,7 +41,7 @@ function Welcome (props){
 
     return(
     <div id='welcome'>
-    
+
         {/* <header>
             <div class='returnHome'>
                 <img src="./logo.svg" height="50" alt="Logo"/>
@@ -83,8 +83,13 @@ function Welcome (props){
                 </div>
             </div>
         </main>
-        
+<<<<<<< HEAD:frontend/src/Welcome.js
+
+    </body>
+=======
+
     </div>
+>>>>>>> 270f071c64d640c7f60276d7e56da003c401d470:frontend/src/welcome.js
     );//}
 }
 
