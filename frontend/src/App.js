@@ -12,42 +12,50 @@ import LandingPage from './LandingPage';
 function App() {
   return (
     <div>
-    <Header></Header>
     <BrowserRouter>
-
    <div className="App">
       <Switch>
          <Route exact path="/">
             <LandingPage />
          </Route>
          <Route path="/login">
+            <Header />
             <Login />
          </Route>
          <Route path="/spreadsheets">
+            <Header />
             <Spreadsheets />
          </Route>
          <Route path="/signup">
+            <Header />
             <Signup />
          </Route>
          <Route path="/admin">
+            <Header />
             <Admin />
          </Route>
          <Route path="/calendar">
+            <Header />
             <CalendarPage />
          </Route>
          <Route path="/login">
+            <Header />
             <Login />
          </Route>
          <Route path="/spreadsheets">
+            <Header />
             <Spreadsheets />
          </Route>
          <Route path="/signup">
+            <Header />
             <Signup />
          </Route>
          <Route path="/admin">
+            <Header />
 	        <Admin />
          </Route>
          <Route path="/welcome">
+            <Header />
             <Welcome />
          </Route>
       </Switch>
