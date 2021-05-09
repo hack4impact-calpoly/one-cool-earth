@@ -1,4 +1,5 @@
 import React from 'react'
+import logo from './images/oce-logo.png'
 import './css/LandingPage.css';
 
 class LandingPage extends React.Component {
@@ -6,21 +7,20 @@ class LandingPage extends React.Component {
    render() {
       return (
          <div id='landing-page'>
-            <div id='welcome-banner'>
+            <div id='banner'>
                <div id='logo'>
-                  <img src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/pastel-mint-green-color-garaga-designs.jpg" alt="This is a temp img and message"/>
+                  <img src={logo} alt='One Cool Earth Education and Preservation: Service Since 2001'/>
                </div>
                <div id='title'>
                   <h2 className='volunteer-opportunities'>Volunteer</h2>
                   <h2 className='volunteer-opportunities'>Opportunities</h2>
                </div>
             </div>
-
-            <div id="buttons">
-               <div className="loginBox">
+            <div id='options'>
+               <div id='login-box'>
                   <button>Log In</button>
                </div>
-               <div className="signupBox">
+               <div id='signup-box'>
                   <button>Sign Up</button>
                </div>
             </div>

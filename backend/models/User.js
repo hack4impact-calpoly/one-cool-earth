@@ -11,7 +11,8 @@ const UserSchema = new mongoose.Schema({
   email : String,
   availableDates : [Date],
   location : String,
-  volunteerPreferences : [String]
+  volunteerPreferences : [String],
+  status : Boolean
 }, {
   versionKey: false
 })
