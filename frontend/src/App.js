@@ -1,11 +1,11 @@
 import './css/App.css';
 import Header from './Header';
-import Admin from './admin.js';
+import Admin from './Admin.js';
 import LandingPage from './LandingPage';
-import Signup from './signup.js';
-import Login from './login.js';
-import Spreadsheets from './spreadsheets.js';
-import CalendarPage from './calendar'
+import SignUp from './SignUp.js';
+import Login from './Login.js';
+import Spreadsheets from './Spreadsheets.js';
+import CalendarPage from './Calendar'
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
             <Spreadsheets />
           </Route>
           <Route path="/signup">
-            <Signup />
+            <SignUp />
           </Route>
           <Route path="/admin">
             <Admin />

@@ -1,11 +1,11 @@
 import React from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-import './css/signup.css';
+import './css/SignUp.css';
 
 const volunteerOptions = [
-    'Garden Workday Volunteer', 'Special Events Volunteer', 'Garden Educator Assistant', 
-    'Office/Remote Volunteer', 'Unsure or Interested in Multiple Opportunities' 
+    'Garden Workday Volunteer', 'Special Events Volunteer', 'Garden Educator Assistant',
+    'Office/Remote Volunteer', 'Unsure or Interested in Multiple Opportunities'
   ]
   const locationOptions = [
     'South County', 'Coastal', 'San Luis Obispo', 'North County'
@@ -31,7 +31,7 @@ class Signup extends React.Component {
                         <div id ='volunteer-preferences-field' className='drop-down'>
                             <label for='volunteer-preferences'>Volunteer Preferences</label>
                             <Dropdown id = 'volunteer-preferences' options={volunteerOptions} placeholder='Select'/>
-                        </div> 
+                        </div>
                     </div>
                     <div className='fields-column'>
                         <div id='phone-number-field' className='input'>

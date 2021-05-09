@@ -1,7 +1,7 @@
 // import React from "react"
 // import "./css/welcome.css"
 require("react")
-require("./css/welcome.css")
+require("./css/Welcome.css")
 
 function Welcome (props){
     // render(){
@@ -46,7 +46,7 @@ function Welcome (props){
                 </div>
             </div>
         </main>
-        
+
     </body>
     );//}
 }

@@ -1,4 +1,4 @@
-import './css/calendar.css';
+import './css/Calendar.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -20,7 +20,7 @@ function CalendarPage() {
       <div className = 'calendar'>
         <FullCalendar
           className = 'fc'
-          plugins={[ dayGridPlugin ]} 
+          plugins={[ dayGridPlugin ]}
           initialView = 'dayGridMonth'
           height = 'auto'
           width = 'auto'
