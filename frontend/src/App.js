@@ -34,21 +34,6 @@ function App() {
           <Route path="/calendar">
             <CalendarPage />
           </Route>
-<<<<<<< HEAD
-	  <Route path="/login">
-	    <Login />
-	  </Route>
-    {/* <Route path="/spreadsheets">
-      <Spreadsheets />
-	  </Route> */}
-	  <Route path="/signup">
-	    <Signup />
-	  </Route>
-	  <Route path="/admin">
-	    <Admin />
-	  </Route>
-=======
->>>>>>> dbc384915d6085ee5de3a2ca356074b29b20c2f3
         </Switch>
       </div>
     </BrowserRouter>
