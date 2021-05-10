@@ -13,5 +13,5 @@ const EventSchema = new mongoose.Schema({
   versionKey: false
 })
 
-const Event = mongoose.model('devs', EventSchema);
+const Event = mongoose.model('events', EventSchema);
 module.exports = Event;
