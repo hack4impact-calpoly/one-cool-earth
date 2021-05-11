@@ -1,52 +1,64 @@
 #landing-page {
-	background-image: url("https://s-media-cache-ak0.pinimg.com/736x/7e/1b/ec/7e1bec3d3fc337050f7a7c6873d0342b.jpg");
-	/* -webkit-background-size: cover;
+	min-height: 100vh;
+	min-width: 100vw;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+	background-image: url('../images/landing-page-background.JPG');
+	-webkit-background-size: cover;
   	-moz-background-size: cover;
   	-o-background-size: cover;
-  	background-size: cover; */
-	width: 100%;
-	height: auto;
 	font-family: sans-serif;
-	color: white;
-	background-color: #d4d4d4;
-	padding-top: 8%;
-	padding-bottom: 8%;
+	padding-top: 1%;
+	padding-bottom: 4%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	
 }
 
-#welcome-banner {
+#banner {
 	display: flex;
 	flex-direction: row;
-	/* justify-content: space-around; */
-	padding-bottom: 4%;
-}
-
-#logo > img {
-	height: 160px;
-	width: auto;
+	justify-content: space-between;
+	margin-bottom: 4%;
 }
 
 #logo {
-	margin-right: 5%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#logo img {
+	height: 9.1em;
+	width: auto;
 }
 
 #title {
-	margin-left: 5%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	
+}
+
+#logo, #title {
+	margin-right: 10%;
 }
 
 .volunteer-opportunities {
 	display: flex;
  	justify-content: center;
  	align-items: center;
- 	font-size: 70px;
+ 	font-size: 3.5em;
  	margin: 0px;
 	color: white;
 }
 
-#buttons {
+#options {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -54,23 +66,24 @@
 	
 }
 
-#buttons button {
+/* #options button {
+	cursor: pointer;
 	text-transform: uppercase;
-	height: 70px;
-	width: 250px;
-	font-size: 25px;
+	height: 50px;
+	width: 150px;
+	font-size: 1.1em;
 	font-stretch: condensed;
 	background-color: transparent;
 	border: 2px solid white;
 	color: white;
-}
+} */
 
-.signinBox {
+.signup-box {
 	justify-content: center;
 	padding: 22pc;
 }
 
-.loginBox {
+#login-box {
 	justify-content: center;
-	padding: 22px;
+	padding: 30px;
 }
