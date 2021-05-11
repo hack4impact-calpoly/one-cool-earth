@@ -1,11 +1,21 @@
 import './css/App.css';
 import Header from './Header';
+<<<<<<< HEAD
+import Admin from './admin.js';
+import LandingPage from './LandingPage';
+import Signup from './signup.js';
+import Login from './login.js';
+//import Welcome from './welcome.js';
+import Spreadsheets from './spreadsheets.js';
+import CalendarPage from './calendar'
+=======
 import Admin from './Admin.js';
 import Signup from './SignUp.js';
 import Login from './Login.js';
 import Welcome from './Welcome.js';
 import Spreadsheets from './Spreadsheets.js';
 import CalendarPage from './Calendar'
+>>>>>>> main
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import LandingPage from './LandingPage';
 
