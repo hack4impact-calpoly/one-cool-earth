@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import './css/welcome.css';
+import './css/Welcome.css';
+import {Button} from "react-bootstrap";
 
 function Welcome (props){
-    
+
     const [eventList, setEventList] = useState([]);
 
     useEffect(() => {
@@ -28,11 +29,11 @@ function Welcome (props){
         //             "date": new Date(),
         //             "location" : "Coastal",
         //             "volunteerPreference" : "Special Events Volunteer"
-                    
+
         //         }
         //     ]
-        // };  
-        
+        // };
+
         // setEventList(json.events);
 
         // console.log(json.events);
@@ -41,7 +42,7 @@ function Welcome (props){
 
     return(
     <div id='welcome'>
-    
+
         {/* <header>
             <div class='returnHome'>
                 <img src="./logo.svg" height="50" alt="Logo"/>
@@ -69,10 +70,10 @@ function Welcome (props){
                             </div>
                         ))}
                     <br/>
-                    <button>Edit</button>
+                    <Button>Edit</Button>
                 </div>
                 <div id='calendar'>
-                    <button>Calendar</button>
+                    <Button>Calendar</Button>
                 </div>
             </div>
             <div id='news'>
@@ -83,9 +84,9 @@ function Welcome (props){
                 </div>
             </div>
         </main>
-        
+
     </div>
-    );//}
+    );
 }
 
 export default Welcome;

@@ -1,6 +1,6 @@
 import React from "react";
 import React_Datasheet from "react-datasheet";
-import '../src/css/spreadsheet.css';
+import '../src/css/Spreadsheets.css';
 
 
 const data = [
@@ -13,16 +13,16 @@ const data = [
 class Spreadsheets extends React.Component{
     render(){
         return (
-            <body>		
+            <body>
             <header id="header">
             <div id="logo">
                 <h1>Spreadsheet</h1>
             </div>
             </header>
-                
+
             <main>
                 <div class="datasheet">
-                    <React_Datasheet 
+                    <React_Datasheet
                         data={data}
                         valueRenderer={cell => cell.value}
                     />
@@ -33,7 +33,7 @@ class Spreadsheets extends React.Component{
             <div class="innertube">
                 <h1>Sort By</h1>
             </div>
-            </nav>	
+            </nav>
             </body>
         )
     }

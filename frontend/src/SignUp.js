@@ -1,7 +1,8 @@
 import React from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-import './css/signup.css';
+import './css/SignUp.css';
+import {Button} from "react-bootstrap";
 
 const volunteerOptions = [
     'Garden Workday Volunteer', 'Special Events Volunteer', 'Garden Educator Assistant', 'Office/Remote Volunteer', 'Unsure or Interested in Multiple Opportunities'
@@ -12,7 +13,7 @@ const volunteerOptions = [
 
   var preference;
   var loc;
-  
+
 class Signup extends React.Component {
 
     constructor (props) {
@@ -73,7 +74,7 @@ class Signup extends React.Component {
                 <div className='title'>
                     <h2>New Volunteer? Sign Up Here!</h2>
                 </div>
-                <div className='fields'>
+                <div className='fields' style={{paddingBottom: "20px"}}>
                     <div className='fields-column'>
                         <div id='first-name-field' className='input'>
                             <label for='first-name'>First Name</label>
@@ -87,7 +88,7 @@ class Signup extends React.Component {
                             <label for='volunteer-preferences'>Volunteer Preferences</label>
                             <Dropdown id = 'volunteer-preferences' onChange={this._onPreferenceSelect} options={volunteerOptions} placeholder='Select'/>
 
-                        </div> 
+                        </div>
                     </div>
                     <div className='fields-column'>
                         <div id='phone-number-field' className='input'>
@@ -104,8 +105,7 @@ class Signup extends React.Component {
                         </div>
                     </div>
                 </div>
-
-                <button id = 'sign-up-button' onClick={() => {this.postSignUpData(); this.clear()}}> Sign Up</button>
+                <Button onClick={() => {this.postSignUpData(); this.clear()}}> Sign Up</Button>
             </div>
     );
   }
