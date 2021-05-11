@@ -1,10 +1,10 @@
 import React from "react";
-import {Button, Col, Row} from "react-bootstrap"
-import "./css/Admin.css";
+import {Button, Col, Row} from 'react-bootstrap';
+import './css/Admin.css';
 
 class Admin extends React.Component {
 	render() {
-		return(
+		return (
 			<div>
 				<body>
 					<div id="main">

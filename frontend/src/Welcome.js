@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import {Button} from 'react-bootstrap';
 import './css/Welcome.css';
-import {Button} from "react-bootstrap";
 
-function Welcome (props){
+class Welcome extends React.Component {
 
-    const [eventList, setEventList] = useState([]);
+    constructor(props) {
+        super(props);
+        this.state = {
+            eventList: []
+        }
+    }
 
-    useEffect(() => {
+    componentDidMount() {
         // Need to make a call to API endpoint to get all events for the user
 
         // Example of API data converted to JSON
@@ -34,59 +39,62 @@ function Welcome (props){
         //     ]
         // };
 
-        // setEventList(json.events);
+        // this.setState({
+        //     eventList: json
+        // });
 
-        // console.log(json.events);
+        // console.log(this.state.eventList);
+    }
 
-    }, []);
+    render() {
+        return (
+            <div id='welcome'>
 
-    return(
-    <div id='welcome'>
+            {/* <header>
+                <div class='returnHome'>
+                    <img src="./logo.svg" height="50" alt="Logo"/>
+                    <button>RETURN HOME</button>
+                </div>
 
-        {/* <header>
-            <div class='returnHome'>
-                <img src="./logo.svg" height="50" alt="Logo"/>
-                <button>RETURN HOME</button>
-            </div>
+                <h1>Welcome, [VOLUNTEER]</h1>
+                <div class='logout'>
+                    <button>LOG OUT</button>
+                </div>
+            </header> */}
 
             <h1>Welcome, [VOLUNTEER]</h1>
-            <div class='logout'>
-                <button>LOG OUT</button>
-            </div>
-        </header> */}
-
-        <h1>Welcome, [VOLUNTEER]</h1>
-        <div id='banner'>
-            <p1>[BANNER]</p1>
-            <br/>
-        </div>
-        <main>
-            <div id='planning'>
-                <div id='engagements'>
-                    <p1>Current Engagements</p1>
-                        {eventList.map((e) => (
-                            <div key={e.name} className='event'>
-                                <p>{'> ' + e.name + ', ' + e.volunteerPreference}</p>
-                            </div>
-                        ))}
-                    <br/>
-                    <Button>Edit</Button>
-                </div>
-                <div id='calendar'>
-                    <Button>Calendar</Button>
-                </div>
-            </div>
-            <div id='news'>
-                <p1>Organization News / Highlighted Event</p1>
+            <div id='banner'>
+                <p1>[BANNER]</p1>
                 <br/>
-                <div id='showcase'>
-                    {/* <img src='https://media-exp1.licdn.com/dms/image/C4E0BAQHikN6EXPd23Q/company-logo_200_200/0/1595359131127?e=2159024400&v=beta&t=S5MNjBDjiH433VCWzjPeiopNDhxGwmfcMk4Zf1P_m_s'></img> */}
-                </div>
             </div>
-        </main>
+            <main>
+                <div id='planning'>
+                    <div id='engagements'>
+                        <p1>Current Engagements</p1>
+                            {this.state.eventList.map((e) => (
+                                <div key={e.name} className='event'>
+                                    <p>{'> ' + e.name + ', ' + e.volunteerPreference}</p>
+                                </div>
+                            ))}
+                        <br/>
+                        <Button>Edit</Button>
+                    </div>
+                    <div id='calendar'>
+                        <Button>Calendar</Button>
+                    </div>
+                </div>
+                <div id='news'>
+                    <p1>Organization News / Highlighted Event</p1>
+                    <br/>
+                    <div id='showcase'>
+                        {/* <img src='https://media-exp1.licdn.com/dms/image/C4E0BAQHikN6EXPd23Q/company-logo_200_200/0/1595359131127?e=2159024400&v=beta&t=S5MNjBDjiH433VCWzjPeiopNDhxGwmfcMk4Zf1P_m_s'></img> */}
+                    </div>
+                </div>
+            </main>
 
-    </div>
+        </div>
     );
+    }
 }
 
 export default Welcome;
