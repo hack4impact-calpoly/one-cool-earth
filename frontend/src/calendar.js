@@ -11,21 +11,21 @@ class CalendarPage extends React.Component{
     return (
       <body>
         <div className = 'header'>
-          <div className= 'buttons'>
-            <button id = 'home-button'>Home</button>
-            <button id = 'logout-button'>Log out</button>
-          </div>
           <div className = 'text'>
             <p id = 'main-text'> Calendar</p>
           </div>
         </div>
         <div className = 'calendar'>
-          <FullCalendar
+	  <FullCalendar
             className = 'fc'
             plugins={[ dayGridPlugin ]} 
             initialView = 'dayGridMonth'
-            height = 'auto'
-            width = 'auto'
+	    headerToolbar = {{left: '',
+	        center: 'title', 
+	        right: 'today prev,next'
+	    }}
+	    height = 'auto'
+	    width = 'auto'
           />
         </div>
       </body>

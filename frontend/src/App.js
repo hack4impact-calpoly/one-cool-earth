@@ -11,9 +11,8 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 function App() {
   return (
     <div>
-    <Header></Header>
     <BrowserRouter>
-
+      
       <div className="App">
         <Switch>
           <Route exact path="/">
