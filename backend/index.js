@@ -27,11 +27,13 @@ const signUpEndpoint = require('./api/signup.js')
 const authEndpoint = require('./api/auth')
 const datesEndpoint = require('./api/dates')
 const adminEndpoint = require('./api/admin')
+const userEndpoint = require('./api/user')
 
 app.use('api/login', loginEndpoint)
 app.use('api/signup', signUpEndpoint)
 app.use('/api/auth', authEndpoint)
 app.use('/api/user/events', datesEndpoint)
 app.use('/api/admin', adminEndpoint)
+app.use('/api/user', userEndpoint)
 
 app.listen(3001, "localhost")
