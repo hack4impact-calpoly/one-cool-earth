@@ -1,7 +1,4 @@
 
-Button{
-  height:10% ! important
-}
 .box2{
   grid-area: box2;
   display: flex;
