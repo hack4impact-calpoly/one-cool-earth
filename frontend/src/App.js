@@ -2,25 +2,40 @@ import './css/App.css';
 import Header from './Header';
 import Admin from './Admin.js';
 import Signup from './SignUp.js';
-import Login from './Login.js';
 import Welcome from './Welcome.js';
 import Spreadsheets from './Spreadsheets.js';
 import CalendarPage from './Calendar'
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import LandingPage from './LandingPage';
+import CreateEvent from './CreateEvent'
+import SetAuthToken from './actions/SetAuthToken'
+import { useState, useEffect } from 'react'
+
 
 function App() {
+
+   const [user, setUser] = useState();
+   const [StartPage, setStartPage] = useState();
+
+   useEffect(() => {
+      const URL = `${process.env.REACT_APP_SERVER_URL}/api/user`;
+      fetch(URL, { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => setUser(data.user))
+      .catch(err => console.error(err)); // catches when users aren't logged in
+   }, []);
+
+   useEffect(() => {
+      setStartPage( user ? <> <Header /> <Welcome /> </> : <LandingPage />)
+   }, [user])
+
   return (
     <div>
     <BrowserRouter>
     <div className="App">
       <Switch>
-         <Route exact path="/">
-            <LandingPage/>
-         </Route>
-         <Route path="/login">
-            <Header/>
-            <Login/>
+         <Route exact path='/'>
+            {StartPage}
          </Route>
          <Route path="/spreadsheets">
             <Header/>
@@ -35,13 +50,14 @@ function App() {
             <Admin/>
          </Route>
          <Route path="/calendar">
-            <Header/>
-            <CalendarPage/>
+            <Header />
+            <CalendarPage />
          </Route>
-         <Route path="/welcome">
-            <Header/>
-            <Welcome/>
+         <Route path="/create-event">
+            <Header />
+            <CreateEvent />
          </Route>
+         <Route path='/auth/login/:token' component={SetAuthToken} />
       </Switch>
    </div>
    </BrowserRouter>

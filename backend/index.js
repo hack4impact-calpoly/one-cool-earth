@@ -3,37 +3,42 @@ const bodyParser = require('body-parser')
 const passport = require('passport')
 require('dotenv').config()
 require('./config/passport-setup')   // import passport configuration for google authentication
-require('./database/connection')    // connectino to database
-const cookieSession = require('cookie-session')
+require('./database/connection')    // connection to database
+const cookieParser = require('cookie-parser')
 
 const app = express();
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Credentials", true);
+    next();
+});
+
 // json body parsing middleware
 app.use(bodyParser.json())
+app.use(cookieParser())
 
-// cookie session
-app.use(cookieSession({
-    maxAge: 60 * 60 * 1000,
-    name: 'test-session',
-    keys: ['test-session-key']
-}))
-
-// initialize passport
-app.use(passport.initialize())
-app.use(passport.session())
 
 const loginEndpoint = require('./api/login.js')
 const signUpEndpoint = require('./api/signup.js')
 const authEndpoint = require('./api/auth')
-const datesEndpoint = require('./api/dates')
 const adminEndpoint = require('./api/admin')
 const userEndpoint = require('./api/user')
 
 app.use('api/login', loginEndpoint)
 app.use('api/signup', signUpEndpoint)
 app.use('/api/auth', authEndpoint)
-app.use('/api/user/events', datesEndpoint)
 app.use('/api/admin', adminEndpoint)
 app.use('/api/user', userEndpoint)
+
+app.get('/api/user', async (req, res) => {
+    res.redirect(`${process.env.SERVER_URL}/api/auth`)
+})
+
+app.get('/api/logout', async (req, res) => {
+    res.redirect(`${process.env.SERVER_URL}/api/auth/logout`)
+})
+
 
 app.listen(3001, "localhost")
