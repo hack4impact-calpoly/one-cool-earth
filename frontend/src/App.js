@@ -7,6 +7,7 @@ import Spreadsheets from './Spreadsheets.js';
 import CalendarPage from './Calendar'
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import LandingPage from './LandingPage';
+import CreateEvent from './CreateEvent'
 import SetAuthToken from './actions/SetAuthToken'
 import { useState, useEffect } from 'react'
 
@@ -51,6 +52,10 @@ function App() {
          <Route path="/calendar">
             <Header />
             <CalendarPage />
+         </Route>
+         <Route path="/create-event">
+            <Header />
+            <CreateEvent />
          </Route>
          <Route path='/auth/login/:token' component={SetAuthToken} />
       </Switch>
