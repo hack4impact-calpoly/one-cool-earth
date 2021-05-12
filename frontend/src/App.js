@@ -31,22 +31,22 @@ function App() {
   return (
     <div>
     <BrowserRouter>
-   <div className="App">
+    <div className="App">
       <Switch>
          <Route exact path='/'>
             {StartPage}
          </Route>
          <Route path="/spreadsheets">
-            <Header />
-            <Spreadsheets />
+            <Header/>
+            <Spreadsheets/>
          </Route>
          <Route path="/signup">
-            <Header />
-            <Signup />
+            <Header/>
+            <Signup/>
          </Route>
          <Route path="/admin">
-            <Header />
-            <Admin />
+            <Header/>
+            <Admin/>
          </Route>
          <Route path="/calendar">
             <Header />

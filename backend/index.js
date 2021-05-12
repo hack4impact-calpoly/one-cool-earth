@@ -24,11 +24,13 @@ const loginEndpoint = require('./api/login.js')
 const signUpEndpoint = require('./api/signup.js')
 const authEndpoint = require('./api/auth')
 const adminEndpoint = require('./api/admin')
+const userEndpoint = require('./api/user')
 
 app.use('api/login', loginEndpoint)
 app.use('api/signup', signUpEndpoint)
 app.use('/api/auth', authEndpoint)
 app.use('/api/admin', adminEndpoint)
+app.use('/api/user', userEndpoint)
 
 app.get('/api/user', async (req, res) => {
     res.redirect(`${process.env.SERVER_URL}/api/auth`)
