@@ -12,7 +12,7 @@ const locationOptions = [
   'South County', 'Coastal', 'San Luis Obispo', 'North County'
 ]
 
-class Event extends React.Component {
+class CreateEvent extends React.Component {
   render() {
     return(
       <body id = 'events-body'>
@@ -44,4 +44,4 @@ class Event extends React.Component {
   };
 }
 
-export default Event;
+export default CreateEvent;
