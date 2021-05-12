@@ -19,7 +19,7 @@ class LandingPage extends React.Component {
             </div>
             <div id='options'>
                <div id='login-box'>
-                  <Button variant="whiteLarge">Log In</Button>
+                  <Button href={process.env.REACT_APP_SERVER_URL + "/api/auth/google"}  variant="whiteLarge">Log In</Button>
                </div>
                <div id='signup-box'>
                   <Button variant="whiteLarge">Sign Up</Button>

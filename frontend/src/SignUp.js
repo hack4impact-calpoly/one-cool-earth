@@ -25,12 +25,10 @@ class Signup extends React.Component {
 
       _onPreferenceSelect (option) {
           preference = option.label;
-          console.log(preference);
       }
 
       _onLocationSelect (option) {
         loc = option.label;
-        console.log(loc);
     }
 
 
