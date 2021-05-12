@@ -1,15 +1,15 @@
-import './css/App.css';
+import React from 'react';
 import Header from './Header';
 import Admin from './Admin.js';
 import Signup from './SignUp.js';
 import Welcome from './Welcome.js';
 import Spreadsheets from './Spreadsheets.js';
 import CalendarPage from './Calendar'
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import LandingPage from './LandingPage';
 import CreateEvent from './CreateEvent'
 import SetAuthToken from './actions/SetAuthToken'
 import { useState, useEffect } from 'react'
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 
 function App() {

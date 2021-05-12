@@ -1,7 +1,7 @@
-import React from 'react'
-import logo from './images/oce-logo.png'
+import React from 'react';
+import logo from './images/oce-logo.png';
+import {Button} from 'react-bootstrap';
 import './css/LandingPage.css';
-import {Button} from "react-bootstrap";
 
 class LandingPage extends React.Component {
 

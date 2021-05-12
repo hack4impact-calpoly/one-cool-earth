@@ -1,8 +1,8 @@
 import React from 'react';
 import Dropdown from 'react-dropdown';
+import {Button} from 'react-bootstrap';
 import 'react-dropdown/style.css';
 import './css/SignUp.css';
-import {Button} from "react-bootstrap";
 
 const volunteerOptions = [
     'Garden Workday Volunteer', 'Special Events Volunteer', 'Garden Educator Assistant', 'Office/Remote Volunteer', 'Unsure or Interested in Multiple Opportunities'
