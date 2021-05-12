@@ -14,50 +14,33 @@ function App() {
     <div>
     <BrowserRouter>
     <div className="App">
-      <Header/>
       <Switch>
          <Route exact path="/">
-            <LandingPage />
+            <LandingPage/>
          </Route>
          <Route path="/login">
-            <Header />
-            <Login />
+            <Header/>
+            <Login/>
          </Route>
          <Route path="/spreadsheets">
-            <Header />
-            <Spreadsheets />
+            <Header/>
+            <Spreadsheets/>
          </Route>
          <Route path="/signup">
-            <Header />
-            <Signup />
+            <Header/>
+            <Signup/>
          </Route>
          <Route path="/admin">
-            <Header />
-            <Admin />
+            <Header/>
+            <Admin/>
          </Route>
          <Route path="/calendar">
-            <Header />
-            <CalendarPage />
-         </Route>
-         <Route path="/login">
-            <Header />
-            <Login />
-         </Route>
-         <Route path="/spreadsheets">
-            <Header />
-            <Spreadsheets />
-         </Route>
-         <Route path="/signup">
-            <Header />
-            <Signup />
-         </Route>
-         <Route path="/admin">
-            <Header />
-	        <Admin />
+            <Header/>
+            <CalendarPage/>
          </Route>
          <Route path="/welcome">
-            <Header />
-            <Welcome />
+            <Header/>
+            <Welcome/>
          </Route>
       </Switch>
    </div>
