@@ -12,7 +12,7 @@ class Header extends React.Component {
 					<Nav.Link className="custom-nav-link" href="/admin">Admin</Nav.Link>
 					<Nav.Link className="custom-nav-link" href="/spreadsheets">Spreadsheets</Nav.Link>
 					<Nav.Link className="custom-nav-link" href="/calendar">Calendar</Nav.Link>
-					<Nav.Link className="custom-nav-link" href="/logout">Logout</Nav.Link>
+					<Nav.Link className="custom-nav-link" href={process.env.REACT_APP_SERVER_URL + "/api/logout"}>Logout</Nav.Link>
 			</Nav>)		
 		} else if (loggedIn) {
 			return (<Nav className="justify-content-end" style={{ width: "100%", paddingRight: "15px"}}>
