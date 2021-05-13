@@ -1,9 +1,11 @@
+import React from 'react';
+import {Button} from 'react-bootstrap';
 import './css/Login.css';
-import {Button} from "react-bootstrap";
 
-function Login() {
-  return (
-    <div>
+class Login extends React.Component {
+  render() {
+    return (
+      <div>
       <div className = 'box2'>
         <p>Log In</p>
       </div>
@@ -19,7 +21,8 @@ function Login() {
         <Button>Submit</Button>
       </div>
     </div>
-  );
+    );
+  }
 }
 
 export default Login;
