@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 
 const EventSchema = new mongoose.Schema({
-  googleId: String,
-  name : {
-    first : String,
-    last : String
-  },
+  name : String,
   date: Date,
   location : String,
   volunteerPreferences : [String]
@@ -13,5 +9,5 @@ const EventSchema = new mongoose.Schema({
   versionKey: false
 })
 
-const Event = mongoose.model('devs', EventSchema);
+const Event = mongoose.model('events', EventSchema);
 module.exports = Event;
