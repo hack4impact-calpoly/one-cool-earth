@@ -33,7 +33,7 @@ class Header extends React.Component {
 
 	render() {
 		return(
-			<Navbar>
+			<Navbar style={{backgroundColor: "#fff", marginBottom: "10px"}}>
 				{this.getLinks(true, true)}
 			</Navbar>
 		);
