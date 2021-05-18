@@ -3,17 +3,20 @@ const User = require('../models/User');
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
-   res.status(200);
-
-   if (User.findOne({'email': req.body.email})) {
-      const user = await User.updateOne({email: req.body.email}, 
-                                        {name: req.body.name, password: req.body.password, dates: req.body.dates, location: req.body.location, preferences: req.body.preferences},
-                                        {upsert: true});
-      res.send('Welcome ' + req.body.name + '!\n Your account has been successfully created');
-   }
-   else {
-   	res.send('Your email (' + req.body.email + ') is alriady associated with an account, please log in.');
+router.post('/', async(req, res) => {
+   email = req.body.email
+   name = req.body.name
+   availableDates = req.body.availableDates
+   location = req.body.location
+   volunteerPreferences = req.body.volunteerPreferences
+   existing = await User.find({"email": email})
+   console.log(existing)
+   if (existing == []) {
+      res.send("you already have an account, plaese log in")
+   } else {
+      var doc = new User({"email": email, "name": name, "availableDates": availableDates, "location": location, "volunteerPreferences": volunteerPreferences, "admin": false})
+      doc.save()
+      res.redirect("/api/auth/google")
    }
 })
 
