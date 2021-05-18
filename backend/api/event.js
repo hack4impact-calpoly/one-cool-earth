@@ -29,8 +29,8 @@ router.post('/create', async (req, res) => {
  });
  
  router.get('/get-all', async(req, res) =>{
-     Event.find({}).then(events => {
-         res.json(events)
-     })
- })
+    Event.find({}).then(events => {
+        res.json(events)
+    })
+})
  module.exports = router;
