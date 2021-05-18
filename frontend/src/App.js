@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./Header";
 import Admin from "./Admin.js";
 import Signup from "./SignUp.js";
+import EditUser from "./EditUser.js";
 import Welcome from "./Welcome.js";
 import Spreadsheets from "./Spreadsheets.js";
 import CalendarPage from "./Calendar";
@@ -52,6 +53,10 @@ function App() {
             <Route path="/signup">
               <Header />
               <Signup />
+            </Route>
+            <Route path="/edit-user">
+              <Header />
+              <EditUser />
             </Route>
             <Route path="/admin">
               <Header />
