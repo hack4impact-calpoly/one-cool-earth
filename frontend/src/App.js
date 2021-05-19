@@ -28,10 +28,21 @@ function App() {
   useEffect(() => {
     setStartPage(
       user ? (
-        <>
-          {" "}
-          <Header /> <Welcome />{" "}
-        </>
+        user.admin ? (
+	  <>
+	    {" "}
+	    <Header/>
+            <Admin/>
+            {" "}
+	  </>
+	) : (
+          <>
+            {" "}
+            <Header/>
+	    <Welcome/>
+	    {" "}
+          </>
+        )
       ) : (
         <LandingPage />
       )
