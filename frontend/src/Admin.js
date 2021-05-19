@@ -9,10 +9,13 @@ class Admin extends React.Component {
 				<body>
 					<div id="main">
 						<div id="createEventBox">
-							<Button>CREATE EVENT</Button>
+							<Button href={process.env.REACT_APP_SERVER_URL + "/create-event"}>CREATE EVENT</Button>
 						</div>
 						<div id="viewVolunteerDataBox">
 							<Button>VIEW VOLUNTEER DATA</Button>
+						</div>
+						<div id="editAnnouncementsBox">
+							<Button>EDIT ANNOUNCEMENTS</Button>
 						</div>
 					</div>
 				</body>
