@@ -30,7 +30,7 @@ function App() {
       user ? (
         <>
           {" "}
-          <Header /> <Welcome />{" "}
+          <Header /> <Welcome user={user} />{" "}
         </>
       ) : (
         <LandingPage />
