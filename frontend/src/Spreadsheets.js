@@ -4,6 +4,7 @@ import '../src/css/Spreadsheets.css';
 import { ExportCSV } from './ExportCSV.js'
 import Toggle from 'react-toggle'
 import UserModal from './UserModal.js'
+import EventModal from './EventModal.js'
 
 
 const userData = {rows:
@@ -118,7 +119,8 @@ class Spreadsheets extends React.Component{
             tableViewUsers: false,
             showUserModal: false,
             showEventModal: false,
-            userModalData: {}
+            userModalData: {},
+            eventModalData: {}
         }
     }
 
@@ -138,6 +140,19 @@ class Spreadsheets extends React.Component{
         this.setState({
             showUserModal: true,
             userModalData: userData
+        })
+    }
+
+    handleCloseEventModal = () => {
+        this.setState({
+            showEventModal: false
+        })
+    }
+
+    handleShowEventModal = (eventData) => {
+        this.setState({
+            showEventModal: true,
+            eventModalData: eventData
         })
     }
 
@@ -183,7 +198,7 @@ class Spreadsheets extends React.Component{
                     </thead>
                 <tbody>
                     {eventData.rows.map(event => (
-                        <tr>
+                        <tr onClick={() => this.handleShowEventModal(event)}>
                             <td>{event.id}</td>
                             <td>{event.name}</td>
                             <td>{event.date}</td>
@@ -201,12 +216,9 @@ class Spreadsheets extends React.Component{
 
     render(){
         return (<body>
-            
+            <EventModal show={this.state.showEventModal} eventData={this.state.eventModalData} handleClose={this.handleCloseEventModal} ></EventModal>
             <UserModal show={this.state.showUserModal} userData={this.state.userModalData} handleClose={this.handleCloseUserModal}></UserModal>
             <Container>
-            <Button variant="primary" onClick={() => this.handleShowUserModal()}>
-        Custom Width Modal
-      </Button>
                 <Row style={{paddingBottom: "10px"}}>
                     <Col md={10}>
                         <h1>Admin Data</h1>
