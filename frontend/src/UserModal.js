@@ -44,6 +44,14 @@ class UserModal extends React.Component {
                             <Form.Control plaintext readOnly defaultValue={this.props.userData.phone} />
                             </Col>
                         </Form.Group>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="4">
+                            Admin
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Control plaintext readOnly defaultValue={this.props.userData.admin === true ? "Yes" : "No"} />
+                            </Col>
+                        </Form.Group>
                         
                     </Form>
                 </Modal.Body>

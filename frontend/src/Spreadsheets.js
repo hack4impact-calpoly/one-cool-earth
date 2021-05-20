@@ -15,6 +15,7 @@ const userData = {rows:
         lastName: "Monasterial",
         email: "q@gmail.com",
         phone: "1234567890",
+        admin: false,
         eventIds: [1, 2, 3]
     },
     {
@@ -23,6 +24,7 @@ const userData = {rows:
         lastName: "Tadmor",
         email: "e@gmail.com",
         phone: "1234567890",
+        admin: false,
         eventIds: [1, 2, 3]
     },
     {
@@ -31,6 +33,7 @@ const userData = {rows:
         lastName: "Skykora",
         email: "s@gmail.com",
         phone: "1234567890",
+        admin: true,
         eventIds: [1, 2, 3]
     },
     {
@@ -39,6 +42,7 @@ const userData = {rows:
         lastName: "Monasterial",
         email: "q@gmail.com",
         phone: "1234567890",
+        admin: false,
         eventIds: [1, 2, 3]
     },
     {
@@ -47,6 +51,7 @@ const userData = {rows:
         lastName: "Tadmor",
         email: "e@gmail.com",
         phone: "1234567890",
+        admin: true,
         eventIds: [1, 2, 3]
     },
     {
@@ -55,6 +60,7 @@ const userData = {rows:
         lastName: "Skykora",
         email: "s@gmail.com",
         phone: "1234567890",
+        admin: false,
         eventIds: [1, 2, 3]
     }
 ]}
@@ -167,6 +173,7 @@ class Spreadsheets extends React.Component{
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Admin</th>
                             {/* <th>Events</th> */}
                         </tr>
                     </thead>
@@ -178,6 +185,7 @@ class Spreadsheets extends React.Component{
                             <td>{user.lastName}</td>
                             <td>{user.email}</td>
                             <td>{user.phone}</td>
+                            <td>{user.admin === true ? "Yes" : "No"}</td>
                         </tr>
                     )) }
                 </tbody>
