@@ -1,8 +1,9 @@
 import React from 'react';
-import {Table, Container, Row, Col, Card} from "react-bootstrap";
+import {Table, Container, Row, Col, Button} from "react-bootstrap";
 import '../src/css/Spreadsheets.css';
 import { ExportCSV } from './ExportCSV.js'
 import Toggle from 'react-toggle'
+import UserModal from './UserModal.js'
 
 
 const userData = {rows:
@@ -114,7 +115,10 @@ class Spreadsheets extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            tableViewUsers: false
+            tableViewUsers: false,
+            showUserModal: false,
+            showEventModal: false,
+            userModalData: {}
         }
     }
 
@@ -122,6 +126,19 @@ class Spreadsheets extends React.Component{
         this.setState(prevState => ({
             tableViewUsers: !prevState.tableViewUsers
           }));
+    }
+
+    handleCloseUserModal = () => {
+        this.setState({
+            showUserModal: false
+        })
+    }
+
+    handleShowUserModal = (userData) => {
+        this.setState({
+            showUserModal: true,
+            userModalData: userData
+        })
     }
 
     getTableDataRows() {
@@ -140,7 +157,7 @@ class Spreadsheets extends React.Component{
                     </thead>
                 <tbody>
                     {userData.rows.map(user => (
-                        <tr>
+                        <tr onClick={() => this.handleShowUserModal(user)}>
                             <td>{user.id}</td>
                             <td>{user.firstName}</td>
                             <td>{user.lastName}</td>
@@ -184,7 +201,12 @@ class Spreadsheets extends React.Component{
 
     render(){
         return (<body>
+            
+            <UserModal show={this.state.showUserModal} userData={this.state.userModalData} handleClose={this.handleCloseUserModal}></UserModal>
             <Container>
+            <Button variant="primary" onClick={() => this.handleShowUserModal()}>
+        Custom Width Modal
+      </Button>
                 <Row style={{paddingBottom: "10px"}}>
                     <Col md={10}>
                         <h1>Admin Data</h1>
