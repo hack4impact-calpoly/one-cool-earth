@@ -11,26 +11,35 @@ input {
     padding-bottom: 1%;
     padding-left: 6%;
     padding-right: 6%;
+
+    font-family: PT Serif;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: capitalize; 
 }
 
 .fields {
     display: flex;
     justify-content: center;
+
 }
 
 .fields-column {
     margin-left: 5%;
     margin-right: 5%;
+
 }
 
 .input, .drop-down {
     display: flex;
     flex-direction: column;
     width: 33vw;
+    line-height:  40px;
+    
 }
 
 .input {
-    margin-bottom: 7%;
+    margin-bottom: 4%;
 }
 
 .wrapper {
@@ -39,6 +48,10 @@ input {
     align-items: center;
     text-transform: uppercase;
     color: black;
+}
+
+#sign-up-button {
+    margin-top: 3%;
 }
 
 /* 

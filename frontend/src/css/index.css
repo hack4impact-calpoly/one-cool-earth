@@ -11,3 +11,56 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+.btn {
+	display: inline-block !important;
+	height: auto !important;
+	padding: 14px 30px !important;
+	background: transparent !important;
+	background-image: none !important;
+	color: inherit !important;
+	letter-spacing: 0.03em !important;
+	font-family: 'Montserrat', sans-serif !important;
+	font-size: 12px !important;
+	line-height: 1 !important;
+	text-transform: uppercase !important;
+  border: 1px solid black !important;
+  border-radius: 0px !important;
+  }
+  
+  
+  
+.btn:hover {
+	background-color:lightgray !important;
+}
+  
+  
+.btn-small {
+	font-size: 10px !important;
+}
+
+.btn-large {
+	font-size: 1.1em !important;
+}
+
+.btn-white {
+  border: 1px solid white !important;
+  color: white !important;
+}
+
+.btn-whiteLarge {
+  border: 1px solid white !important;
+  color: white !important;
+  font-size: 1.1em !important;
+}
+
+.btn-whiteSmall {
+  border: 1px solid white !important;
+  color: white !important;
+  font-size: 10px !important;
+}

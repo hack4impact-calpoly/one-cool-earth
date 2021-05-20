@@ -15,13 +15,6 @@ body{
 	justify-content: center;
 }
 
-#main button{
-	height: 70px;
-	width: 450px;
-	font-size: 25px;
-	font-stretch: condensed;
-}
-
 #createEventBox{
 	justify-content: center;
 	padding: 22px;
