@@ -1,7 +1,6 @@
 const express = require('express');
 
 const Event = require('../models/Event');
-//const User = require('../models/User');
 const router = express.Router();
 
 const createEvent = async (eventName, eventDate, eventLocation, eventVolunteerPreferences) => {
@@ -29,34 +28,27 @@ router.post('/create', async (req, res) => {
     res.send("success")
  });
 
- const deleteEvent = async (eventName, eventDate, eventLocation, eventVolunteerPreferences) => {
+ const deleteEvent = async (eventName) => {
+
+
+
     Event.findOne({name: eventName}).then((data) => {
         if(data)
         {
-            Event.deleteOne({name: eventName})
-        }
-        else
-        {
-            res.send("Couldn't find event")
+            Event.deleteOne({ name: eventName }).then(function(){
+                console.log("Data deleted"); // Success
+            }).catch(function(error){
+                console.log(error); // Failure
+            }); 
+            
         }
     });
 };
 
-
-
- router.post('/editEvent', async (req, res) => {
-    if (req.user.admin)
-    {
-        const eventName = req.body.name
-        const date = req.body.date
-        const location = req.body.location
-        const volunteerPreferences = req.body.volunteerPreferences
-        await deleteEvent(eventName);
-        res.send("success")
-    }
-    else {
-        res.send("You must be an admin to delete event")
-     }
+ router.post('/deleteEvent', async (req, res) => {
+    const eventName = req.body.name
+    await deleteEvent(eventName);
+    res.send("success delete")
  });
  
  module.exports = router;
