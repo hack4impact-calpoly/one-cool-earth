@@ -29,19 +29,15 @@ function App() {
     setStartPage(
       user ? (
         user.admin ? (
-	  <>
-	    {" "}
-	    <Header/>
-            <Admin/>
-            {" "}
-	  </>
-	) : (
-          <>
-            {" "}
-            <Header/>
-	    <Welcome/>
-	    {" "}
-          </>
+	      <>
+          <Header/>
+          <Admin/>
+	      </>
+        ) : (
+        <>
+          <Header/>
+          <Welcome user={user} />
+        </>
         )
       ) : (
         <LandingPage />
