@@ -244,7 +244,7 @@ class Spreadsheets extends React.Component{
 
     render(){
         return (<body>
-            <EventModal show={this.state.showEventModal} eventData={this.state.eventModalData} handleClose={this.handleCloseEventModal} ></EventModal>
+            <EventModal edit={true} show={this.state.showEventModal} eventData={this.state.eventModalData} handleClose={this.handleCloseEventModal} ></EventModal>
             <UserModal show={this.state.showUserModal} userData={this.state.userModalData} handleClose={this.handleCloseUserModal}></UserModal>
             <Container>
                 <Row style={{paddingBottom: "10px"}}>
