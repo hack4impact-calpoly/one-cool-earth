@@ -25,15 +25,23 @@ class EventModal extends React.Component {
                             Date
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext readOnly defaultValue={this.props.eventData.date} />
+                            <Form.Control plaintext readOnly defaultValue={new Date(this.props.eventData.date).toLocaleDateString()} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
                             <Form.Label column sm="4">
-                            Time
+                            Start Time
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext readOnly defaultValue={this.props.eventData.time} />
+                            <Form.Control plaintext readOnly defaultValue={this.props.eventData.startTime} />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="4">
+                            End Time
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Control plaintext readOnly defaultValue={this.props.eventData.endTime} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -42,6 +50,22 @@ class EventModal extends React.Component {
                             </Form.Label>
                             <Col sm="8">
                             <Form.Control plaintext readOnly defaultValue={this.props.eventData.location} />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="4">
+                            Description
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Control plaintext readOnly defaultValue={this.props.eventData.description} />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="4">
+                            Volunteers Needed Per Shift
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Control plaintext readOnly defaultValue={this.props.eventData.volunteersPerShift} />
                             </Col>
                         </Form.Group>
                         
