@@ -59,15 +59,27 @@ class Signup extends React.Component {
     }
 
     const SignUpData = {
-      firstName: first,
-      lastName: last,
+      name: {
+          first: first,
+          last: last
+      },
       preferences: preferences,
       phoneNum: phone,
       email: email,
       loc: location,
     };
 
-    console.log(SignUpData);
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/signup`, {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(SignUpData),
+    }).then (() => {
+        window.location.assign('/login')
+    })
   }
 
   clear() {

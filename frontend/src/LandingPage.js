@@ -5,6 +5,16 @@ import './css/LandingPage.css';
 
 class LandingPage extends React.Component {
 
+   onClickLogin() {
+      // fetch(`${process.env.REACT_APP_SERVER_URL}/api/login`, {
+      //    mode: 'cors', 
+      //    credentials: "include" 
+      // })
+      // .then( () => {
+         window.location.assign(`${process.env.REACT_APP_SERVER_URL}/api/auth/google`)
+      // })
+   }
+
    render() {
       return (
          <div id='landing-page'>
@@ -19,10 +29,10 @@ class LandingPage extends React.Component {
             </div>
             <div id='options'>
                <div id='login-box'>
-                  <Button href={process.env.REACT_APP_SERVER_URL + "/api/auth/google"}  variant="whiteLarge">Log In</Button>
+                  <Button onClick={this.onClickLogin}  variant="whiteLarge">Log In</Button>
                </div>
                <div id='signup-box'>
-                  <Button variant="whiteLarge">Sign Up</Button>
+                  <Button href='/signup' variant="whiteLarge">Sign Up</Button>
                </div>
             </div>
          </div>
