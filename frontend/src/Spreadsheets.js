@@ -130,6 +130,19 @@ class Spreadsheets extends React.Component{
         }
     }
 
+    componentDidMount() {
+        if(this.state.eventData === undefined) {
+            const URL = `${process.env.REACT_APP_SERVER_URL}/api/event/get-all`;
+            fetch(URL)
+                .then((res) => res.json())
+                .then((data) => {
+                    this.setState({eventData: data})
+                }, (error) => {
+                    console.log("Error loading event data: ", error)
+                });
+        }
+    }
+
     handleToggleChange() {
         this.setState(prevState => ({
             tableViewUsers: !prevState.tableViewUsers
@@ -192,31 +205,38 @@ class Spreadsheets extends React.Component{
                 </>
             )
         } else if (this.state.tableViewUsers === false) {
-            return (
-                <>
-                <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Location</th>
-                            {/* <th>Volunteers</th> */}
-                        </tr>
-                    </thead>
-                <tbody>
-                    {eventData.rows.map(event => (
-                        <tr onClick={() => this.handleShowEventModal(event)}>
-                            <td>{event.id}</td>
-                            <td>{event.name}</td>
-                            <td>{event.date}</td>
-                            <td>{event.time}</td>
-                            <td>{event.location}</td>
-                        </tr>
-                    )) }
-                </tbody>
-                </>
-            )}
+            if(this.state.eventData === undefined) {
+                return (<h4>No event data found</h4>)
+            } else {
+                return (
+                    <>
+                    <thead>
+                            <tr>
+                                {/* <th>Id</th> */}
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Location</th>
+                                {/* <th>Volunteers</th> */}
+                            </tr>
+                        </thead>
+                    <tbody>
+                        {this.state.eventData.map(event => (
+                            <tr onClick={() => this.handleShowEventModal(event)}>
+                                {/* <td>{event.id}</td> */}
+                                <td>{event.name}</td>
+                                <td>{new Date(event.date).toLocaleDateString()}</td>
+                                <td>{event.startTime}</td>
+                                <td>{event.endTime}</td>
+                                <td>{event.location}</td>
+                            </tr>
+                        )) }
+                    </tbody>
+                    </>
+                )
+            
+            }}
     }
 
 
