@@ -18,7 +18,7 @@ function App() {
   const [StartPage, setStartPage] = useState();
 
   useEffect(() => {
-    const URL = `${process.env.REACT_APP_SERVER_URL}/api/user`;
+    const URL = `${process.env.REACT_APP_SERVER_URL}/api/auth`;
     fetch(URL, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => setUser(data.user))

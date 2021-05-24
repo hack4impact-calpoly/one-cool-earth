@@ -12,7 +12,7 @@ const volunteerOptions = [
   ]
 
   var preference;
-  var loc;
+  var location;
 
 class Signup extends React.Component {
 
@@ -28,7 +28,7 @@ class Signup extends React.Component {
       }
 
       _onLocationSelect (option) {
-        loc = option.label;
+        location = option.label;
     }
 
 
@@ -39,23 +39,36 @@ class Signup extends React.Component {
         const preferences = preference;
         const phone = document.getElementById("phone-number").value;
         const email = document.getElementById("email").value;
-        const location = loc;
+        const loc = location;
 
-      //Don't submit data unless both fields are non-empty
+      // Don't submit data unless both fields are non-empty
       if(first === "" || last === "" || preferences === "" || phone === "" || email === "" || location === ""){
         return;
       }
 
-      const SignUpData={
-        firstName: first,
-        lastName: last,
-        preferences: preferences,
-        phoneNum : phone,
-        email : email,
-        loc : location
-      }
+        const SignUpData = {
+            name: {
+                first: first,
+                last: last
+            },
+            preferences: preferences,
+            phoneNum : phone,
+            email : email,
+            location : loc
+        }
+        console.log(SignUpData);
 
-      console.log(SignUpData);
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/signup`, {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(SignUpData),
+        }).then (() => {
+            window.location.assign('/login')
+        })
     }
 
     clear() {
@@ -64,7 +77,7 @@ class Signup extends React.Component {
         preference = "";
         document.getElementById("phone-number").value = '' ;
         document.getElementById("email").value = '';
-        loc = "";
+        location = "";
     }
 
 
