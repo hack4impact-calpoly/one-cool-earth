@@ -1,6 +1,5 @@
 import React from 'react';
 import {Button, Modal, Form, Row, Col} from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FaEdit } from 'react-icons/fa';
 
 
