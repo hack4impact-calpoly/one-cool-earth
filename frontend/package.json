@@ -7,6 +7,7 @@
     "@fullcalendar/bootstrap": "^5.5.0",
     "@fullcalendar/core": "^5.5.1",
     "@fullcalendar/daygrid": "^5.5.0",
+    "@fullcalendar/interaction": "^5.7.0",
     "@fullcalendar/react": "^5.5.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
