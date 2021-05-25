@@ -12,7 +12,8 @@ const UserSchema = new mongoose.Schema({
   availableDates : [Date],
   shifts: [{
     name: String,
-    date: Date,
+    startTime: Date,
+    endTime: Date
   }],
   location : String,
   volunteerPreferences : [String],
