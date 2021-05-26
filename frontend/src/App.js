@@ -30,12 +30,12 @@ function App() {
       user ? (
         user.admin ? (
 	      <>
-          <Header/>
+          <Header user = {user} />
           <Admin/>
 	      </>
         ) : (
         <>
-          <Header/>
+          <Header user = {user} />
           <Welcome user={user} />
         </>
         )
