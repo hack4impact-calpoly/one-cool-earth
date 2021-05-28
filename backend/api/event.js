@@ -27,6 +27,29 @@ router.post('/create', async (req, res) => {
     await createEvent(eventName, date, location, volunteerPreferences)
     res.send("success")
  });
+
+ const deleteEvent = async (eventName) => {
+
+
+
+    Event.findOne({name: eventName}).then((data) => {
+        if(data)
+        {
+            Event.deleteOne({ name: eventName }).then(function(){
+                console.log("Data deleted"); // Success
+            }).catch(function(error){
+                console.log(error); // Failure
+            }); 
+            
+        }
+    });
+};
+
+ router.post('/deleteEvent', async (req, res) => {
+    const eventName = req.body.name
+    await deleteEvent(eventName);
+    res.send("success delete")
+ });
  
  router.get('/get-all', async(req, res) =>{
     Event.find({}).then(events => {

@@ -37,10 +37,6 @@ app.use('/api/event', eventEndpoint)
 app.use('/api/user/addShift', addShiftEndpoint)
 app.use('/api/user/deleteShift', deleteShiftEndpoint)
 
-app.get('/api/user', async (req, res) => {
-    res.redirect(`${process.env.SERVER_URL}/api/auth`)
-})
-
 app.get('/api/logout', async (req, res) => {
     res.redirect(`${process.env.SERVER_URL}/api/auth/logout`)
 })
