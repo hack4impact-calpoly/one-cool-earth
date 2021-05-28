@@ -9,28 +9,17 @@ router.delete('/', async(req, res) => {
     startTime = req.body.startTime;
     endTime = req.body.endTime;
 
-    console.log(
-        User.findOne(
-            {email: email},
-            {$elemMatch: 
-                {shifts:{
-                    name: eventName,
-                    startTime: startTime,
-                    endTime: endTime,
-                }}
-            }
-        )
-    )
-    User.updateOne(
-        {"email": email},
+    await User.findOneAndUpdate(
+        {email: email},
         {$pull: 
             {shifts:{
-                "name": eventName,
-                "startTime": startTime,
-                "endTime": endTime,
+                name: eventName,
+                startTime: startTime,
+                endTime: endTime,
             }}
         }
-    );
+    )
+
     res.sendStatus(200);
 })
 

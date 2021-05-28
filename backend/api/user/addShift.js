@@ -13,20 +13,11 @@ router.post('/', async(req,res) => {
     console.log("Event Name: " + eventName)
     console.log("Start Time: " + startTime)
     console.log("End Time: " + endTime)
-    
-    User.findOne({email: email}).then(function(user) {
-        if(!user){
-            console.log("User not found")
-        }
-        else{
-            console.log("User found")
-        }
-    })
 
-    User.updateOne(
+    await User.findOneAndUpdate(
         {email: email},
         {$push: 
-            {"shifts":
+            {shifts:
                 {
                     name: eventName,
                     startTime: startTime,
