@@ -5,7 +5,7 @@ import "react-dropdown/style.css";
 import "./css/SignUp.css";
 import Select from "react-select";
 
-// DUMMY: need to replace with backend data
+// // DUMMY: need to replace with backend data
 const volunteerOptions = [
   { value: "garden workday", label: "Garden Workday Volunteer" },
   { value: "special events", label: "Special Events Volunteer" },
@@ -20,29 +20,82 @@ const locationOptions = [
   { value: "north county", label: "North County" },
 ];
 
-var preference;
-var loc;
+// var preference;
+// var loc;
 
-// dummy data : replace with stored backend data
-var stored_first = "dummy-first";
-var stored_last = "dummy-last";
+// // dummy data : replace with stored backend data
+// var stored_first = data.first;
+// var stored_last = "dummy-last";
 var stored_preferences = [
   { value: "garden workday", label: "Garden Workday Volunteer" },
   { value: "special events", label: "Special Events Volunteer" },
   { value: "unsure", label: "Unsure or Interested in Multiple Opportunities" },
 ];
-var stored_phone = "dummy-phone";
-var stored_email = "dummy-email";
+// var stored_phone = "dummy-phone";
+// var stored_email = "dummy-email";
 var stored_location = [
   { value: "south county", label: "South County" },
   { value: "north county", label: "North County" },
 ];
 
 class EditUser extends React.Component {
-  state = {
-    volSelected: stored_preferences,
-    locSelected: stored_location,
-  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+    stored_first: "",
+    stored_last: "",
+    stored_preferences: [],
+    stored_phone: "",
+    stored_email: "",
+    stored_location: [],
+    volSelected: [],
+    locSelected: [],
+    volunteerOptions: [],
+    locationOptions: []
+    };
+  }
+
+  componentDidMount() {
+    this.getData()
+  }
+
+  async getData() {
+    let email = "patrickstar24@gmail.com"
+
+    let response = await fetch(`http://localhost:3001/api/user/get/${email}`, {
+      mode: 'cors',
+      credentials: 'include',
+    })
+
+    const data = await response.json()
+    const prefArray = []
+    for (let pref of data.volunteerPreferences) {
+        for (let option of volunteerOptions) {
+          console.log("pref", pref, "option.value", option.value)
+          if (pref === option.value)
+            prefArray.push(option)
+        }
+    }
+    const locationArray = []
+    for (let option of locationOptions) {
+      console.log("loc", data.location, "option.value", option.value)
+      if (data.location == option.value)
+        locationArray.push(option)
+    }
+
+    this.setState({
+      stored_first: data.name.first,
+      stored_last: data.name.last,
+      stored_phone: data.phone,
+      stored_email: data.email,
+      stored_location: locationArray,
+      stored_preferences: prefArray,
+      volSelected: prefArray,
+      locSelected: locationArray
+    })
+    console.log(this.state)
+  }
 
   handleVolChange = (volSelected) => {
     this.setState({ volSelected }, () =>
@@ -55,13 +108,7 @@ class EditUser extends React.Component {
       console.log(`Option selected:`, this.state.locSelected)
     );
   };
-  /*   constructor(props) {
-    super(props);
-    this.state = {
-      selected: "",
-    };
-  }
- */
+ 
   /*   _onPreferenceSelect(option) {
     preference = option.label;
   }
@@ -70,7 +117,7 @@ class EditUser extends React.Component {
     loc = option.label;
   }
  */
-  postSignUpData() {
+  async postSignUpData() {
     const first = document.getElementById("first-name").value;
     const last = document.getElementById("last-name").value;
     const preferences = this.state.volSelected;
@@ -80,24 +127,50 @@ class EditUser extends React.Component {
 
     //Don't submit data unless both fields are non-empty
     if (
-      first === "" ||
-      last === "" ||
-      preferences === "" ||
-      phone === "" ||
-      email === "" ||
-      location === ""
+      first === this.state.stored_first &&
+      last === this.state.stored_last &&
+      preferences === this.state.stored_preferences &&
+      phone === this.state.stored_phone &&
+      email === this.state.stored_email &&
+      location === this.state.stored_location
     ) {
       return;
     }
 
+    const volArray = []
+    for (let pref of preferences) {
+      volArray.push(pref.value)
+    }
+
+    const locArray = []
+    for (let loc of location) {
+      locArray.push(loc.value)
+    }
+
+    this.setState({
+      stored_preferences: volArray,
+      stored_location: locArray
+    })
     const SignUpData = {
-      firstName: first,
-      lastName: last,
-      preferences: this.state.volSelected,
+      name: {
+        firstName: first,
+        lastName: last
+      },
+      volunteerPreferences: volArray,
       phoneNum: phone,
-      email: email,
-      loc: this.state.locSelected,
+      email: this.state.stored_email,
+      location: locArray[0],
     };
+
+    await fetch(`http://localhost:3001/api/user/edit`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(SignUpData)
+      });
 
     console.log(SignUpData);
   }
@@ -113,8 +186,8 @@ class EditUser extends React.Component {
   }
 
   render() {
-    const { volSelected } = this.state;
-    const { locSelected } = this.state;
+    // const { volSelected } = this.state.stored_preferences;
+    // const { locSelected } = this.state.stored_location;
     return (
       <div className="wrapper">
         <div className="title">
@@ -124,16 +197,16 @@ class EditUser extends React.Component {
           <div className="fields-column">
             <div id="first-name-field" className="input">
               <label for="first-name">First Name</label>
-              <input id="first-name" defaultValue={stored_first}></input>
+              <input id="first-name" defaultValue={this.state.stored_first}></input>
             </div>
             <div id="last-name-field" className="input">
               <label for="last-name">Last Name</label>
-              <input id="last-name" defaultValue={stored_last}></input>
+              <input id="last-name" defaultValue={this.state.stored_last}></input>
             </div>
             <div id="volunteer-preferences-field" className="drop-down">
               <label for="volunteer-preferences">Volunteer Preferences</label>
               <Select
-                value={volSelected}
+                value={this.state.volSelected}
                 onChange={this.handleVolChange}
                 options={volunteerOptions}
                 isMulti={true}
@@ -153,23 +226,23 @@ class EditUser extends React.Component {
                 id="volunteer-preferences"
                 onChange={this._onPreferenceSelect}
                 options={volunteerOptions}
-                placeholder={stored_preferences} */
+                placeholder={this.state.stored_preferences} */
               />
             </div>
           </div>
           <div className="fields-column">
             <div id="phone-number-field" className="input">
               <label for="phone-number">Phone Number</label>
-              <input id="phone-number" defaultValue={stored_phone}></input>
+              <input id="phone-number" defaultValue={this.state.stored_phone}></input>
             </div>
             <div id="email-field" className="input">
               <label for="email">Email</label>
-              <input id="email" defaultValue={stored_email}></input>
+              <input id="email" defaultValue={this.state.stored_email}></input>
             </div>
             <div id="location-preference-field" className="drop-down">
               <label for="location-preference">Location Preference</label>
               <Select
-                value={locSelected}
+                value={this.state.locSelected}
                 onChange={this.handleLocChange}
                 options={locationOptions}
                 isMulti={true}
@@ -199,6 +272,7 @@ class EditUser extends React.Component {
           onClick={() => {
             this.postSignUpData();
             this.clear();
+            console.log("clicked edit");
           }}
         >
           {" "}
