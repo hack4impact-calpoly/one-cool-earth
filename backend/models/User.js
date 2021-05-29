@@ -10,6 +10,11 @@ const UserSchema = new mongoose.Schema({
   password : String,
   email : String,
   availableDates : [Date],
+  shifts: [{
+    name: String,
+    startTime: Date,
+    endTime: Date
+  }],
   location : String,
   volunteerPreferences : [String],
   status : Boolean

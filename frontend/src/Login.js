@@ -14,9 +14,16 @@ class Login extends React.Component {
           <label for='email'>EMAIL</label>
           <input id = 'email'></input>
         </div>
-        <div id = 'password-div'>
-          <label for = 'password'>PASSWORD</label>
-          <input id = 'password' type = 'password'></input>
+        <div className = 'box3'>
+          <div id = 'email-div'>
+            <label for='email'>EMAIL</label>
+            <input id = 'email'></input>
+          </div>
+          <div id = 'password-div'>
+            <label for = 'password'>PASSWORD</label>
+            <input id = 'password' type = 'password'></input>
+          </div>
+          <button id = 'log-in-button' onClick={() => {this.postLoginData(); this.clearFields()}}> Log In</button>
         </div>
         <Button>Submit</Button>
       </div>
@@ -24,5 +31,4 @@ class Login extends React.Component {
     );
   }
 }
-
 export default Login;
