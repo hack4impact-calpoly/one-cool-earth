@@ -16,7 +16,6 @@ class Header extends React.Component {
     } else if (loggedIn) {
       return (<Nav className="justify-content-end" style={{ width: "100%", paddingRight: "15px"}}>
 	<Nav.Link className="custom-nav-link" href="/">Home</Nav.Link>
-	<Nav.Link className="custom-nav-link" href="/spreadsheets">Spreadsheets</Nav.Link>
 	<Nav.Link className="custom-nav-link" href="/calendar">Calendar</Nav.Link>
 	<Nav.Link className="custom-nav-link" href="/logout">Logout</Nav.Link>
 	</Nav>)	
@@ -32,7 +31,8 @@ class Header extends React.Component {
   render() {
     return(
       <Navbar style={{backgroundColor: "#fff", marginBottom: "10px"}}>
-	{this.getLinks(true, true)}
+	{this.getLinks(this.props.user ? true : false,this.props.user ? this.props.user.admin : this.props.admin)}
+  {console.log(this.props.user)}
       </Navbar>
     );
   }

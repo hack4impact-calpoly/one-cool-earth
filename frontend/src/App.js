@@ -30,12 +30,12 @@ function App() {
       user ? (
         user.admin ? (
 	      <>
-          <Header/>
+          <Header user = {user} />
           <Admin/>
 	      </>
         ) : (
         <>
-          <Header/>
+          <Header user = {user} />
           <Welcome user={user} />
         </>
         )
@@ -54,31 +54,31 @@ function App() {
               {StartPage}
             </Route>
             <Route path="/spreadsheets">
-              <Header />
+              <Header user = {user} />
               <Spreadsheets />
             </Route>
             <Route path="/signup">
-              <Header />
+              <Header user = {user} />
               <Signup />
             </Route>
             <Route path="/edit-user">
-              <Header />
+              <Header user = {user} />
               <EditUser />
             </Route>
             <Route path="/admin">
-              <Header />
+              <Header user = {user} />
               <Admin />
             </Route>
             <Route path="/calendar">
-              <Header />
+              <Header user = {user} />
               <CalendarPage />
             </Route>
             <Route path="/create-event">
-              <Header />
+              <Header user = {user} />
               <CreateEvent />
             </Route>
             <Route path="/edit-event">
-              <Header />
+              <Header user = {user} />
               <EditEvent />
             </Route>
             <Route path="/auth/login/:token" component={SetAuthToken} />
