@@ -30,12 +30,10 @@ function App() {
       user ? (
         user.admin ? (
 	      <>
-          <Header user = {user} />
           <Admin/>
 	      </>
         ) : (
         <>
-          <Header user = {user} />
           <Welcome user={user} />
         </>
         )
@@ -49,37 +47,30 @@ function App() {
     <div>
       <BrowserRouter>
         <div className="App">
+        <Header user = {user} />
           <Switch>
             <Route exact path="/">
               {StartPage}
             </Route>
             <Route path="/spreadsheets">
-              <Header user = {user} />
               <Spreadsheets />
             </Route>
             <Route path="/signup">
-              <Header user = {user} />
               <Signup />
             </Route>
             <Route path="/edit-user">
-              <Header user = {user} />
               <EditUser />
             </Route>
             <Route path="/admin">
-              <Header user = {user} />
               <Admin />
             </Route>
             <Route path="/calendar">
-              <Header user = {user} />
               <CalendarPage />
             </Route>
             <Route path="/create-event">
-              <Header user = {user} />
               <CreateEvent />
             </Route>
             <Route path="/edit-event">
-              <Header user = {user} />
-              <EditEvent />
             </Route>
             <Route path="/auth/login/:token" component={SetAuthToken} />
           </Switch>
