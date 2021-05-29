@@ -4,7 +4,7 @@ const User = require('../models/User');
 const router = express.Router();
 
 const editUser = async (email, name, availableDates, location, volunteerPreferences) => {
-    User.findOne({"email": email}).then(function(user) {
+    await User.findOne({"email": email}).then(function(user) {
       if (name.first) {
          user.name.first = name.first
       }
@@ -25,18 +25,28 @@ const editUser = async (email, name, availableDates, location, volunteerPreferen
 };
 
 router.post('/edit', async (req, res) => {
-   if (req.user.admin || req.user.email == req.body.email) {
+   // if (req.user.admin || req.user.email == req.body.email) {
       email = req.body.email
       name = req.body.name
       availableDates = req.body.availableDates
       location = req.body.location
       volunteerPreferences = req.body.volunteerPreferences
+      console.log(req.body)
       await editUser(email, name, availableDates, location, volunteerPreferences)
       res.send("success")
-   }
-   else {
-      res.send("not allowed to edit")
-   }
+   // }
+   // else {
+   //    res.send("not allowed to edit")
+   // }
+});
+
+router.get('/get/:email', async (req, res) => {
+   let email = req.params.email
+   User.findOne({"email": email}).then(function(user) {
+      if (user) {
+         res.send(user)
+      }
+   })
 });
 
 module.exports = router;
