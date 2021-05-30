@@ -1,9 +1,10 @@
 import React from "react";
-import Dropdown from "react-dropdown";
 import { Button } from "react-bootstrap";
 import "react-dropdown/style.css";
 import "./css/SignUp.css";
 import Select from "react-select";
+import JotformEmbed from 'react-jotform-embed';
+import Iframe from 'react-iframe'
 
 // DUMMY: need to replace with backend data
 const volunteerOptions = [
@@ -101,68 +102,82 @@ class Signup extends React.Component {
         <div className="title">
           <h2>New Volunteer? Sign Up Here!</h2>
         </div>
-        <div className="fields" style={{ paddingBottom: "20px" }}>
-          <div className="fields-column">
-            <div id="first-name-field" className="input">
-              <label for="first-name">First Name</label>
-              <input id="first-name"></input>
+        <div className="fields-jotform-wrapper">
+          <div className="fields" style={{ paddingBottom: "20px" }}>
+            <div className="fields-column">
+              <div id="first-name-field" className="input">
+                <label for="first-name">First Name</label>
+                <input id="first-name"></input>
+              </div>
+              <div id="last-name-field" className="input">
+                <label for="last-name">Last Name</label>
+                <input id="last-name"></input>
+              </div>
+              <div id="volunteer-preferences-field" className="drop-down">
+                <label for="volunteer-preferences">Volunteer Preferences</label>
+                <Select
+                  value={volSelected}
+                  onChange={this.handleVolChange}
+                  options={volunteerOptions}
+                  isMulti={true}
+                  theme={(theme) => ({
+                    ...theme,
+                    borderRadius: 0,
+                    borderColor: "black",
+                    colors: {
+                      ...theme.colors,
+                      neutral20: "black", // this is border line color
+                    },
+                    spacing: {
+                      baseUnit: 8,
+                    },
+                  })}
+                />
+              </div>
             </div>
-            <div id="last-name-field" className="input">
-              <label for="last-name">Last Name</label>
-              <input id="last-name"></input>
-            </div>
-            <div id="volunteer-preferences-field" className="drop-down">
-              <label for="volunteer-preferences">Volunteer Preferences</label>
-              <Select
-                value={volSelected}
-                onChange={this.handleVolChange}
-                options={volunteerOptions}
-                isMulti={true}
-                theme={(theme) => ({
-                  ...theme,
-                  borderRadius: 0,
-                  borderColor: "black",
-                  colors: {
-                    ...theme.colors,
-                    neutral20: "black", // this is border line color
-                  },
-                  spacing: {
-                    baseUnit: 8,
-                  },
-                })}
-              />
+            <div className="fields-column">
+              <div id="phone-number-field" className="input">
+                <label for="phone-number">Phone Number</label>
+                <input id="phone-number"></input>
+              </div>
+              <div id="email-field" className="input">
+                <label for="email">Email</label>
+                <input id="email"></input>
+              </div>
+              <div id="location-preference-field" className="drop-down">
+                <label for="location-preference">Location Preference</label>
+                <Select
+                  value={locSelected}
+                  onChange={this.handleLocChange}
+                  options={locationOptions}
+                  isMulti={true}
+                  theme={(theme) => ({
+                    ...theme,
+                    borderRadius: 0,
+                    borderColor: "black",
+                    colors: {
+                      ...theme.colors,
+                      neutral20: "black", // this is border line color
+                    },
+                    spacing: {
+                      baseUnit: 8,
+                    },
+                  })}
+                />
+              </div>
             </div>
           </div>
-          <div className="fields-column">
-            <div id="phone-number-field" className="input">
-              <label for="phone-number">Phone Number</label>
-              <input id="phone-number"></input>
-            </div>
-            <div id="email-field" className="input">
-              <label for="email">Email</label>
-              <input id="email"></input>
-            </div>
-            <div id="location-preference-field" className="drop-down">
-              <label for="location-preference">Location Preference</label>
-              <Select
-                value={locSelected}
-                onChange={this.handleLocChange}
-                options={locationOptions}
-                isMulti={true}
-                theme={(theme) => ({
-                  ...theme,
-                  borderRadius: 0,
-                  borderColor: "black",
-                  colors: {
-                    ...theme.colors,
-                    neutral20: "black", // this is border line color
-                  },
-                  spacing: {
-                    baseUnit: 8,
-                  },
-                })}
-              />
-            </div>
+          <div className="jotform">
+            <JotformEmbed src="https://form.jotform.com/70895957565174" scrolling="on"/>
+          </div>
+          <div className="iframe-jotform">
+            <Iframe url="https://form.jotform.com/70895957565174"
+              width="450px"
+              height="450px"
+              className="jotform"
+              display="initial"
+              position="relative"
+            />
           </div>
         </div>
         <Button

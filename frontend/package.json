@@ -24,6 +24,8 @@
     "react-dom": "^17.0.1",
     "react-dropdown": "^1.9.2",
     "react-icons": "^4.2.0",
+    "react-iframe": "^1.8.0",
+    "react-jotform-embed": "^1.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-select": "^4.3.1",

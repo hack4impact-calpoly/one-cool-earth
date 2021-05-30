@@ -9,6 +9,7 @@ import CalendarPage from "./Calendar";
 import LandingPage from "./LandingPage";
 import CreateEvent from "./CreateEvent";
 import EditEvent from "./EditEvent";
+import Jotform from './Jotform'
 import SetAuthToken from "./actions/SetAuthToken";
 import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -72,6 +73,7 @@ function App() {
             </Route>
             <Route path="/edit-event">
             </Route>
+            <Route path="/jotform" component={Jotform} />
             <Route path="/auth/login/:token" component={SetAuthToken} />
           </Switch>
         </div>
