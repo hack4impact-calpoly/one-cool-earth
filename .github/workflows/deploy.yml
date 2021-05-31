@@ -18,7 +18,7 @@ jobs:
         aws-region: us-west-1
 
     - id: backend-deployment
-      uses: oce/express-deployment-aws@v0.1.0
+      uses: Zimboboys/express-deployment-aws@v0.1.0
       with:
         s3-bucket: 'example-api-deployment'
         stack-name: 'example-api-deployment-stack'
