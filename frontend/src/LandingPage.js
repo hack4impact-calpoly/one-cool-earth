@@ -33,7 +33,7 @@ class LandingPage extends React.Component {
             <Switch>
                <Route exact path='/'>
                   <div id='landing-page'>
-                     <div id='banner'>
+                     <div id='landing-page-banner'>
                         <div id='logo'>
                            <img src={logo} alt='One Cool Earth Education and Preservation: Service Since 2001'/>
                         </div>
