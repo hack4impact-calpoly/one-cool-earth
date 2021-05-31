@@ -14,10 +14,11 @@ const jwt_options = {
 
 const getUser = async (req, res, next) => {
     const { user } = req;
+    // console.log(user);
 
     if (user) {
         const { id } = req.user
-        await User.findById(id, function(err, user) {
+        await User.findById(id).then((user) => {
             req.user = user
         })
     }

@@ -4,6 +4,7 @@ import './css/Header.css';
 import Logo from './images/oce-logo.png';
 
 class Header extends React.Component {
+  
   //return link components that should be accessible to current user
   getLinks(loggedIn, admin) {
     if(loggedIn && admin) {
@@ -22,7 +23,7 @@ class Header extends React.Component {
 
   render() {
     return(
-      (this.props.user) 
+      (this.props.user || this.props.signup) 
       ?
         <div className="custom-header">
           <Navbar style={{backgroundColor: "#fff", marginBottom: "10px", paddingLeft: "20px"}}>
@@ -32,7 +33,9 @@ class Header extends React.Component {
                 <div>Home</div>
               </div>
             </NavbarBrand>
-            {this.getLinks(true, this.props.user.admin)}
+            {this.props.signup
+            ? null 
+            : this.getLinks(true, this.props.user.admin)}
           </Navbar> 
         </div>
       : null

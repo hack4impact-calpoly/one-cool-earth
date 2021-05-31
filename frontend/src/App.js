@@ -1,21 +1,12 @@
 import React from "react";
-import Header from "./Header";
 import Admin from "./Admin.js";
-import Signup from "./SignUp.js";
-import EditUser from "./EditUser.js";
-import Welcome from "./Welcome.js";
-import Spreadsheets from "./Spreadsheets.js";
-import CalendarPage from "./Calendar";
+import Volunteer from './Volunteer';
 import LandingPage from "./LandingPage";
-import CreateEvent from "./CreateEvent";
-import EditEvent from "./EditEvent";
-import SetAuthToken from "./actions/SetAuthToken";
 import { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 function App() {
-  const [user, setUser] = useState();
-  const [StartPage, setStartPage] = useState();
+  const [user, setUser] = useState(null);
+  const [StartPage, setStartPage] = useState(<LandingPage />);
 
   useEffect(() => {
     const URL = `${process.env.REACT_APP_SERVER_URL}/api/auth`;
@@ -26,56 +17,23 @@ function App() {
   }, []);
 
   useEffect(() => {
+    console.log(user);
     setStartPage(
       user ? (
         user.admin ? (
-	      <>
-          <Admin/>
-	      </>
+          <Admin user={user}/>
         ) : (
-        <>
-          <Welcome user={user} />
-        </>
+          <Volunteer user={user} />
         )
       ) : (
-        <LandingPage />
+        <LandingPage user={user} />
       )
     );
   }, [user]);
 
   return (
     <div>
-      <BrowserRouter>
-        <div className="App">
-        <Header user = {user} />
-          <Switch>
-            <Route exact path="/">
-              {StartPage}
-            </Route>
-            <Route path="/spreadsheets">
-              <Spreadsheets />
-            </Route>
-            <Route path="/signup">
-              <Signup />
-            </Route>
-            <Route path="/edit-user">
-              <EditUser />
-            </Route>
-            <Route path="/admin">
-              <Admin />
-            </Route>
-            <Route path="/calendar">
-              <CalendarPage />
-            </Route>
-            <Route path="/create-event">
-              <CreateEvent />
-            </Route>
-            <Route path="/edit-event">
-            </Route>
-            <Route path="/auth/login/:token" component={SetAuthToken} />
-          </Switch>
-        </div>
-      </BrowserRouter>
+      {StartPage}
     </div>
   );
 }
