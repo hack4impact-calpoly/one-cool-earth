@@ -32,7 +32,12 @@ app.use('/api/user', userEndpoint)
 app.use('/api/event', eventEndpoint)
 
 app.get('/api/logout', async (req, res) => {
-    res.redirect(`${process.env.SERVER_URL}/api/auth/logout`)
+    res.redirect(`/api/auth/logout`)
 })
 
-app.listen(3001, "localhost")
+if (process.argv.includes('dev')) {
+    const PORT = process.env.PORT || 3001;
+    app.listen(PORT, () => console.log(`server running on port ${PORT}`));
+}
+
+module.exports = app
