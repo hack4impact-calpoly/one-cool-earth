@@ -14,7 +14,6 @@ const jwt_options = {
 
 const getUser = async (req, res, next) => {
     const { user } = req;
-    // console.log(user);
 
     if (user) {
         const { id } = req.user
@@ -60,4 +59,7 @@ router.post('/token', async (req, res) => {
     res.sendStatus(200);
 })
 
-module.exports = router
+module.exports = {
+    router: router,
+    auth: auth
+}

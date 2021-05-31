@@ -1,7 +1,7 @@
 const express = require('express');
-
 const User = require('../models/User');
 const router = express.Router();
+const authEndpoint = require('./auth')
 
 const editUser = async (email, name, availableDates, location, volunteerPreferences) => {
     await User.findOne({"email": email}).then(function(user) {
@@ -24,8 +24,8 @@ const editUser = async (email, name, availableDates, location, volunteerPreferen
     });
 };
 
-router.post('/edit', async (req, res) => {
-   // if (req.user.admin || req.user.email == req.body.email) {
+router.post('/edit', authEndpoint.auth, async (req, res) => {
+   if (req.user.email === req.params.email) {
       email = req.body.email
       name = req.body.name
       availableDates = req.body.availableDates
@@ -33,20 +33,79 @@ router.post('/edit', async (req, res) => {
       volunteerPreferences = req.body.volunteerPreferences
       console.log(req.body)
       await editUser(email, name, availableDates, location, volunteerPreferences)
-      res.send("success")
-   // }
-   // else {
-   //    res.send("not allowed to edit")
-   // }
+      res.sendStatus(200)
+   } else {
+      res.sendStatus(403)
+   }
 });
 
-router.get('/get/:email', async (req, res) => {
-   let email = req.params.email
-   User.findOne({"email": email}).then(function(user) {
-      if (user) {
-         res.send(user)
-      }
-   })
+router.get('/get/:email', authEndpoint.auth, async (req, res) => {
+   if(req.user.email === req.params.email) {
+      let email = req.params.email
+      User.findOne({"email": email}).then(function(user) {
+         if (user) {
+            res.send(user)
+         }
+      })
+   } else {
+      res.sendStatus(403)
+   }
 });
+
+router.post('/add-shift', authEndpoint.auth, async(req,res) => {
+   if(req.user.email === req.params.email) {
+      email = req.body.email
+      eventName = req.body.name;
+      startTime = req.body.startTime;
+      endTime = req.body.endTime;
+
+      console.log("Email: " + email)
+      console.log("Event Name: " + eventName)
+      console.log("Start Time: " + startTime)
+      console.log("End Time: " + endTime)
+
+      await User.findOneAndUpdate(
+         {email: email},
+         {$push: 
+            {shifts:
+                  {
+                     name: eventName,
+                     startTime: startTime,
+                     endTime: endTime
+                  }
+            }
+         },
+      )
+      
+      res.sendStatus(200)
+   } else {
+      res.sendStatus(403)
+   }
+})
+
+router.delete('/delete-shift', authEndpoint.auth, async(req, res) => {
+   if(req.user) {
+      email = req.body.email;
+      eventName = req.body.name;
+      startTime = req.body.startTime;
+      endTime = req.body.endTime;
+
+      await User.findOneAndUpdate(
+         {email: email},
+         {$pull: 
+            {shifts:{
+                  name: eventName,
+                  startTime: startTime,
+                  endTime: endTime,
+            }}
+         }
+      )
+
+      res.sendStatus(200)
+   } else {
+      res.sensStatus(403)
+   }
+})
+
 
 module.exports = router;

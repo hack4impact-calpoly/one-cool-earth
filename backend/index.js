@@ -19,23 +19,17 @@ app.use((req, res, next) => {
 app.use(bodyParser.json())
 app.use(cookieParser())
 
-const loginEndpoint = require('./api/login.js')
 const signUpEndpoint = require('./api/signup.js')
 const authEndpoint = require('./api/auth')
 const adminEndpoint = require('./api/admin')
 const userEndpoint = require('./api/user')
 const eventEndpoint = require('./api/event')
-const addShiftEndpoint = require('./api/user/addShift')
-const deleteShiftEndpoint = require('./api/user/deleteShift.js')
 
-app.use('/api/login', loginEndpoint)
 app.use('/api/signup', signUpEndpoint)
-app.use('/api/auth', authEndpoint)
+app.use('/api/auth', authEndpoint.router)
 app.use('/api/admin', adminEndpoint)
 app.use('/api/user', userEndpoint)
 app.use('/api/event', eventEndpoint)
-app.use('/api/user/addShift', addShiftEndpoint)
-app.use('/api/user/deleteShift', deleteShiftEndpoint)
 
 app.get('/api/logout', async (req, res) => {
     res.redirect(`${process.env.SERVER_URL}/api/auth/logout`)
