@@ -14,7 +14,7 @@ function App() {
       .then((res) => res.json())
       .then((data) => setUser(data.user))
       .catch((err) => console.error(err)); // catches when users aren't logged in
-  }, []);
+  });
 
   useEffect(() => {
     console.log(user);
