@@ -23,7 +23,7 @@ jobs:
         s3-bucket: 'oce-api-deployment'
         stack-name: 'oce-api-deployment-stack'
       env:
-        CLIENT_URL: ''
+        CLIENT_URL: 'https://main.d3ubwc4nmisdue.amplifyapp.com'
 
     - run: echo API is at ${{ steps.backend-deployment.outputs.api-url }}
       shell: bash
