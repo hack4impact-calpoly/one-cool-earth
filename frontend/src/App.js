@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div>
-      <LandingPage />
+      {StartPage}
     </div>
   );
 }
