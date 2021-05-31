@@ -7,6 +7,25 @@ import SetAuthToken from "./actions/SetAuthToken";
 import SignUp from "./SignUp.js";
 import Header from './Header';
 
+const landingPageStyles = {
+	minHeight: '100vh',
+	minWidth: '100vw',
+	backgroundRepeat: 'no-repeat',
+	backgroundAttachment: 'fixed',
+	backgroundPosition: 'center',
+	backgroundSize: 'cover',
+	backgroundImage: `url(/landing-page-background.jpg)`,
+	webkitBackgroundSize: 'cover',
+  	mozBackgroundSize: 'cover',
+  	oBackgroundSize: 'cover',
+	fontFamily: 'sans-serif',
+	paddingTop: '1%',
+	paddingBottom: '4%',
+	display: 'flex',
+	flexDirection: 'column',
+	justifyContent: 'center',
+	alignItems: 'center'	
+}
 
 class LandingPage extends React.Component {
 
@@ -32,7 +51,7 @@ class LandingPage extends React.Component {
          <BrowserRouter>
             <Switch>
                <Route exact path='/'>
-                  <div id='landing-page'>
+                  <div style={landingPageStyles} id='landing-page'>
                      <div id='landing-page-banner'>
                         <div id='logo'>
                            <img src={logo} alt='One Cool Earth Education and Preservation: Service Since 2001'/>
