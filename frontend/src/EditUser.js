@@ -63,7 +63,7 @@ class EditUser extends React.Component {
   async getData() {
     let email = "patrickstar24@gmail.com"
 
-    let response = await fetch(`http://localhost:3001/api/user/get/${email}`, {
+    let response = await fetch(process.env.REACT_APP_SERVER_UL + '/api/user/get/' + email, {
       mode: 'cors',
       credentials: 'include',
     })
@@ -162,7 +162,7 @@ class EditUser extends React.Component {
       location: locArray[0],
     };
 
-    await fetch(`http://localhost:3001/api/user/edit`, {
+    await fetch(process.env.REACT_APP_SERVER_URL + `/api/user/edit`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',

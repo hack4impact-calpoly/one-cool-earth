@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 const SetAuthToken = () => {
    const { token } = useParams(); // import from react-router-dom
  
-   fetch(`http://localhost:3001/api/auth/token`, {
+   fetch(process.env.REACT_APP_SERVER_URL + `/api/auth/token`, {
      method: 'POST',
      mode: 'cors',
      credentials: 'include',
