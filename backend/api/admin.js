@@ -1,21 +1,7 @@
 const express = require("express");
 const User = require('../models/User');
 const router = express.Router();
-
-router.post("/", async (req, res) => {
-	const field = req.body.field;
-	const data = req.body[field];
-	let queryFilter = {};
-	queryFilter[field] = data;
-	let users;
-	if(field === "all"){
-		users = await User.find({});
-	}else{
-		users = await User.find(queryFilter);
-	}
-	res.status(200);
-	res.json(users);
-});
+const authEndpoint = require('./auth')
 
 const deactivateUser = async (name, email) => {
 	console.log(name.first);
@@ -27,24 +13,24 @@ const deactivateUser = async (name, email) => {
     });
 };
 
-router.post('/deactivateUser', async (req, res) => {
-	if (req.user.admin) {
+router.post('/deactivateUser', authEndpoint.auth, async (req, res) => {
+	if (req.user && req.user.admin) {
 		name = req.body.name
 		email = req.body.email
 		await deactivateUser(name, email)
-		res.send("success")
+		res.sendStatus(200)
 	}
 	else {
-		res.send("not an admin")
+		res.sendStatus(403)
 	}
 });
 
-router.post('/deleteUser', async (req, res) => {
-	if (req.user.admin) {
+router.post('/deleteUser', authEndpoint.auth, async (req, res) => {
+	if (req.user && req.user.admin) {
 		name = req.body.name
 		email = req.body.email
 		await User.deleteOne({"email": email})
-		res.send("success")
+		res.sendStatus(200)
 	}
 	else {
 		res.send("not an admin")

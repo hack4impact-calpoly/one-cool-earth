@@ -2,10 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon server.js dev"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +18,9 @@
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.19",
+    "mongodb": "^3.6.8",
+    "mongodb-client-encryption": "^1.2.3",
+    "mongoose": "^5.12.12",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0"
   },

@@ -19,22 +19,25 @@ app.use((req, res, next) => {
 app.use(bodyParser.json())
 app.use(cookieParser())
 
-
-const signUpEndpoint = require('./api/signup')
+const signUpEndpoint = require('./api/signup.js')
 const authEndpoint = require('./api/auth')
 const adminEndpoint = require('./api/admin')
 const userEndpoint = require('./api/user')
 const eventEndpoint = require('./api/event')
 
 app.use('/api/signup', signUpEndpoint)
-app.use('/api/auth', authEndpoint)
+app.use('/api/auth', authEndpoint.router)
 app.use('/api/admin', adminEndpoint)
 app.use('/api/user', userEndpoint)
 app.use('/api/event', eventEndpoint)
 
 app.get('/api/logout', async (req, res) => {
-    res.redirect(`${process.env.SERVER_URL}/api/auth/logout`)
+    res.redirect(`/api/auth/logout`)
 })
 
+if (process.argv.includes('dev')) {
+    const PORT = process.env.PORT || 3001;
+    app.listen(PORT, () => console.log(`server running on port ${PORT}`));
+}
 
-app.listen(3001, "localhost")
+module.exports = app
