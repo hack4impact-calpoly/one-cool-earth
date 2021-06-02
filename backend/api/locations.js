@@ -29,19 +29,25 @@ const addLocation = async (name) => {
   });
 };
 
-router.post('/createLocation', async(req, res) => {
-    await addLocation(req.body.name)
-    res.sendStatus(200)
+router.post('/createLocation', authEndpoint.auth, async(req, res) => {
+  if(req.user && req.user.admin){
+      await addLocation(req.body.name)
+      res.sendStatus(200)
+  }
 })
-router.post('/deleteLocation', async (req, res) => { 
+router.post('/deleteLocation', authEndpoint.auth, async (req, res) => { 
+  if(req.user && req.user.admin){
       const name = req.body.name
       await deleteLocation(name);
       res.sendStatus(200)
+  }
 });
 router.get('/get-all', authEndpoint.auth, async(req, res) => {
-  Location.find({}).then(locations => {
-    res.status(200);
-    res.json(locations)
-  })
+  if(req.user){
+    Location.find({}).then(locations => {
+      res.status(200);
+      res.json(locations)
+    })
+  }
 })
 module.exports = router
