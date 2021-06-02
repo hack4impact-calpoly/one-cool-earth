@@ -1,17 +1,20 @@
 import './css/Calendar.css';
-import React, {useState} from 'react';
+import React from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import {Container, Modal, Button} from "react-bootstrap";
-import './css/Calendar.css';
 import interactionPlugin from "@fullcalendar/interaction";
+import DateModal from "./DateModal.js"
 
 class CalendarPage extends React.Component{
   constructor(){
     super();
     this.state={
-      modalVisible: false,
-      dateClicked: ""
+      dateModalVisible: false,
+      dateData: {
+                  dateStr: "",
+	          events: {}
+                }
     }
   }
   render (){
@@ -27,38 +30,31 @@ class CalendarPage extends React.Component{
             className = 'fc'
             plugins={[ dayGridPlugin, interactionPlugin ]}
             initialView = 'dayGridMonth'
-	    dateClick= {function(arg){console.log(arg.dateStr)}}
+	    dateClick= {this.handleDateClick}
             height = 'auto'
             width = 'auto'
           />
         </div>
-	<Modal show={this.state.modalVisible} onHide={this.hideModal}>
-          <Modal.Header>
-            <Modal.Title>Events on {this.state.dateClicked}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-	    This is the modal body
-	  </Modal.Body>
-          <Modal.Footer>
-	    <Button onClick={this.hideModal}>Close</Button>
-	  </Modal.Footer>
-        </Modal>
+	<DateModal 
+	    show={this.state.dateModalVisible}
+	    onHide={this.hideDateModal}
+	    dateData={this.state.dateData}
+	></DateModal>
       </Container>
     );
   }
   
-  showModal = () => {
-    this.setState({modalVisible: true});
+  showDateModal = () => {
+    this.setState({dateModalVisible: true});
   }
 
-  hideModal = () => {
-    this.setState({modalVisible: false});
+  hideDateModal = () => {
+    this.setState({dateModalVisible: false});
   }
   
   handleDateClick = (arg) =>{
-    this.setState({dateClicked: `${arg.date.getMonth()}/${arg.date.getDate()}/${arg.date.getFullYear()}`});
-    console.log(arg.dateStr);
-    this.showModal();
+    this.setState({dateData: {dateStr: `${arg.date.getMonth()+1}/${arg.date.getDate()}/${arg.date.getFullYear()}`}});
+    this.showDateModal();
   }
 } 
 
