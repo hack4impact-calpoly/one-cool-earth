@@ -3,30 +3,26 @@ const Event = require('../models/Event');
 const router = express.Router();
 const authEndpoint = require('./auth')
 
-const createEvent = async (eventName, eventDate, eventLocation, eventVolunteerPreferences) => {
-    Event.findOne({name: eventName}).then((data) => {
-        if(!data)
-        {
-            const event = Event.create(
-            {
-                name: eventName, 
-                date: eventDate, 
-                location: eventLocation, 
-                volunteerPreferences: 
-                eventVolunteerPreferences
-            });
-        }
-    });
-};
-
 router.post('/create', authEndpoint.auth, async (req, res) => {
     if(req.user && req.user.admin) {
-        const eventName = req.body.name
-        const date = req.body.date
-        const location = req.body.location
-        const volunteerPreferences = req.body.volunteerPreferences
-        await createEvent(eventName, date, location, volunteerPreferences)
-        res.sendStatus(200)
+        Event.create(
+            {
+                name: req.body.name, 
+                startTime: req.body.startTime, 
+                endTime: req.body.endTime, 
+                location: req.body.location, 
+                description: req.body.description,
+                volunteersPerShift: req.body.volunteersPerShift,
+                coordinator: req.body.coordinator,
+                address: req.body.address,
+                volunteerType: req.body.volunteerType
+            }, function(err) {
+                if(err) {
+                    res.sendStatus(500)
+                } else {
+                    res.sendStatus(200)
+                }
+        });
     } else {
         res.sendStatus(403)
     }
