@@ -50,4 +50,5 @@ router.get('/get-all', authEndpoint.auth, async(req, res) => {
     })
   }
 })
+
 module.exports = router

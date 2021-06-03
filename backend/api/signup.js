@@ -12,7 +12,7 @@ router.post('/', async(req, res) => {
    .then( (user) => {
       if (user) {
          res.status(200);
-         res.send("you already have an account, plaese log in")
+         res.send("you already have an account, please log in")
       } else {
          var doc = new User({
                "email": userEmail, 
@@ -26,4 +26,4 @@ router.post('/', async(req, res) => {
    })
 })
 
-module.exports = router;
+module.exports = router
