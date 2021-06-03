@@ -25,7 +25,7 @@ const editUser = async (email, name, availableDates, location, volunteerPreferen
 };
 
 router.post('/edit', authEndpoint.auth, async (req, res) => {
-   if (req.user.email === req.params.email) {
+   if (req.user.email === req.body.email) {
       email = req.body.email
       name = req.body.name
       availableDates = req.body.availableDates

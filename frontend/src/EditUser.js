@@ -20,39 +20,22 @@ const locationOptions = [
   { value: "north county", label: "North County" },
 ];
 
-// var preference;
-// var loc;
-
-// // dummy data : replace with stored backend data
-// var stored_first = data.first;
-// var stored_last = "dummy-last";
-var stored_preferences = [
-  { value: "garden workday", label: "Garden Workday Volunteer" },
-  { value: "special events", label: "Special Events Volunteer" },
-  { value: "unsure", label: "Unsure or Interested in Multiple Opportunities" },
-];
-// var stored_phone = "dummy-phone";
-// var stored_email = "dummy-email";
-var stored_location = [
-  { value: "south county", label: "South County" },
-  { value: "north county", label: "North County" },
-];
-
 class EditUser extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-    stored_first: "",
-    stored_last: "",
-    stored_preferences: [],
-    stored_phone: "",
-    stored_email: "",
-    stored_location: [],
-    volSelected: [],
-    locSelected: [],
-    volunteerOptions: [],
-    locationOptions: []
+      user: this.props.user,
+      stored_first: "",
+      stored_last: "",
+      stored_preferences: [],
+      stored_phone: "",
+      stored_email: "",
+      stored_location: [],
+      volSelected: [],
+      locSelected: [],
+      volunteerOptions: [],
+      locationOptions: []
     };
   }
 
@@ -61,9 +44,7 @@ class EditUser extends React.Component {
   }
 
   async getData() {
-    let email = "patrickstar24@gmail.com"
-
-    let response = await fetch(`http://localhost:3001/api/user/get/${email}`, {
+    let response = await fetch(`http://localhost:3001/api/user/get/${this.state.user.email}`, {
       mode: 'cors',
       credentials: 'include',
     })
@@ -87,7 +68,7 @@ class EditUser extends React.Component {
     this.setState({
       stored_first: data.name.first,
       stored_last: data.name.last,
-      stored_phone: data.phone,
+      stored_phone: data.phoneNumber,
       stored_email: data.email,
       stored_location: locationArray,
       stored_preferences: prefArray,
@@ -109,14 +90,6 @@ class EditUser extends React.Component {
     );
   };
  
-  /*   _onPreferenceSelect(option) {
-    preference = option.label;
-  }
-
-  _onLocationSelect(option) {
-    loc = option.label;
-  }
- */
   async postSignUpData() {
     const first = document.getElementById("first-name").value;
     const last = document.getElementById("last-name").value;
@@ -125,7 +98,7 @@ class EditUser extends React.Component {
     const email = document.getElementById("email").value;
     const location = this.state.locSelected;
 
-    //Don't submit data unless both fields are non-empty
+    //Don't submit data unless fields are non-empty
     if (
       first === this.state.stored_first &&
       last === this.state.stored_last &&
@@ -179,10 +152,8 @@ class EditUser extends React.Component {
     // does'nt clear volPreference and locPreference
     document.getElementById("first-name").value = "";
     document.getElementById("last-name").value = "";
-    // preference = "";
     document.getElementById("phone-number").value = "";
     document.getElementById("email").value = "";
-    // loc = "";
   }
 
   render() {
@@ -222,11 +193,6 @@ class EditUser extends React.Component {
                     baseUnit: 8,
                   },
                 })}
-                /*               <Dropdown
-                id="volunteer-preferences"
-                onChange={this._onPreferenceSelect}
-                options={volunteerOptions}
-                placeholder={this.state.stored_preferences} */
               />
             </div>
           </div>
@@ -259,19 +225,12 @@ class EditUser extends React.Component {
                   },
                 })}
               />
-              {/*               <Dropdown
-                id="location-preference"
-                onChange={this._onLocationSelect}
-                options={locationOptions}
-                placeholder={stored_location}
-              /> */}
             </div>
           </div>
         </div>
         <Button
           onClick={() => {
             this.postSignUpData();
-            this.clear();
             console.log("clicked edit");
           }}
         >
