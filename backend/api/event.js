@@ -28,25 +28,16 @@ router.post('/create', authEndpoint.auth, async (req, res) => {
     }
  });
 
- const deleteEvent = async (eventName) => {
-    Event.findOne({name: eventName}).then((data) => {
-        if(data)
-        {
-            Event.deleteOne({ name: eventName }).then(function(){
-                console.log("Data deleted"); // Success
-            }).catch(function(error){
-                console.log(error); // Failure
-            }); 
-            
-        }
-    });
-};
 
  router.post('/deleteEvent', authEndpoint.auth, async (req, res) => { 
     if(req.user && req.user.admin) {
-        const eventName = req.body.name
-        await deleteEvent(eventName);
-        res.sendStatus(200)
+        Event.findByIdAndDelete(req.body.id, function (err) {
+            if(err) {
+                res.sendStatus(500);
+            } else {
+                res.sendStatus(200);
+            }
+        });
     } else {
         res.sendStatus(403)
     }
