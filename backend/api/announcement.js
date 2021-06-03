@@ -13,7 +13,7 @@ router.get('/',  authEndpoint.auth,  // retrieves all announcements
         if (request.user) {
             await Announcement.find({}, function (error, announcements) {
                 if (error) {
-                    console.log(error)
+                    console.error(error)
                     response.sendStatus(503);  // Service Unavailable (mongoose failure)
                 }
                 else {
@@ -46,7 +46,7 @@ router.post('/create', authEndpoint.auth,
                         description: request.body.description
                     }, function (error) {
                         if (error) {
-                            console.log(error)
+                            console.error(error)
                             response.sendStatus(503);  // Service Unavailable (mongoose failure)
                         }
                         else
@@ -78,7 +78,7 @@ router.post('/delete', authEndpoint.auth,
                         _id: request.body.id
                     }, function (error) {
                         if (error) {
-                            console.log(error)
+                            console.error(error)
                             response.sendStatus(503);  // Service Unavailable (mongoose failure)
                         }
                         else

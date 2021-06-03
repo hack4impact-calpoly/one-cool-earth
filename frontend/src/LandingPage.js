@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from './images/oce-logo.png';
-import Background from './images/landing-page-background.jpg'
+import Background from './images/landing-page-background.jpg';
 import {Button} from 'react-bootstrap';
 import './css/LandingPage.css';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
