@@ -28,6 +28,20 @@ router.post('/create', authEndpoint.auth, async (req, res) => {
     }
  });
 
+ router.get('/getEvent', authEndpoint.auth, async (req, res) => {
+     if(req.user) {
+        Event.findById(req.query.id, function (err, event) {
+            if(err) {
+                res.sendStatus(500);
+            } else {
+                res.status(200).json({event: event});
+            }
+        });
+     } else {
+         res.sendStatus(403);
+     }
+ })
+
 
  router.post('/deleteEvent', authEndpoint.auth, async (req, res) => { 
     if(req.user && req.user.admin) {
