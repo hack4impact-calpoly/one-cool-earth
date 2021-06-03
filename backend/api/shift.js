@@ -51,3 +51,5 @@ router.post('/deleteShift', authEndpoint.auth, async (req, res) => {
         res.sendStatus(403)
     }
 })
+
+module.exports = router;
