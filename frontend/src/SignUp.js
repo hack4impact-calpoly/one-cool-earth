@@ -1,6 +1,5 @@
 import React from "react";
-import Dropdown from "react-dropdown";
-import { Button } from "react-bootstrap";
+import { Modal, Form, Button } from "react-bootstrap";
 import "react-dropdown/style.css";
 import "./css/SignUp.css";
 import Select from "react-select";
@@ -21,30 +20,45 @@ const locationOptions = [
 ];
 
 class Signup extends React.Component {
-  state = {
-    volSelected: null,
-    locSelected: null,
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      volSelected: null,
+      locSelected: null,
+      errorMsg: null,
+      showModal: false,
+    }
+    this.clear = this.clear.bind(this)
+    this.postSignUpData = this.postSignUpData.bind(this)
+    this.handleLocChange = this.handleLocChange.bind(this)
+    this.handleVolChange = this.handleVolChange.bind(this)
+    this.handleShowModal = this.handleShowModal.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+  }
 
   handleVolChange = (volSelected) => {
-    this.setState({ volSelected }, () =>
-      console.log(`Option selected:`, this.state.volSelected)
-    );
+    this.setState({ volSelected: volSelected });
   };
 
   handleLocChange = (locSelected) => {
-    this.setState({ locSelected }, () =>
-      console.log(`Option selected:`, this.state.locSelected)
-    );
+    this.setState({ locSelected: locSelected });
   };
 
+  handleShowModal (errorMsg) {
+    this.setState({ errorMsg: errorMsg, showModal: true })
+  }
+
+  handleClose() {
+    this.setState({ showModal: false })
+  }
+
   postSignUpData() {
-    const first = document.getElementById("first-name").value;
-    const last = document.getElementById("last-name").value;
-    const preferences = this.state.volSelected;
-    const phone = document.getElementById("phone-number").value;
-    const email = document.getElementById("email").value;
-    const location = this.state.locSelected;
+    const first = document.getElementById("first-name") ? document.getElementById("first-name").value : null;
+    const last = document.getElementById("last-name") ? document.getElementById("last-name").value : null;
+    const preferences = (this.state.volSelected) ? this.state.volSelected.map( entry => entry.value ) : null;
+    const phone = document.getElementById("phone-number") ? document.getElementById("phone-number").value : null;
+    const email = document.getElementById("email") ? document.getElementById("email").value : null;
+    const location = this.state.locSelected ? this.state.locSelected.value : null;
 
     //Don't submit data unless both fields are non-empty
     if (
@@ -55,6 +69,7 @@ class Signup extends React.Component {
       email === "" ||
       location === ""
     ) {
+      this.handleShowModal('Invalid inputs!');
       return;
     }
 
@@ -77,8 +92,14 @@ class Signup extends React.Component {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(SignUpData),
-    }).then (() => {
-        window.location.assign('/login')
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      if(data.status === 'user already exists') {
+        this.handleShowModal('It looks like an account is already associated with this email!');
+      } else {
+        window.location.assign('/')
+      }
     })
   }
 
@@ -86,10 +107,8 @@ class Signup extends React.Component {
     // everything except for the 2 dropdown menu values gets reset
     document.getElementById("first-name").value = "";
     document.getElementById("last-name").value = "";
-    //this.state.volSelected = [];
     document.getElementById("phone-number").value = "";
     document.getElementById("email").value = "";
-    //this.state.locSelected = [];
   }
 
   render() {
@@ -98,6 +117,17 @@ class Signup extends React.Component {
 
     return (
       <div className="wrapper">
+        <Modal centered show={this.state.showModal} onHide={this.handleClose}>
+          <Modal.Header>
+            <Modal.Title>Error</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.state.errorMsg}</Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={this.handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <div className="title">
           <h2>New Volunteer? Sign Up Here!</h2>
         </div>
@@ -148,7 +178,6 @@ class Signup extends React.Component {
                 value={locSelected}
                 onChange={this.handleLocChange}
                 options={locationOptions}
-                isMulti={true}
                 theme={(theme) => ({
                   ...theme,
                   borderRadius: 0,
