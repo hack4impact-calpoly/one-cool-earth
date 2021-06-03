@@ -25,6 +25,7 @@ const adminEndpoint = require('./api/admin')
 const userEndpoint = require('./api/user')
 const eventEndpoint = require('./api/event')
 const locationEndpoint = require('./api/locations')
+const shiftEndpoint = require('./api/shift')
 
 app.use('/api/signup', signUpEndpoint)
 app.use('/api/auth', authEndpoint.router)
@@ -32,6 +33,7 @@ app.use('/api/admin', adminEndpoint)
 app.use('/api/user', userEndpoint)
 app.use('/api/event', eventEndpoint)
 app.use('/api/location', locationEndpoint)
+app.use('/api/shift', shiftEndpoint)
 
 app.get('/api/logout', async (req, res) => {
     res.redirect(`/api/auth/logout`)
