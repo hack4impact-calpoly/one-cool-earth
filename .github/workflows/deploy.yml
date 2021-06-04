@@ -24,7 +24,7 @@ jobs:
         stack-name: 'oce-api-deployment-stack'
       env:
         CLIENT_URL: 'https://main.d3ubwc4nmisdue.amplifyapp.com'
-        SERVER_URL: 'https://2ht6f910k6.execute-api.us-west-1.amazonaws.com/prod/'
+        SERVER_URL: 'https://2ht6f910k6.execute-api.us-west-1.amazonaws.com/prod'
         CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
         CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
 
