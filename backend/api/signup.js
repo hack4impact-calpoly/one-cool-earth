@@ -14,6 +14,7 @@ router.post('/', async(req, res) => {
       if (user) {
          res.status(200)
          res.json({status: 'user already exists'})
+
       } else {
          var doc = new User({
             "email": email, 
@@ -31,4 +32,4 @@ router.post('/', async(req, res) => {
    })
 })
 
-module.exports = router;
+module.exports = router
