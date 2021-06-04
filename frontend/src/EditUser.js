@@ -1,6 +1,5 @@
 import React from "react";
-import Dropdown from "react-dropdown";
-import { Button } from "react-bootstrap";
+import { Modal, Container, Form, Button, Row, Col } from "react-bootstrap";
 import "react-dropdown/style.css";
 import "./css/SignUp.css";
 import Select from "react-select";
@@ -21,222 +20,326 @@ const locationOptions = [
 ];
 
 class EditUser extends React.Component {
-
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       user: this.props.user,
-      stored_first: "",
-      stored_last: "",
-      stored_preferences: [],
-      stored_phone: "",
-      stored_email: "",
-      stored_location: [],
       volSelected: [],
-      locSelected: [],
-      volunteerOptions: [],
-      locationOptions: []
-    };
+      locSelected: null,
+      firstName: null,
+      lastName: null,
+      phoneNumber: null,
+      email: null,
+      modalMsg: null,
+      showModal: false,
+      validatedEmail: true,
+      validatedPhoneNumber: true,
+      validatedFirstName: true,
+      validatedLastName: true
+    }
+    this.clear = this.clear.bind(this)
+    this.handleLocChange = this.handleLocChange.bind(this)
+    this.handleEdit = this.handleEdit.bind(this)
+    this.handleVolChange = this.handleVolChange.bind(this)
+    this.handleShowModal = this.handleShowModal.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    this.handleEmailChange = this.handleEmailChange.bind(this)
+    this.handlePhoneChange = this.handlePhoneChange.bind(this)
+    this.handleFirstNameChange = this.handleFirstNameChange.bind(this)
+    this.handleLastNameChange = this.handleLastNameChange.bind(this)
+    this.getData = this.getData.bind(this)
+    this.populateLocationSelection = this.populateLocationSelection.bind(this)
+    this.populatePrefSelection = this.populatePrefSelection.bind(this)
   }
 
   componentDidMount() {
     this.getData()
   }
-
+  
   async getData() {
-    let response = await fetch(`http://localhost:3001/api/user/get/${this.state.user.email}`, {
+    let response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/user/get/${this.state.user.email}`, {
       mode: 'cors',
       credentials: 'include',
     })
-
+  
     const data = await response.json()
-    const prefArray = []
-    for (let pref of data.volunteerPreferences) {
+  
+    this.setState({
+      firstName: data.name.first,
+      lastName: data.name.last,
+      phoneNumber: data.phoneNumber,
+      email: data.email,
+      volSelected: data.volunteerPreferences,
+      locSelected: data.location
+    })
+  }
+
+  populateLocationSelection() {
+    let locArray = null
+    for (let option of locationOptions) {
+      if (this.state.locSelected === option.value) {
+        locArray = option
+        return locArray
+      }
+    }
+  }
+
+  populatePrefSelection() {
+    let prefArray = []
+    for (let pref of this.state.volSelected) {
         for (let option of volunteerOptions) {
-          console.log("pref", pref, "option.value", option.value)
           if (pref === option.value)
             prefArray.push(option)
         }
     }
-    const locationArray = []
-    for (let option of locationOptions) {
-      console.log("loc", data.location, "option.value", option.value)
-      if (data.location == option.value)
-        locationArray.push(option)
-    }
-
-    this.setState({
-      stored_first: data.name.first,
-      stored_last: data.name.last,
-      stored_phone: data.phoneNumber,
-      stored_email: data.email,
-      stored_location: locationArray,
-      stored_preferences: prefArray,
-      volSelected: prefArray,
-      locSelected: locationArray
-    })
-    console.log(this.state)
+    return prefArray
   }
 
   handleVolChange = (volSelected) => {
-    this.setState({ volSelected }, () =>
-      console.log(`Option selected:`, this.state.volSelected)
-    );
+    this.setState({ volSelected: volSelected });
   };
 
   handleLocChange = (locSelected) => {
-    this.setState({ locSelected }, () =>
-      console.log(`Option selected:`, this.state.locSelected)
-    );
+    this.setState({ locSelected: locSelected });
   };
- 
-  async postSignUpData() {
-    const first = document.getElementById("first-name").value;
-    const last = document.getElementById("last-name").value;
-    const preferences = this.state.volSelected;
-    const phone = document.getElementById("phone-number").value;
-    const email = document.getElementById("email").value;
-    const location = this.state.locSelected;
 
-    //Don't submit data unless fields are non-empty
+  handleFirstNameChange(event) {
+    this.setState({ firstName: event.target.value })
+    if(event.target.value &&
+      /^[a-zA-Z]+$/.test(event.target.value) &&
+      event.target.value.length > 1) {
+      this.setState({ validatedFirstName: true})
+    }
+    else {
+      this.setState({ validatedFirstName: false})
+    }
+  }
+
+  handleLastNameChange(event) {
+    this.setState({ lastName: event.target.value })
+    if(event.target.value &&
+      /^[a-zA-Z]+$/.test(event.target.value) &&
+      event.target.value.length > 1) {
+      this.setState({ validatedLastName: true})
+    }
+    else {
+      this.setState({ validatedLastName: false})
+    }
+  }
+
+  handleEmailChange(event) {
+    this.setState({ email: event.target.value })
+    if(event.target.value.endsWith('@gmail.com'))
+      this.setState({ validatedEmail: true})
+    else
+      this.setState({ validatedEmail: false})
+  }
+
+  handlePhoneChange(event) {
+    let index = 0
+    this.setState({ phoneNumber: event.target.value })
+    if(event.target.value.length === 14) {
+      if(event.target.value.indexOf('-', index) === 5) {
+        index = 6;
+        if(event.target.value.indexOf('-', index) === 9) {
+          index = 10
+            this.setState({validatedPhoneNumber: true})
+        }
+      }
+    }
+    else
+      this.setState({ validatedPhoneNumber: false})
+  }
+
+  handleShowModal (msg) {
+    this.setState({ modalMsg: msg, showModal: true })
+  }
+
+  handleClose() {
+    this.setState({ showModal: false })
+  }
+
+  handleEdit(event) {
+    event.preventDefault();
+
+    // Don't submit data unless both fields are non-empty
     if (
-      first === this.state.stored_first &&
-      last === this.state.stored_last &&
-      preferences === this.state.stored_preferences &&
-      phone === this.state.stored_phone &&
-      email === this.state.stored_email &&
-      location === this.state.stored_location
+      !this.state.firstName||
+      !this.state.lastName ||
+      !this.state.phoneNumber ||
+      !this.state.email ||
+      !this.state.locSelected ||
+      this.state.volSelected === []
     ) {
-      return;
+      return
     }
 
-    const volArray = []
-    for (let pref of preferences) {
-      volArray.push(pref.value)
-    }
-
-    const locArray = []
-    for (let loc of location) {
-      locArray.push(loc.value)
-    }
-
-    this.setState({
-      stored_preferences: volArray,
-      stored_location: locArray
-    })
-    const SignUpData = {
+    const EditData = {
       name: {
-        firstName: first,
-        lastName: last
+          first: this.state.firstName,
+          last: this.state.lastName
       },
-      volunteerPreferences: volArray,
-      phoneNum: phone,
-      email: this.state.stored_email,
-      location: locArray[0],
+      volunteerPreferences: this.state.volSelected.map(entry => entry.value),
+      phoneNumber: this.state.phoneNumber,
+      location: this.state.locSelected,
     };
-
-    await fetch(`http://localhost:3001/api/user/edit`, {
+  
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/user/edit`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(SignUpData)
-      });
-
-    console.log(SignUpData);
+      body: JSON.stringify(EditData)
+      })
+      .then( () => {
+        console.log("edited!")
+        this.handleShowModal("Successfully edited!");
+      })
   }
 
   clear() {
-    // does'nt clear volPreference and locPreference
-    document.getElementById("first-name").value = "";
-    document.getElementById("last-name").value = "";
-    document.getElementById("phone-number").value = "";
-    document.getElementById("email").value = "";
+    this.setState({
+      volSelected: [],
+      locSelected: null,
+      firstName: null,
+      lastName: null,
+      phoneNumber: null,
+      email: null,
+      errorMsg: null,
+      showModal: false,
+      validatedEmail: null,
+      validatedPhoneNumber: null,
+      validatedFirstName: null,
+      validatedLastName: null
+    })
   }
 
   render() {
-    // const { volSelected } = this.state.stored_preferences;
-    // const { locSelected } = this.state.stored_location;
+    const volSelected  = this.populatePrefSelection()
+    const locSelected  = this.populateLocationSelection();
+
     return (
-      <div className="wrapper">
-        <div className="title">
+      <div className="signup-wrapper">
+        <Modal centered show={this.state.showModal} onHide={this.handleClose}>
+          <Modal.Header>
+            <Modal.Title>Error</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.state.modalMsg}</Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={this.handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <div className="signup-title">
           <h2>Edit Info</h2>
         </div>
-        <div className="fields" style={{ paddingBottom: "20px" }}>
-          <div className="fields-column">
-            <div id="first-name-field" className="input">
-              <label for="first-name">First Name</label>
-              <input id="first-name" defaultValue={this.state.stored_first}></input>
-            </div>
-            <div id="last-name-field" className="input">
-              <label for="last-name">Last Name</label>
-              <input id="last-name" defaultValue={this.state.stored_last}></input>
-            </div>
-            <div id="volunteer-preferences-field" className="drop-down">
-              <label for="volunteer-preferences">Volunteer Preferences</label>
-              <Select
-                value={this.state.volSelected}
-                onChange={this.handleVolChange}
-                options={volunteerOptions}
-                isMulti={true}
-                theme={(theme) => ({
-                  ...theme,
-                  borderRadius: 0,
-                  borderColor: "black",
-                  colors: {
-                    ...theme.colors,
-                    neutral20: "black", // this is border line color
-                  },
-                  spacing: {
-                    baseUnit: 8,
-                  },
-                })}
-              />
-            </div>
-          </div>
-          <div className="fields-column">
-            <div id="phone-number-field" className="input">
-              <label for="phone-number">Phone Number</label>
-              <input id="phone-number" defaultValue={this.state.stored_phone}></input>
-            </div>
-            <div id="email-field" className="input">
-              <label for="email">Email</label>
-              <input id="email" defaultValue={this.state.stored_email}></input>
-            </div>
-            <div id="location-preference-field" className="drop-down">
-              <label for="location-preference">Location Preference</label>
-              <Select
-                value={this.state.locSelected}
-                onChange={this.handleLocChange}
-                options={locationOptions}
-                isMulti={true}
-                theme={(theme) => ({
-                  ...theme,
-                  borderRadius: 0,
-                  borderColor: "black",
-                  colors: {
-                    ...theme.colors,
-                    neutral20: "black", // this is border line color
-                  },
-                  spacing: {
-                    baseUnit: 8,
-                  },
-                })}
-              />
-            </div>
-          </div>
-        </div>
-        <Button
-          onClick={() => {
-            this.postSignUpData();
-            console.log("clicked edit");
-          }}
-        >
-          {" "}
-          Edit
-        </Button>
+        <Container fluid="md" style={{ paddingBottom: "20px" }}>
+          <Form className="forms" onSubmit={this.handleSignUp}>
+            <Row>
+              <Form.Group as={Col} controlId="first-name">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control 
+                  required
+                  placeholder="First Name"
+                  value={this.state.firstName}
+                  onChange={this.handleFirstNameChange}
+                  isValid={this.state.validatedFirstName}
+                  isInvalid={this.state.firstName && !this.state.validatedFirstName}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">Plese enter a valid first name</Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} controlId="last-name">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control 
+                  required
+                  placeholder="Last Name"
+                  value={this.state.lastName}
+                  onChange={this.handleLastNameChange}
+                  isValid={this.state.validatedLastName}
+                  isInvalid={this.state.lastName && !this.state.validatedLastName}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">Plese enter a valid last name</Form.Control.Feedback>
+              </Form.Group>
+            </Row>
+            <br />
+            <Row>
+              <Form.Group as={Col} controlId="phone-number">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control 
+                  required
+                  placeholder="(###)-###-####"
+                  value={this.state.phoneNumber}
+                  onChange={this.handlePhoneChange}
+                  isValid={this.state.validatedPhoneNumber}
+                  isInvalid={this.state.phoneNumber && !this.state.validatedPhoneNumber}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">Plese enter a valid phone number</Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} controlId="email">
+                <Form.Label>Gmail</Form.Label>
+                <Form.Control 
+                  readOnly
+                  value={this.state.email}
+                />
+              </Form.Group>
+              </Row>
+              <br />
+              <Row>
+                <Col>
+                  <label htmlFor="volunteer-preferences">Volunteer Preferences</label>
+                  <Select
+                    value={volSelected}
+                    onChange={this.handleVolChange}
+                    options={volunteerOptions}
+                    isMulti={true}
+                    theme={(theme) => ({
+                      ...theme,
+                      borderRadius: 0,
+                      borderColor: "black",
+                      colors: {
+                        ...theme.colors,
+                        neutral20: "black", // this is border line color
+                      },
+                      spacing: {
+                        baseUnit: 8,
+                      },
+                    })}
+                  />
+                </Col>
+                <Col>
+                  <label htmlFor="location-preference">Location Preference</label>
+                  <Select
+                    value={locSelected}
+                    onChange={this.handleLocChange}
+                    options={locationOptions}
+                    theme={(theme) => ({
+                      ...theme,
+                      borderRadius: 0,
+                      borderColor: "black",
+                      colors: {
+                        ...theme.colors,
+                        neutral20: "black", // this is border line color
+                      },
+                      spacing: {
+                        baseUnit: 8,
+                      },
+                    })}
+                  />
+                </Col>
+              </Row>
+              <div className='d-flex justify-content-center'>
+                <Button type="submit" className="signup-button">
+                  Edit
+                </Button>
+              </div>
+          </Form>
+        </Container>
       </div>
     );
   }
