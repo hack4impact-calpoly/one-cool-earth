@@ -35,8 +35,14 @@ app.use('/api/event', eventEndpoint)
 app.use('/api/location', locationEndpoint)
 app.use('/api/shift', shiftEndpoint)
 
-app.get('/api/logout', async (req, res) => {
-    res.redirect(`/api/auth/logout`)
+app.get('/api/logout', authEndpoint.auth, async (req, res) => {
+    if (req.user) {
+        const options = { secure: true, httpOnly: true, sameSite: 'none' }
+
+        res.clearCookie('auth_token', options)
+        res.status(200)
+        res.redirect(`${process.env.CLIENT_URL}`)
+    }
 })
 
 if (process.argv.includes('dev')) {
