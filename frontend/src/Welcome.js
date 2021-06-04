@@ -33,9 +33,9 @@ class Welcome extends React.Component {
             <div id='welcome'>
                 <h1>Welcome, {this.props.user.name.first}</h1>
                 <div id='images-banner'>
-                    <div className='banner-image' style={{backgroundImage: `url(${BannerImage1})`}} ></div>
-                    <div className='banner-image' style={{backgroundImage: `url(${BannerImage2})`}} ></div>
-                    <div className='banner-image' style={{backgroundImage: `url(${BannerImage3})`}} ></div>
+                    <img className='banner-image' src={BannerImage1}></img>
+                    <img className='banner-image' src={BannerImage2}></img>
+                    <img className='banner-image' src={BannerImage3}></img>
                 </div>
                 <div id='dashboard'>
                     <div id='planning'>
@@ -48,7 +48,7 @@ class Welcome extends React.Component {
                             ))}
                             <br/>
                             <div id='edit-button'>
-                                <Button>Edit</Button>
+                                <Button href='/edit-user'>Edit</Button>
                             </div>
                         </div>
                         <div id='calendar-button'>
@@ -56,13 +56,14 @@ class Welcome extends React.Component {
                         </div>
                     </div>
                     <div id='news'>
+                        
                         <h3>Organization News</h3>
-                        {this.state.announcementList.map((e) => (
-                            <div key={e._id} className='announcement'>
-                                <h5>{e.title}</h5>
-                                <p>{e.description}</p>
-                            </div>
-                        ))}
+                            {this.state.announcementList.map((e) => (
+                                <div key={e._id} className='announcement'>
+                                    <h5>{e.title}</h5>
+                                    <p>{e.description}</p>
+                                </div>
+                            ))}
                     </div>
                 </div>
             </div>

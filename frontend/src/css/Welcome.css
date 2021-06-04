@@ -124,16 +124,28 @@ main {
 } */
 
 .banner-image {
-    height: 5em;
+    height: 12em;
     width: auto;
 }
 
-h1 {
+#images-banner {
+    display: flex;
+    margin-top: 2em;
+    margin-bottom: 3em;
+}
+
+/* selects all banner images immediately following another banner image */
+.banner-image + .banner-image {
+    margin-left: 3em;
+}
+
+#welcome > h1 {
     color: #4E5E9A;
 }
 
-h3 {
+#news > h3, #engagements > h3 {
     padding-bottom: 0.8em;
+    text-transform: uppercase;
 }
 
 #welcome {
@@ -149,6 +161,10 @@ h3 {
 }
 
 #news {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin-left: 7em;
     max-width: 33vw;
 }
@@ -165,4 +181,13 @@ h3 {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.event, .announcement {
+    text-transform: uppercase;
+}
+
+.announcement {
+    display: flex;
+    flex-direction: column;
 }
