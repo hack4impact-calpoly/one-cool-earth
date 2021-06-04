@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {Button} from 'react-bootstrap';
 import './css/Welcome.css';
 import BannerImage1 from './images/banner-image-1.jpg';
-import BannerImage2 from './images/banner-image-2.JPG';
-import BannerImage3 from './images/banner-image-3.JPG';
+import BannerImage2 from './images/banner-image-2.jpg';
+import BannerImage3 from './images/banner-image-3.jpg';
 
 class Welcome extends React.Component {
 
