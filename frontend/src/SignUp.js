@@ -1,6 +1,5 @@
 import React from "react";
-import Dropdown from "react-dropdown";
-import { Button } from "react-bootstrap";
+import { Modal, Container, Form, Button, Row, Col } from "react-bootstrap";
 import "react-dropdown/style.css";
 import "./css/SignUp.css";
 import Select from "react-select";
@@ -21,54 +20,125 @@ const locationOptions = [
 ];
 
 class Signup extends React.Component {
-  state = {
-    volSelected: null,
-    locSelected: null,
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      volSelected: [],
+      locSelected: null,
+      firstName: null,
+      lastName: null,
+      phoneNumber: null,
+      email: null,
+      errorMsg: null,
+      showModal: false,
+      validatedEmail: null,
+      validatedPhoneNumber: null,
+      validatedFirstName: null,
+      validatedLastName: null
+    }
+    this.clear = this.clear.bind(this)
+    this.handleLocChange = this.handleLocChange.bind(this)
+    this.handleSignUp = this.handleSignUp.bind(this)
+    this.handleVolChange = this.handleVolChange.bind(this)
+    this.handleShowModal = this.handleShowModal.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    this.handleEmailChange = this.handleEmailChange.bind(this)
+    this.handlePhoneChange = this.handlePhoneChange.bind(this)
+    this.handleFirstNameChange = this.handleFirstNameChange.bind(this)
+    this.handleLastNameChange = this.handleLastNameChange.bind(this)
+  }
 
   handleVolChange = (volSelected) => {
-    this.setState({ volSelected }, () =>
-      console.log(`Option selected:`, this.state.volSelected)
-    );
+    this.setState({ volSelected: volSelected });
   };
 
   handleLocChange = (locSelected) => {
-    this.setState({ locSelected }, () =>
-      console.log(`Option selected:`, this.state.locSelected)
-    );
+    this.setState({ locSelected: locSelected });
   };
 
-  postSignUpData() {
-    const first = document.getElementById("first-name").value;
-    const last = document.getElementById("last-name").value;
-    const preferences = this.state.volSelected;
-    const phone = document.getElementById("phone-number").value;
-    const email = document.getElementById("email").value;
-    const location = this.state.locSelected;
+  handleFirstNameChange(event) {
+    this.setState({ firstName: event.target.value })
+    if(event.target.value &&
+      /^[a-zA-Z]+$/.test(event.target.value) &&
+      event.target.value.length > 1) {
+      this.setState({ validatedFirstName: true})
+    }
+    else {
+      this.setState({ validatedFirstName: false})
+    }
+  }
 
-    //Don't submit data unless both fields are non-empty
+  handleLastNameChange(event) {
+    this.setState({ lastName: event.target.value })
+    if(event.target.value &&
+      /^[a-zA-Z]+$/.test(event.target.value) &&
+      event.target.value.length > 1) {
+      this.setState({ validatedLastName: true})
+    }
+    else {
+      this.setState({ validatedLastName: false})
+    }
+  }
+
+  handleEmailChange(event) {
+    this.setState({ email: event.target.value })
+    if(event.target.value.endsWith('@gmail.com'))
+      this.setState({ validatedEmail: true})
+    else
+      this.setState({ validatedEmail: false})
+  }
+
+  handlePhoneChange(event) {
+    let index = 0
+    this.setState({ phoneNumber: event.target.value })
+    if(event.target.value.length === 14) {
+      if(event.target.value.indexOf('-', index) === 5) {
+        index = 6;
+        if(event.target.value.indexOf('-', index) === 9) {
+          index = 10
+            this.setState({validatedPhoneNumber: true})
+        }
+      }
+    }
+    else
+      this.setState({ validatedPhoneNumber: false})
+  }
+
+  handleShowModal (errorMsg) {
+    this.setState({ errorMsg: errorMsg, showModal: true })
+  }
+
+  handleClose() {
+    this.setState({ showModal: false })
+    this.clear();
+  }
+
+  handleSignUp(event) {
+    event.preventDefault();
+
+    // Don't submit data unless both fields are non-empty
     if (
-      first === "" ||
-      last === "" ||
-      preferences === "" ||
-      phone === "" ||
-      email === "" ||
-      location === ""
+      !this.state.firstName||
+      !this.state.lastName ||
+      !this.state.phoneNumber ||
+      !this.state.email ||
+      !this.state.locSelected ||
+      this.state.volSelected === []
     ) {
-      return;
+      return
     }
 
     const SignUpData = {
       name: {
-          first: first,
-          last: last
+          first: this.state.firstName,
+          last: this.state.lastName
       },
-      preferences: preferences,
-      phoneNum: phone,
-      email: email,
-      loc: location,
+      volunteerPreferences: this.state.volSelected.map(entry => entry.value),
+      phoneNumber: this.state.phoneNumber,
+      email: this.state.email,
+      location: this.state.locSelected.value,
     };
-
+  
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/signup`, {
         method: 'POST',
         mode: 'cors',
@@ -77,19 +147,38 @@ class Signup extends React.Component {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(SignUpData),
-    }).then (() => {
-        window.location.assign('/login')
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      if(data.status === 'user already exists') {
+        this.handleShowModal('It looks like an account is already associated with this email!');
+      } else {
+        window.location.assign('/')
+      }
+    }).catch( (err) => {
+      this.handleShowModal('An error occurred. Please try again.');
     })
   }
 
   clear() {
-    // everything except for the 2 dropdown menu values gets reset
     document.getElementById("first-name").value = "";
     document.getElementById("last-name").value = "";
-    //this.state.volSelected = [];
     document.getElementById("phone-number").value = "";
     document.getElementById("email").value = "";
-    //this.state.locSelected = [];
+    this.setState({
+      volSelected: [],
+      locSelected: null,
+      firstName: null,
+      lastName: null,
+      phoneNumber: null,
+      email: null,
+      errorMsg: null,
+      showModal: false,
+      validatedEmail: null,
+      validatedPhoneNumber: null,
+      validatedFirstName: null,
+      validatedLastName: null
+    })
   }
 
   render() {
@@ -97,83 +186,133 @@ class Signup extends React.Component {
     const { locSelected } = this.state;
 
     return (
-      <div className="wrapper">
-        <div className="title">
+      <div className="signup-wrapper">
+        <Modal centered show={this.state.showModal} onHide={this.handleClose}>
+          <Modal.Header>
+            <Modal.Title>Error</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.state.errorMsg}</Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={this.handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <div className="signup-title">
           <h2>New Volunteer? Sign Up Here!</h2>
         </div>
-        <div className="fields" style={{ paddingBottom: "20px" }}>
-          <div className="fields-column">
-            <div id="first-name-field" className="input">
-              <label for="first-name">First Name</label>
-              <input id="first-name"></input>
-            </div>
-            <div id="last-name-field" className="input">
-              <label for="last-name">Last Name</label>
-              <input id="last-name"></input>
-            </div>
-            <div id="volunteer-preferences-field" className="drop-down">
-              <label for="volunteer-preferences">Volunteer Preferences</label>
-              <Select
-                value={volSelected}
-                onChange={this.handleVolChange}
-                options={volunteerOptions}
-                isMulti={true}
-                theme={(theme) => ({
-                  ...theme,
-                  borderRadius: 0,
-                  borderColor: "black",
-                  colors: {
-                    ...theme.colors,
-                    neutral20: "black", // this is border line color
-                  },
-                  spacing: {
-                    baseUnit: 8,
-                  },
-                })}
-              />
-            </div>
-          </div>
-          <div className="fields-column">
-            <div id="phone-number-field" className="input">
-              <label for="phone-number">Phone Number</label>
-              <input id="phone-number"></input>
-            </div>
-            <div id="email-field" className="input">
-              <label for="email">Email</label>
-              <input id="email"></input>
-            </div>
-            <div id="location-preference-field" className="drop-down">
-              <label for="location-preference">Location Preference</label>
-              <Select
-                value={locSelected}
-                onChange={this.handleLocChange}
-                options={locationOptions}
-                isMulti={true}
-                theme={(theme) => ({
-                  ...theme,
-                  borderRadius: 0,
-                  borderColor: "black",
-                  colors: {
-                    ...theme.colors,
-                    neutral20: "black", // this is border line color
-                  },
-                  spacing: {
-                    baseUnit: 8,
-                  },
-                })}
-              />
-            </div>
-          </div>
-        </div>
-        <Button
-          onClick={() => {
-            this.postSignUpData();
-            this.clear();
-          }}
-        >
-          {" "}
-          Sign Up
-        </Button>
+        <Container fluid="md" style={{ paddingBottom: "20px" }}>
+          <Form className="forms" onSubmit={this.handleSignUp}>
+            <Row>
+              <Form.Group as={Col} controlId="first-name">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control 
+                  required
+                  placeholder="First Name"
+                  size="lg"
+                  onChange={this.handleFirstNameChange}
+                  isValid={this.state.validatedFirstName}
+                  isInvalid={this.state.firstName && !this.state.validatedFirstName}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">Plese enter a valid first name</Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} controlId="last-name">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control 
+                  required
+                  placeholder="Last Name"
+                  size="lg"
+                  onChange={this.handleLastNameChange}
+                  isValid={this.state.validatedLastName}
+                  isInvalid={this.state.lastName && !this.state.validatedLastName}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">Plese enter a valid last name</Form.Control.Feedback>
+              </Form.Group>
+            </Row>
+            <br />
+            <Row>
+              <Form.Group as={Col} controlId="phone-number">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control 
+                  required
+                  placeholder="(###)-###-####"
+                  size="lg"
+                  onChange={this.handlePhoneChange}
+                  isValid={this.state.validatedPhoneNumber}
+                  isInvalid={this.state.phoneNumber && !this.state.validatedPhoneNumber}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">Plese enter a valid phone number</Form.Control.Feedback>
+                <Form.Text muted>Exact format is required</Form.Text>
+              </Form.Group>
+              <Form.Group as={Col} controlId="email">
+                <Form.Label>Gmail</Form.Label>
+                <Form.Control 
+                  required
+                  placeholder="username@gmail.com"
+                  size="lg"
+                  onChange={this.handleEmailChange}
+                  isValid={this.state.validatedEmail}
+                  isInvalid={this.state.email && !this.state.validatedEmail}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">Plese enter a valid gmail</Form.Control.Feedback>
+                <Form.Text muted>Gmail is required</Form.Text>
+              </Form.Group>
+              </Row>
+              <br />
+              <Row>
+                <Col>
+                  <label htmlFor="volunteer-preferences">Volunteer Preferences</label>
+                  <Select
+                    value={volSelected}
+                    onChange={this.handleVolChange}
+                    options={volunteerOptions}
+                    isMulti={true}
+                    theme={(theme) => ({
+                      ...theme,
+                      borderRadius: 0,
+                      borderColor: "black",
+                      colors: {
+                        ...theme.colors,
+                        neutral20: "black", // this is border line color
+                      },
+                      spacing: {
+                        baseUnit: 8,
+                      },
+                    })}
+                  />
+                </Col>
+                <Col>
+                  <label htmlFor="location-preference">Location Preference</label>
+                  <Select
+                    value={locSelected}
+                    onChange={this.handleLocChange}
+                    options={locationOptions}
+                    theme={(theme) => ({
+                      ...theme,
+                      borderRadius: 0,
+                      borderColor: "black",
+                      colors: {
+                        ...theme.colors,
+                        neutral20: "black", // this is border line color
+                      },
+                      spacing: {
+                        baseUnit: 8,
+                      },
+                    })}
+                  />
+                </Col>
+              </Row>
+              <div className='d-flex justify-content-center'>
+                <Button type="submit" className="signup-button">
+                  Sign Up
+                </Button>
+              </div>
+          </Form>
+        </Container>
       </div>
     );
   }

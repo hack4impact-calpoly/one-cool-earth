@@ -1,112 +1,33 @@
-h2  {
-    color: #4e5e9a;
+.signup-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
 }
 
-input {
-    border: 1px solid black;
-}
-
-.title {
+.signup-title {
     padding-top: 4%;
     padding-bottom: 1%;
     padding-left: 6%;
     padding-right: 6%;
 
-    font-family: PT Serif;
     font-style: normal;
     font-weight: normal;
-    text-transform: capitalize; 
+    text-transform: uppercase; 
+    color: #4e5e9a;
 }
 
-.fields {
-    display: flex;
-    justify-content: center;
-
-}
-
-.fields-column {
-    margin-left: 5%;
-    margin-right: 5%;
-
-}
-
-.input, .drop-down {
-    display: flex;
-    flex-direction: column;
-    width: 33vw;
-    line-height:  40px;
+.forms {
+    text-transform: uppercase; 
+    margin-top: 5%;
     
 }
 
-.input {
-    margin-bottom: 4%;
+input.form-control {
+    border-radius: 0%;
+    border-color: black;
 }
 
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-transform: uppercase;
-    color: black;
-}
-
-#sign-up-button {
+.signup-button {
     margin-top: 3%;
-}
-
-/* 
-* The following selectors overwrite the default styling 
-* of the Dropdown component defined in 'react-dropdown' 
-*/
-
-.Dropdown-control {
-    border: 1px solid black;
-    color: black;
-}
-
-.Dropdown-control:hover {
-    cursor: pointer;
-}
-
-.Dropdown-menu {
-    border: 1px solid black;
-}
-
-.Dropdown-menu .Dropdown-group > .Dropdown-title {
-    color: black;
-}
-
-.Dropdown-option {
-    color: black;
-    background-color: #d4d4d4;
-}
-
-.Dropdown-option:hover {
-    background-color: white;
-    color: black;
-}
-
-.Dropdown-option.is-selected {
-    background-color: white;
-    color: black;
-}
-
-.Dropdown-arrow {
-    border-color: black transparent transparent;
-}
-
-.is-open .Dropdown-arrow {
-    border-color: transparent transparent black;
-}
-
-/* The following selector modifies Google Chrome's default
-* autofill input background color to match the color scheme
-*/
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active
-{
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
 }

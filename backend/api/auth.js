@@ -43,14 +43,6 @@ router.get('/google/callback',
     res.redirect(`${process.env.CLIENT_URL}/auth/login/${token}`)
 })
 
-router.get('/logout', async (req, res) => {
-    const options = { secure: true, httpOnly: true, sameSite: 'none' }
-
-    res.clearCookie('auth_token', options)
-    res.status(200)
-    res.redirect(`${process.env.CLIENT_URL}`)
-})
-
 router.post('/token', async (req, res) => {
     const { token } = req.body
     const options = { secure: true, httpOnly: true, sameSite: 'none' }
