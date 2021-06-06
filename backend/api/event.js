@@ -63,7 +63,6 @@ const editEvent = async (id, name, startTime, endTime, location, description, vo
 
 router.post('/editEvent', authEndpoint.auth, async (req, res) => {
     if (req.user && req.user.admin) {
-        console.log("edit event being called")
         id = req.body.id
         name = req.body.name
         startTime = req.body.startTime
@@ -74,7 +73,6 @@ router.post('/editEvent', authEndpoint.auth, async (req, res) => {
         coordinator = req.body.coordinator
         address = req.body.address
         volunteerType = req.body.volunteerType
-        console.log(id)
         await editEvent(id, name, startTime, endTime, location, description, volunteersPerShift, coordinator, address, volunteerType)
         res.sendStatus(200)
     } else {
