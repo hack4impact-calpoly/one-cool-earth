@@ -5,18 +5,11 @@ import "./css/SignUp.css";
 import Select from "react-select";
 
 // DUMMY: need to replace with backend data
-const volunteerOptions = [
+let volunteerOptions = [
   { value: "garden workday", label: "Garden Workday Volunteer" },
   { value: "special events", label: "Special Events Volunteer" },
   { value: "garden educator", label: "Garden Educator Assistant" },
   { value: "office/remote", label: "Office/Remote Volunteer" },
-  { value: "unsure", label: "Unsure or Interested in Multiple Opportunities" },
-];
-const locationOptions = [
-  { value: "south county", label: "South County" },
-  { value: "coastal", label: "Coastal" },
-  { value: "san luis", label: "San Luis Obispo" },
-  { value: "north county", label: "North County" },
 ];
 
 class Signup extends React.Component {
@@ -34,18 +27,23 @@ class Signup extends React.Component {
       validatedEmail: null,
       validatedPhoneNumber: null,
       validatedFirstName: null,
-      validatedLastName: null
+      validatedLastName: null,
+      locationOptions: []
     }
-    this.clear = this.clear.bind(this)
-    this.handleLocChange = this.handleLocChange.bind(this)
-    this.handleSignUp = this.handleSignUp.bind(this)
-    this.handleVolChange = this.handleVolChange.bind(this)
-    this.handleShowModal = this.handleShowModal.bind(this)
-    this.handleClose = this.handleClose.bind(this)
-    this.handleEmailChange = this.handleEmailChange.bind(this)
-    this.handlePhoneChange = this.handlePhoneChange.bind(this)
-    this.handleFirstNameChange = this.handleFirstNameChange.bind(this)
-    this.handleLastNameChange = this.handleLastNameChange.bind(this)
+  }
+
+  componentDidMount = () => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/location/get-all`, {
+      mode: 'cors',
+      credentials: 'include'
+    })
+    .then( response => response.json())
+    .then( data => {
+      const locations = data.map( (entry) => {
+        return {value: entry.name, label: entry.name}
+      })
+      this.setState({ locationOptions: locations })
+    })
   }
 
   handleVolChange = (volSelected) => {
@@ -56,7 +54,7 @@ class Signup extends React.Component {
     this.setState({ locSelected: locSelected });
   };
 
-  handleFirstNameChange(event) {
+  handleFirstNameChange = (event) => {
     this.setState({ firstName: event.target.value })
     if(event.target.value &&
       /^[a-zA-Z]+$/.test(event.target.value) &&
@@ -68,7 +66,7 @@ class Signup extends React.Component {
     }
   }
 
-  handleLastNameChange(event) {
+  handleLastNameChange = (event) => {
     this.setState({ lastName: event.target.value })
     if(event.target.value &&
       /^[a-zA-Z]+$/.test(event.target.value) &&
@@ -80,7 +78,7 @@ class Signup extends React.Component {
     }
   }
 
-  handleEmailChange(event) {
+  handleEmailChange =(event) => {
     this.setState({ email: event.target.value })
     if(event.target.value.endsWith('@gmail.com'))
       this.setState({ validatedEmail: true})
@@ -88,7 +86,7 @@ class Signup extends React.Component {
       this.setState({ validatedEmail: false})
   }
 
-  handlePhoneChange(event) {
+  handlePhoneChange = (event) => {
     let index = 0
     this.setState({ phoneNumber: event.target.value })
     if(event.target.value.length === 14) {
@@ -104,16 +102,16 @@ class Signup extends React.Component {
       this.setState({ validatedPhoneNumber: false})
   }
 
-  handleShowModal (errorMsg) {
+  handleShowModal = (errorMsg) => {
     this.setState({ errorMsg: errorMsg, showModal: true })
   }
 
-  handleClose() {
+  handleClose = () => {
     this.setState({ showModal: false })
     this.clear();
   }
 
-  handleSignUp(event) {
+  handleSignUp = (event) => {
     event.preventDefault();
 
     // Don't submit data unless both fields are non-empty
@@ -125,6 +123,7 @@ class Signup extends React.Component {
       !this.state.locSelected ||
       this.state.volSelected === []
     ) {
+      this.handleShowModal("Please fill out all fields")
       return
     }
 
@@ -182,33 +181,28 @@ class Signup extends React.Component {
   }
 
   render() {
-    const { volSelected } = this.state;
-    const { locSelected } = this.state;
-
     return (
       <div className="signup-wrapper">
         <Modal centered show={this.state.showModal} onHide={this.handleClose}>
           <Modal.Header>
-            <Modal.Title>Error</Modal.Title>
+            <Modal.Title className='d-flex justify-content-center'>Error</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{this.state.errorMsg}</Modal.Body>
+          <Modal.Body className='d-flex justify-content-center'>{this.state.errorMsg}</Modal.Body>
           <Modal.Footer>
             <Button variant="primary" onClick={this.handleClose}>
               Close
             </Button>
           </Modal.Footer>
         </Modal>
-        <div className="signup-title">
-          <h2>New Volunteer? Sign Up Here!</h2>
-        </div>
-        <Container fluid="md" style={{ paddingBottom: "20px" }}>
-          <Form className="forms" onSubmit={this.handleSignUp}>
+        <span className="signup-title">New Volunteer? Sign Up Here!</span>
+        <Container fluid="md">
+          <Form className="signup-forms" onSubmit={this.handleSignUp}>
             <Row>
               <Form.Group as={Col} controlId="first-name">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control 
                   required
-                  placeholder="First Name"
+                  placeholder="Enter your first name..."
                   size="lg"
                   onChange={this.handleFirstNameChange}
                   isValid={this.state.validatedFirstName}
@@ -221,7 +215,7 @@ class Signup extends React.Component {
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control 
                   required
-                  placeholder="Last Name"
+                  placeholder="Enter your last name..."
                   size="lg"
                   onChange={this.handleLastNameChange}
                   isValid={this.state.validatedLastName}
@@ -267,7 +261,7 @@ class Signup extends React.Component {
                 <Col>
                   <label htmlFor="volunteer-preferences">Volunteer Preferences</label>
                   <Select
-                    value={volSelected}
+                    value={this.state.volSelected}
                     onChange={this.handleVolChange}
                     options={volunteerOptions}
                     isMulti={true}
@@ -288,9 +282,9 @@ class Signup extends React.Component {
                 <Col>
                   <label htmlFor="location-preference">Location Preference</label>
                   <Select
-                    value={locSelected}
+                    value={this.state.locSelected}
                     onChange={this.handleLocChange}
-                    options={locationOptions}
+                    options={this.state.locationOptions}
                     theme={(theme) => ({
                       ...theme,
                       borderRadius: 0,

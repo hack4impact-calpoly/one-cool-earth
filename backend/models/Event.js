@@ -9,7 +9,8 @@ const EventSchema = new mongoose.Schema({
   volunteersPerShift: Number,
   coordinator: String,
   address: String,
-  volunteerType: String
+  volunteerType: String,
+  status: Boolean
 })
 
 const Event = mongoose.model('events', EventSchema);

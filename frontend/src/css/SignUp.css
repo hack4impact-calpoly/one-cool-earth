@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     color: black;
+    padding-bottom: 10%;
 }
 
 .signup-title {
@@ -11,21 +12,17 @@
     padding-left: 6%;
     padding-right: 6%;
 
+    font-size: xx-large;
     font-style: normal;
     font-weight: normal;
     text-transform: uppercase; 
     color: #4e5e9a;
 }
 
-.forms {
+.signup-forms {
     text-transform: uppercase; 
     margin-top: 5%;
     
-}
-
-input.form-control {
-    border-radius: 0%;
-    border-color: black;
 }
 
 .signup-button {

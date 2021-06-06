@@ -42,13 +42,11 @@ router.post('/deleteLocation', authEndpoint.auth, async (req, res) => {
       res.sendStatus(200)
   }
 });
-router.get('/get-all', authEndpoint.auth, async(req, res) => {
-  if(req.user){
-    Location.find({}).then(locations => {
-      res.status(200);
-      res.json(locations)
-    })
-  }
+router.get('/get-all', async(req, res) => {
+  Location.find({}).then(locations => {
+    res.status(200);
+    res.json(locations)
+  })
 })
 
 module.exports = router
