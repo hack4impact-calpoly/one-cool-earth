@@ -7,6 +7,7 @@ import Spreadsheets from "./Spreadsheets.js";
 import CalendarPage from "./Calendar";
 import CreateEvent from "./CreateEvent";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Card } from 'react-bootstrap'
 
 
 class Admin extends React.Component {
@@ -24,10 +25,15 @@ class Admin extends React.Component {
 			<BrowserRouter>
 			<Header user={this.state.user} />
 				<Switch>
-					<Route exact path="/">
-						<div className="main">
+					<Route exact path="/">	
+						<div className="admin-homepage">
 							<div className="adminBox">
+							<Card style={{ width: '18rem' }}>
+								<Card.Header as="h5"> Create an event here</Card.Header>
+								<Card.Body>
 								<Button href="/create-event">Create Event</Button>
+								</Card.Body>
+							</Card>
 							</div>
 							<div className="adminBox">
 								<Button href="/spreadsheets">View Volunteer Data</Button>
