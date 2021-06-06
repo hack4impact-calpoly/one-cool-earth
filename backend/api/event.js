@@ -28,6 +28,58 @@ router.post('/create', authEndpoint.auth, async (req, res) => {
     }
  });
 
+const editEvent = async (id, name, startTime, endTime, location, description, volunteersPerShift, coordinator, address, volunteerType) => {
+    await Event.findOneAndUpdate({"id": id}).then(function(event) {
+        if (name) {
+            event.name = name
+        }
+        if (startTime) {
+            event.startTime = startTime
+        }
+        if (endTime) {
+            event.endTime = endTime
+        }
+        if (location) {
+            event.location = location
+        }
+        if (description) {
+            event.description = description
+        }
+        if (volunteersPerShift) {
+            event.volunteersPerShift = volunteersPerShift
+        }
+        if (coordinator) {
+            event.coordinator = coordinator
+        }
+        if (address) {
+            event.address = address
+        }
+        if (volunteerType) {
+            event.volunteerType = volunteerType
+        }
+        event.save()
+    });
+};
+
+router.post('/editEvent', authEndpoint.auth, async (req, res) => {
+    if (req.user && req.user.admin) {
+        id = req.body.id
+        name = req.body.name
+        startTime = req.body.startTime
+        endTime = req.body.endTime
+        location = req.body.location
+        description = req.body.description
+        volunteersPerShift = req.body.volunteersPerShift
+        coordinator = req.body.coordinator
+        address = req.body.address
+        volunteerType = req.body.volunteerType
+        await editEvent(id, name, startTime, endTime, location, description, volunteersPerShift, coordinator, address, volunteerType)
+        res.sendStatus(200)
+    } else {
+        res.sendStatus(403)
+    }
+});
+
  router.get('/getEvent', authEndpoint.auth, async (req, res) => {
      if(req.user) {
         Event.findById(req.query.id, function (err, event) {
