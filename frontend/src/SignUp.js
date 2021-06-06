@@ -163,7 +163,7 @@ class Signup extends React.Component {
     document.getElementById("first-name").value = "";
     document.getElementById("last-name").value = "";
     document.getElementById("phone-number").value = "";
-    document.getElementById("email").value = "";
+    document.getElementById("gmail-form-control").value = "";
     this.setState({
       volSelected: [],
       locSelected: null,
@@ -241,7 +241,7 @@ class Signup extends React.Component {
                 <Form.Control.Feedback type="invalid">Plese enter a valid phone number</Form.Control.Feedback>
                 <Form.Text muted>Exact format is required</Form.Text>
               </Form.Group>
-              <Form.Group as={Col} controlId="email">
+              <Form.Group as={Col}>
                 <Form.Label>Gmail</Form.Label>
                 <InputGroup id="gmail-input-group" size="lg">
                   <Form.Control 
