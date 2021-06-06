@@ -12,8 +12,8 @@ code {
     monospace;
 }
 
-html, body, #root {
-  height: 100%;
+html, body, #root, #root>div {
+  height: 100% !important;
   margin: 0;
 }
 
@@ -63,4 +63,9 @@ html, body, #root {
   border: 1px solid white !important;
   color: white !important;
   font-size: 10px !important;
+}
+
+input.form-control {
+  border-radius: 0%;
+  border-color: black;
 }

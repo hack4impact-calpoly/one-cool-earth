@@ -34,6 +34,8 @@ router.post('/createLocation', authEndpoint.auth, async(req, res) => {
       await addLocation(req.body.name)
       res.sendStatus(200)
   }
+  else
+    res.sendStatus(403)
 })
 router.post('/deleteLocation', authEndpoint.auth, async (req, res) => { 
   if(req.user && req.user.admin){
@@ -41,13 +43,14 @@ router.post('/deleteLocation', authEndpoint.auth, async (req, res) => {
       await deleteLocation(name);
       res.sendStatus(200)
   }
+  else
+    res.sendStatus(403)
 });
-router.get('/get-all', authEndpoint.auth, async(req, res) => {
-  if(req.user){
-    Location.find({}).then(locations => {
-      res.status(200);
-      res.json(locations)
-    })
-  }
+router.get('/get-all', async(req, res) => {
+  Location.find({}).then(locations => {
+    res.status(200);
+    res.json(locations)
+  })
 })
+
 module.exports = router

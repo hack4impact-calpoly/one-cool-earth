@@ -27,7 +27,7 @@
     width: 100%;
 } */
 
-header{
+/* header{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -77,21 +77,15 @@ main {
 #engagements{
     display: flex;
     flex-direction: column;
-    /* background-color:aquamarine; */
     align-items: center;
     
     margin-top: 10vh;
-
-    /* border-style: solid;
-    border-color: gray;
-    border-width: 2px; */
 }
 
 #calendar{
     display: flex;
     align-items: center;
     flex-direction: column;
-    /* background-color:blueviolet; */
     margin-top:15vh;
     margin-bottom: 15vh;
 }
@@ -114,9 +108,6 @@ main {
     float: right;
     display: grid;
     position: relative;
-    /* border-style: solid;
-    border-color: gray;
-    border-width: 2px; */
 }
 
 #news > img{
@@ -130,4 +121,73 @@ main {
 
 .event {
     text-transform: uppercase;
+} */
+
+.banner-image {
+    height: 12em;
+    width: auto;
+}
+
+#images-banner {
+    display: flex;
+    margin-top: 2em;
+    margin-bottom: 3em;
+}
+
+/* selects all banner images immediately following another banner image */
+.banner-image + .banner-image {
+    margin-left: 3em;
+}
+
+#welcome > h1 {
+    color: #4E5E9A;
+}
+
+#news > h3, #engagements > h3 {
+    padding-bottom: 0.8em;
+    text-transform: uppercase;
+}
+
+#welcome {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#dashboard {
+    display: flex;
+    padding-bottom: 7em;
+}
+
+#news {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 7em;
+    max-width: 33vw;
+}
+
+#engagements {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 4em;
+}
+
+#edit-button, #calendar-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.event, .announcement {
+    text-transform: uppercase;
+}
+
+.announcement {
+    display: flex;
+    flex-direction: column;
 }

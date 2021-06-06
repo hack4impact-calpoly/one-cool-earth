@@ -7,23 +7,25 @@ router.post('/', async(req, res) => {
    email = req.body.email
    userName = req.body.name
    location = req.body.location
-   pref = req.body.preferences
-   phone = req.body.phoneNum;
+   volunteerPreferences = req.body.volunteerPreferences
+   phone = req.body.phoneNumber;
    await User.findOne({"email": email})
    .then( (user) => {
       if (user) {
          res.status(200)
          res.json({status: 'user already exists'})
+
       } else {
          var doc = new User({
-               "email": email, 
-               "name": userName, 
-               "location": location, 
-               "volunteerPreferences": pref, 
-               "admin": false,
-               "phoneNumber": phone,
-               "shifts": [null],
-            })
+            "email": email, 
+            "name": userName, 
+            "location": location, 
+            "volunteerPreferences": volunteerPreferences, 
+            "admin": false,
+            "phoneNumber": phone,
+            "shifts": [null],
+            active: true
+         })
          doc.save()
          res.status(200)
          res.json({status: 'ok'})
@@ -31,4 +33,4 @@ router.post('/', async(req, res) => {
    })
 })
 
-module.exports = router;
+module.exports = router
