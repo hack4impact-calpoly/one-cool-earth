@@ -1,0 +1,40 @@
+.edit-profile-wrapper {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   color: black;
+   padding-bottom: 10%;
+}
+
+.edit-profile-title {
+   padding-top: 4%;
+   padding-bottom: 1%;
+   padding-left: 6%;
+   padding-right: 6%;
+
+   font-size: xx-large;
+   font-style: normal;
+   font-weight: normal;
+   text-transform: uppercase; 
+   color: #4e5e9a;
+}
+
+.edit-profile-forms {
+   text-transform: uppercase; 
+   margin-top: 5%;
+}
+
+.form-label-edit-btn {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.edit-button:hover {
+   background-color:lightgray !important;
+   cursor:pointer
+}
+
+.edit-profile-button {
+   margin-top: 3%;
+}

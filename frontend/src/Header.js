@@ -15,7 +15,7 @@ class Header extends React.Component {
     } else if (loggedIn && !admin) {
       return (
         <Nav className="justify-content-end" style={{ width: "100%", paddingRight: "15px"}}>
-          <Nav.Link className="custom-nav-link" href="/edit-user">Edit Profile</Nav.Link>
+          <Nav.Link className="custom-nav-link" href="/profile">Profile</Nav.Link>
           <Nav.Link className="custom-nav-link" href={process.env.REACT_APP_SERVER_URL + "/api/logout"}>Logout</Nav.Link>
         </Nav>)	
     }
