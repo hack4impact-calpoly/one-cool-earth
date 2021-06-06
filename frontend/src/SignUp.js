@@ -80,7 +80,12 @@ class Signup extends React.Component {
 
   handleEmailChange =(event) => {
     this.setState({ email: event.target.value + '@gmail.com' })
-    if(/^[a-z0-9.]+$/.test(event.target.value))
+    if(/^[a-z0-9.]+$/.test(event.target.value) &&
+      event.target.value.length > 5 &&
+      event.target.value.length < 31 && 
+      event.target.value.indexOf('.') !== 0 &&
+      !event.target.value.includes(".com") &&
+      !event.target.value.includes("gmail"))
       this.setState({ validatedEmail: true})
     else
       this.setState({ validatedEmail: false})
