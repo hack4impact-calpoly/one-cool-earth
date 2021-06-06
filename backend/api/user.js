@@ -3,43 +3,31 @@ const User = require('../models/User');
 const router = express.Router();
 const authEndpoint = require('./auth')
 
-const editUser = async (email, name, availableDates, location, volunteerPreferences) => {
-    await User.findOne({"email": email}).then(function(user) {
-      if (name.first) {
-         user.name.first = name.first
-      }
-      if (name.last) {
-         user.name.last = name.last
-      }
-      if (availableDates) {
-         user.availableDates = availableDates
-      }
-      if (location) {
-         user.location = location
-      }
-      if (volunteerPreferences) {
-         user.volunteerPreferences = volunteerPreferences
-      }
+const editUser = async (email, name, phoneNumber, location, volunteerPreferences) => {
+   await User.findOne({"email": email})
+   .then( user => {
+      user.name = name
+      user.phoneNumber = phoneNumber
+      user.location = location
+      user.volunteerPreferences = volunteerPreferences
       user.save()
-    });
+   });
 };
 
 router.post('/edit', authEndpoint.auth, async (req, res) => {
-   if (req.user.email === req.body.email) {
-      email = req.body.email
-      name = req.body.name
-      availableDates = req.body.availableDates
-      location = req.body.location
-      volunteerPreferences = req.body.volunteerPreferences
-      console.log(req.body)
-      await editUser(email, name, availableDates, location, volunteerPreferences)
+   if (req.user) {
+      const name = req.body.name
+      const phoneNumber = req.body.phoneNumber
+      const location = req.body.location
+      const volunteerPreferences = req.body.volunteerPreferences
+      await editUser(req.user.email, name, phoneNumber, location, volunteerPreferences)
       res.sendStatus(200)
    } else {
       res.sendStatus(403)
    }
 });
 
-router.get('/get/:email', authEndpoint.auth, async (req, res) => {
+router.get('/:email', authEndpoint.auth, async (req, res) => {
    if(req.user.email === req.params.email) {
       let email = req.params.email
       User.findOne({"email": email}).then(function(user) {
