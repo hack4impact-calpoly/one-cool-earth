@@ -10,7 +10,7 @@ const EventSchema = new mongoose.Schema({
   coordinator: String,
   address: String,
   volunteerType: String,
-  status: Boolean
+  active: Boolean
 })
 
 const Event = mongoose.model('events', EventSchema);

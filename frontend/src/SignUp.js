@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Container, Form, Button, Row, Col } from "react-bootstrap";
+import { Modal, Container, Form, Button, Row, Col, InputGroup } from "react-bootstrap";
 import "react-dropdown/style.css";
 import "./css/SignUp.css";
 import Select from "react-select";
@@ -79,8 +79,8 @@ class Signup extends React.Component {
   }
 
   handleEmailChange =(event) => {
-    this.setState({ email: event.target.value })
-    if(event.target.value.endsWith('@gmail.com'))
+    this.setState({ email: event.target.value + '@gmail.com' })
+    if(/^[a-z0-9.]+$/.test(event.target.value))
       this.setState({ validatedEmail: true})
     else
       this.setState({ validatedEmail: false})
@@ -243,14 +243,20 @@ class Signup extends React.Component {
               </Form.Group>
               <Form.Group as={Col} controlId="email">
                 <Form.Label>Gmail</Form.Label>
-                <Form.Control 
-                  required
-                  placeholder="username@gmail.com"
-                  size="lg"
-                  onChange={this.handleEmailChange}
-                  isValid={this.state.validatedEmail}
-                  isInvalid={this.state.email && !this.state.validatedEmail}
-                />
+                <InputGroup id="gmail-input-group" size="lg">
+                  <Form.Control 
+                    required
+                    placeholder="username"
+                    size="lg"
+                    onChange={this.handleEmailChange}
+                    isValid={this.state.validatedEmail}
+                    isInvalid={(this.state.email && this.state.email !==  '@gmail.com')  && !this.state.validatedEmail}
+                    id="gmail-form-control"
+                  />
+                  <InputGroup.Append className="input-group-lg">
+                    <InputGroup.Text>@gmail.com</InputGroup.Text>
+                  </InputGroup.Append>
+                </InputGroup>
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">Plese enter a valid gmail</Form.Control.Feedback>
                 <Form.Text muted>Gmail is required</Form.Text>
@@ -278,6 +284,7 @@ class Signup extends React.Component {
                       },
                     })}
                   />
+                  <Form.Text muted>Specify the type of volunteer work that your prefer</Form.Text>
                 </Col>
                 <Col>
                   <label htmlFor="location-preference">Location Preference</label>
@@ -298,6 +305,7 @@ class Signup extends React.Component {
                       },
                     })}
                   />
+                  <Form.Text muted>Specify the location that you prefer to volunteer at</Form.Text>
                 </Col>
               </Row>
               <div className='d-flex justify-content-center'>
