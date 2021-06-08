@@ -19,8 +19,8 @@ class Admin extends React.Component {
 			<Header user={this.props.user} />
 				<Switch>
 					<Route exact path="/">
-						<h1 style={{textAlign: "center", color: "#1b597c"}}>Welcome, {this.props.user.name.first}</h1>
 						<div className="admin-homepage-wrapper">
+						<h1 style={{textAlign: "center", color: "#1b597c"}}>Welcome, {this.props.user.name.first}</h1>
 						<Container className="admin-homepage">
 							<div className="admin-card-row">
 								<Card style={{borderRadius: "0%"}} className="admin-card">
