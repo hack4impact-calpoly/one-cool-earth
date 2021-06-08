@@ -30,19 +30,9 @@
 	font-weight: 700 !important;
 }
 
-.custom-home-link-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-}
 .logo-wrapper img {
-    height: 2.5em;
+    height: 3em;
 	width: auto;
-}
-
-.custom-home-link:hover {
-	color: grey !important;
 }
 
 .custom-nav-link:hover {

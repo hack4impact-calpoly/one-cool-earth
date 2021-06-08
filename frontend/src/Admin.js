@@ -12,20 +12,14 @@ import { Container, Card} from 'react-bootstrap'
 
 class Admin extends React.Component {
 
-	constructor(props) {
-		super(props)
-		this.state = {
-			user: this.props.user
-		}
-	}
-
   render() {
     return (
 		 <div>
 			<BrowserRouter>
-			<Header user={this.state.user} />
+			<Header user={this.props.user} />
 				<Switch>
 					<Route exact path="/">
+						<h1 style={{textAlign: "center", color: "#1b597c"}}>Welcome, {this.props.user.name.first}</h1>
 						<div className="admin-homepage-wrapper">
 						<Container className="admin-homepage">
 							<div className="admin-card-row">
@@ -76,16 +70,16 @@ class Admin extends React.Component {
 						</div>	
 					</Route>
 					<Route exact path="/spreadsheets">
-						<Spreadsheets user={this.state.user} />
+						<Spreadsheets user={this.props.user} />
 					</Route>
 					<Route exact path="/profile">
-						<Profile user={this.state.user} />
+						<Profile user={this.props.user} />
 					</Route>
 					<Route exact path="/calendar">
-						<CalendarPage user={this.state.user}/>
+						<CalendarPage user={this.props.user}/>
 					</Route>
 						<Route exact path="/create-event">
-					<CreateEvent user={this.state.user}/>
+					<CreateEvent user={this.props.user}/>
 					</Route>
 				</Switch>
 			</BrowserRouter>

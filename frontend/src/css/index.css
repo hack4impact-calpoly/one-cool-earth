@@ -2,7 +2,8 @@
 
 body {
   margin: 0;
-  font-family: "Playfair Display", serif, sans-serif;
+  font-family: "Playfair Display", serif, sans-serif !important;
+  font-weight: 400 !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

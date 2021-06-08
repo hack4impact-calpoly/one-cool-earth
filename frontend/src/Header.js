@@ -29,9 +29,7 @@ class Header extends React.Component {
       ?
         <Navbar className="custom-header">
           <NavbarBrand href='https://www.onecoolearth.org'> 
-            <div className="custom-home-link-wrapper"> 
-              <div className="logo-wrapper"> <img src={Logo} /></div> 
-            </div>
+            <div className="logo-wrapper"> <img src={Logo} /></div> 
           </NavbarBrand>
           {this.props.signup
           ? null 
