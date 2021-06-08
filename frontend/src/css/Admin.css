@@ -17,6 +17,7 @@
 
 .admin-card-header {
 	padding: 3%;
+	text-transform: uppercase;
 }
 
 .admin-card {
