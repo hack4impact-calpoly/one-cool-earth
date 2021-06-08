@@ -1,3 +1,21 @@
+.custom-header {
+    position: fixed;
+    top: 0;
+    z-index: 12;
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 40px;
+    color: #ffffff;
+    border-color: #ffffff;
+    box-sizing: border-box;
+    -webkit-transition: background-color 300ms ease, color 260ms ease, padding 180ms ease;
+    -moz-transition: background-color 300ms ease, color 260ms ease, padding 180ms ease;
+    -ms-transition: background-color 300ms ease, color 260ms ease, padding 180ms ease;
+    transition: background-color 300ms ease, color 260ms ease, padding 180ms ease;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
 .custom-nav-link {
 	color: black !important;
 	display: block !important;
@@ -12,33 +30,9 @@
 	font-weight: 700 !important;
 }
 
-.custom-home-link {
-	color: black !important;
-	display: block !important;
-    border: 1px solid transparent !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 12px !important;
-    font-weight: 500 !important;
-    line-height: 2 !important;
-    letter-spacing: 0.05em !important;
-    text-transform: uppercase !important;
-	font-weight: 700 !important;
-}
-
-.custom-home-link-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-}
 .logo-wrapper img {
-    padding: 10px;
-    height: 6.0em;
+    height: 3em;
 	width: auto;
-}
-
-.custom-home-link:hover {
-	color: grey !important;
 }
 
 .custom-nav-link:hover {

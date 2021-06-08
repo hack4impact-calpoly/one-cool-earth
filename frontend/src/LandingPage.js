@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from './images/oce-logo.png';
+import Logo from './images/oce-logo-landing-page.png';
 import Background from './images/landing-page-background.jpg';
 import {Button} from 'react-bootstrap';
 import './css/LandingPage.css';

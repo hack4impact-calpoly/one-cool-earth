@@ -15,7 +15,6 @@
   margin: 0;
   font-size: 9vh;
   color:#4b61a3;
-  font-family: serif;
 }
 .calendar{
   grid-area: box2;
@@ -26,14 +25,11 @@
   margin-right: 17%;
   margin-bottom: 10%;
 }
-body{
+/* body{
   height: 100vh;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 2.5fr;
   grid-template-areas: 'box1 .' 'box2 .';
-}
-.fc{
-  font-family: sans-serif !important;
-}
+} */

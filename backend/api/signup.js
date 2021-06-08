@@ -24,6 +24,7 @@ router.post('/', async(req, res) => {
             "admin": false,
             "phoneNumber": phone,
             "shifts": [null],
+            active: true
          })
          doc.save()
          res.status(200)
