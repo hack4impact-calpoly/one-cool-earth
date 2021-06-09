@@ -6,6 +6,7 @@
 .Collapsible__trigger{
   width: 100%;
   display: flex;
+  color: white;
   background-color: #4E5E9A;
   border: 1px solid black;
 }
@@ -13,6 +14,7 @@
 .Collapsible__contentInner{
   display: flex;
   flex-direction: column;
+  padding-bottom: 5px;
 }
 
 .signUpBox{

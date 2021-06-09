@@ -10,24 +10,24 @@ const sampleEvents = [
   {
     id: 1,
     name: "Event 1",
-    startTime: (new Date()).getTime(),
-    endTime: (new Date()).getTime(),
+    startTime: (new Date("Wed Jun 02 2021 03:30:16 GMT-0700")),
+    endTime: (new Date("Wed Jun 02 2021 05:30:16 GMT-0700")),
     location: "Paso Robles",
     description: "This is the decription for Event 1"
   },
   {
     id: 2,
     name: "Event 2",
-    startTime: (new Date()).getTime(),
-    endTime: (new Date()).getTime(),
+    startTime: (new Date("Fri Jun 04 2021 09:30:16 GMT-0700")),
+    endTime: (new Date("Fri Jun 04 2021 10:30:16 GMT-0700")),
     location: "Arroyo Grande",
     description: "This is the decription for Event 2. This has a lot of lines to check the wrap around of the modal."
   },
   {
     id: 3,
     name: "Event 3",
-    startTime: (new Date()).getTime(),
-    endTime: (new Date()).getTime(),
+    startTime: (new Date("Mon Jun 07 2021 13:30:16 GMT-0700")),
+    endTime: (new Date("Mon Jun 07 2021 14:30:16 GMT-0700")),
     location: "San Luis Obispo",
     description: "This is the decription for Event 3"
   }
@@ -38,9 +38,14 @@ class CalendarPage extends React.Component{
     super();
     this.state={
       dateModalVisible: false,
-      dateStr: "",
-      events: []
+      events: sampleEvents,
+      dateClickedStr: "",
+      dateClickedEvents: []
     }
+  }
+
+  componentDidMount() {
+    //$('#calendar').fullCalendar('addEventSource', this.state.events);
   }
 
   showDateModal = () => {
@@ -53,11 +58,9 @@ class CalendarPage extends React.Component{
 
   handleDateClick = (arg) =>{
     this.setState({
-      dateStr: `${arg.date.getMonth()+1}/${arg.date.getDate()}/${arg.date.getFullYear()}`,
-      events: sampleEvents
+      dateClickedStr: `${arg.date.getMonth()+1}/${arg.date.getDate()}/${arg.date.getFullYear()}`,
+      dateClickedEvents: sampleEvents
       });
-    console.log(this.state.dateStr);
-    console.log(this.state.events);
     this.showDateModal();
   }
 
@@ -82,8 +85,8 @@ class CalendarPage extends React.Component{
 	<DateModal 
 	    show={this.state.dateModalVisible}
 	    onHide={this.hideDateModal}
-	    dateStr={this.state.dateStr}
-	    events={this.state.events}
+	    dateStr={this.state.dateClickedStr}
+	    events={this.state.dateClickedEvents}
 	></DateModal>
       </Container>
     );

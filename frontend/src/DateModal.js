@@ -12,15 +12,15 @@ class DateModal extends React.Component {
   }
 
   getEventComponents(){
-	  return (this.props.events.map((e) =>
-	    <Collapsible trigger={e.name}>
-	      {
-	        Object.keys(e).map(function(eventAttribute){
-                  return <h6>{eventAttribute + ": " + e[eventAttribute]}</h6>
-		})
-	      }
-              <div class="signUpBox"><Button class="signUpButton">Sign up</Button></div>
-            </Collapsible>));
+    return (this.props.events.map((e) =>
+      <Collapsible trigger={e.name}>
+        {
+	  Object.keys(e).map(function(eventAttribute){
+            return <h6>{eventAttribute + ": " + e[eventAttribute]}</h6>
+          })
+	}
+        <div class="signUpBox"><Button class="signUpButton">Sign up</Button></div>
+      </Collapsible>));
   }
 
   render() {
