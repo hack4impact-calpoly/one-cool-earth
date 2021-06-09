@@ -1,0 +1,22 @@
+.Collapsible{
+  display: flex;
+  flex-direction: column;
+}
+
+.Collapsible__trigger{
+  width: 100%;
+  display: flex;
+  background-color: #4E5E9A;
+  border: 1px solid black;
+}
+
+.Collapsible__contentInner{
+  display: flex;
+  flex-direction: column;
+}
+
+.signUpBox{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
