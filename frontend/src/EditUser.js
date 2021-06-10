@@ -1,5 +1,4 @@
 import React from "react";
-import Dropdown from "react-dropdown";
 import { Button } from "react-bootstrap";
 import "react-dropdown/style.css";
 import "./css/SignUp.css";
@@ -39,49 +38,46 @@ var stored_location = [
 ];
 
 class EditUser extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-    stored_first: "",
-    stored_last: "",
-    stored_preferences: [],
-    stored_phone: "",
-    stored_email: "",
-    stored_location: [],
-    volSelected: [],
-    locSelected: [],
-    volunteerOptions: [],
-    locationOptions: []
+      stored_first: "",
+      stored_last: "",
+      stored_preferences: [],
+      stored_phone: "",
+      stored_email: "",
+      stored_location: [],
+      volSelected: [],
+      locSelected: [],
+      volunteerOptions: [],
+      locationOptions: [],
     };
   }
 
   componentDidMount() {
-    this.getData()
+    this.getData();
   }
 
   async getData() {
-    let email = "patrickstar24@gmail.com"
+    let email = "patrickstar24@gmail.com";
 
     let response = await fetch(`http://localhost:3001/api/user/get/${email}`, {
-      mode: 'cors',
-      credentials: 'include',
-    })
+      mode: "cors",
+      credentials: "include",
+    });
 
-    const data = await response.json()
-    const prefArray = []
+    const data = await response.json();
+    const prefArray = [];
     for (let pref of data.volunteerPreferences) {
-        for (let option of volunteerOptions) {
-          console.log("pref", pref, "option.value", option.value)
-          if (pref === option.value)
-            prefArray.push(option)
-        }
+      for (let option of volunteerOptions) {
+        console.log("pref", pref, "option.value", option.value);
+        if (pref === option.value) prefArray.push(option);
+      }
     }
-    const locationArray = []
+    const locationArray = [];
     for (let option of locationOptions) {
-      console.log("loc", data.location, "option.value", option.value)
-      if (data.location == option.value)
-        locationArray.push(option)
+      console.log("loc", data.location, "option.value", option.value);
+      if (data.location == option.value) locationArray.push(option);
     }
 
     this.setState({
@@ -92,9 +88,9 @@ class EditUser extends React.Component {
       stored_location: locationArray,
       stored_preferences: prefArray,
       volSelected: prefArray,
-      locSelected: locationArray
-    })
-    console.log(this.state)
+      locSelected: locationArray,
+    });
+    console.log(this.state);
   }
 
   handleVolChange = (volSelected) => {
@@ -108,7 +104,7 @@ class EditUser extends React.Component {
       console.log(`Option selected:`, this.state.locSelected)
     );
   };
- 
+
   /*   _onPreferenceSelect(option) {
     preference = option.label;
   }
@@ -137,24 +133,24 @@ class EditUser extends React.Component {
       return;
     }
 
-    const volArray = []
+    const volArray = [];
     for (let pref of preferences) {
-      volArray.push(pref.value)
+      volArray.push(pref.value);
     }
 
-    const locArray = []
+    const locArray = [];
     for (let loc of location) {
-      locArray.push(loc.value)
+      locArray.push(loc.value);
     }
 
     this.setState({
       stored_preferences: volArray,
-      stored_location: locArray
-    })
+      stored_location: locArray,
+    });
     const SignUpData = {
       name: {
         firstName: first,
-        lastName: last
+        lastName: last,
       },
       volunteerPreferences: volArray,
       phoneNum: phone,
@@ -163,14 +159,14 @@ class EditUser extends React.Component {
     };
 
     await fetch(`http://localhost:3001/api/user/edit`, {
-      method: 'POST',
-      mode: 'cors',
-      credentials: 'include',
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(SignUpData)
-      });
+      body: JSON.stringify(SignUpData),
+    });
 
     console.log(SignUpData);
   }
@@ -197,11 +193,17 @@ class EditUser extends React.Component {
           <div className="fields-column">
             <div id="first-name-field" className="input">
               <label for="first-name">First Name</label>
-              <input id="first-name" defaultValue={this.state.stored_first}></input>
+              <input
+                id="first-name"
+                defaultValue={this.state.stored_first}
+              ></input>
             </div>
             <div id="last-name-field" className="input">
               <label for="last-name">Last Name</label>
-              <input id="last-name" defaultValue={this.state.stored_last}></input>
+              <input
+                id="last-name"
+                defaultValue={this.state.stored_last}
+              ></input>
             </div>
             <div id="volunteer-preferences-field" className="drop-down">
               <label for="volunteer-preferences">Volunteer Preferences</label>
@@ -233,7 +235,10 @@ class EditUser extends React.Component {
           <div className="fields-column">
             <div id="phone-number-field" className="input">
               <label for="phone-number">Phone Number</label>
-              <input id="phone-number" defaultValue={this.state.stored_phone}></input>
+              <input
+                id="phone-number"
+                defaultValue={this.state.stored_phone}
+              ></input>
             </div>
             <div id="email-field" className="input">
               <label for="email">Email</label>

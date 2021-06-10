@@ -1,69 +1,69 @@
 #landing-page {
-	min-height: 100vh;
-	min-width: 100vw;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-position: center;
-	background-size: cover;
-	background-image: url('../images/landing-page-background.JPG');
-	-webkit-background-size: cover;
-  	-moz-background-size: cover;
-  	-o-background-size: cover;
-	font-family: sans-serif;
-	padding-top: 1%;
-	padding-bottom: 4%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	
+  min-height: 100vh;
+  min-width: 100vw;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  background-image: url("../images/landing-page-background.JPG");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  font-family: sans-serif;
+  padding-top: 1%;
+  padding-bottom: 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #landing-page-banner {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	margin-bottom: 4%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 4%;
 }
 
 #logo {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #logo img {
-	height: 9.1em;
-	width: auto;
+  height: 10em;
+  width: auto;
 }
 
 #title {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-#logo, #title {
-	margin-right: 10%;
+#logo,
+#title {
+  margin-right: 10%;
 }
 
 .volunteer-opportunities {
-	display: flex;
- 	justify-content: center;
- 	align-items: center;
- 	font-size: 3.5em;
- 	margin: 0px;
-	color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4em;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin: 0px;
+  color: white;
 }
 
 #options {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* #options button {
@@ -79,11 +79,11 @@
 } */
 
 .signup-box {
-	justify-content: center;
-	padding: 22pc;
+  justify-content: center;
+  padding: 22pc;
 }
 
 #login-box {
-	justify-content: center;
-	padding: 30px;
+  justify-content: center;
+  padding: 30px;
 }

@@ -1,112 +1,89 @@
-h2  {
-    color: #4e5e9a;
-}
-
-input {
-    border: 1px solid black;
+h2 {
+  padding-top: 1%;
+  padding-bottom: 2%;
+  padding-left: 3%;
+  padding-right: 6%;
+  color: #4e5e9a;
+  letter-spacing: -0.015em;
+  font-size: 2.5em;
+  text-transform: capitalize;
+  text-align: center;
 }
 
 .title {
-    padding-top: 4%;
-    padding-bottom: 1%;
-    padding-left: 6%;
-    padding-right: 6%;
+  font-family: PT Serif;
+  font-size: 150%;
+  color: #4e5e9a;
+  line-height: 90px;
+  inline-size: 900px;
+}
 
-    font-family: PT Serif;
-    font-style: normal;
-    font-weight: normal;
-    text-transform: capitalize; 
+input {
+  border: 1px solid black;
+}
+
+label {
+  font-family: Roboto;
+  font-weight: 50;
+  font-stretch: semi-condensed;
+  line-height: 0em;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  font-size: 2em;
+  padding-top: 5%;
 }
 
 .fields {
-    display: flex;
-    justify-content: center;
-
+  display: flex;
+  justify-content: center;
+  font-size: 1em;
 }
 
 .fields-column {
-    margin-left: 5%;
-    margin-right: 5%;
-
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 0%;
+  font-size: 1em;
 }
 
-.input, .drop-down {
-    display: flex;
-    flex-direction: column;
-    width: 33vw;
-    line-height:  40px;
-    
+.drop-down {
+  display: flex;
+  flex-direction: column;
+  width: 33vw;
+  line-height: 3.5em;
 }
 
 .input {
-    margin-bottom: 4%;
+  padding-top: 0%;
+  margin-top: 0%;
+  margin-bottom: 4%;
+  display: flex;
+  flex-direction: column;
+  width: 33vw;
+  line-height: 3.5em;
+  font-size: 1em;
 }
 
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-transform: uppercase;
-    color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* changes text for dropdown placeholder text */
+  font-size: 1em;
+  color: black;
 }
 
 #sign-up-button {
-    margin-top: 3%;
-}
-
-/* 
-* The following selectors overwrite the default styling 
-* of the Dropdown component defined in 'react-dropdown' 
-*/
-
-.Dropdown-control {
-    border: 1px solid black;
-    color: black;
-}
-
-.Dropdown-control:hover {
-    cursor: pointer;
-}
-
-.Dropdown-menu {
-    border: 1px solid black;
-}
-
-.Dropdown-menu .Dropdown-group > .Dropdown-title {
-    color: black;
-}
-
-.Dropdown-option {
-    color: black;
-    background-color: #d4d4d4;
-}
-
-.Dropdown-option:hover {
-    background-color: white;
-    color: black;
-}
-
-.Dropdown-option.is-selected {
-    background-color: white;
-    color: black;
-}
-
-.Dropdown-arrow {
-    border-color: black transparent transparent;
-}
-
-.is-open .Dropdown-arrow {
-    border-color: transparent transparent black;
+  margin-top: 3%;
 }
 
 /* The following selector modifies Google Chrome's default
-* autofill input background color to match the color scheme
-*/
+  * autofill input background color to match the color scheme
+  */
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active
-{
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }

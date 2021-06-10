@@ -60,8 +60,8 @@ class Signup extends React.Component {
 
     const SignUpData = {
       name: {
-          first: first,
-          last: last
+        first: first,
+        last: last,
       },
       preferences: preferences,
       phoneNum: phone,
@@ -70,16 +70,16 @@ class Signup extends React.Component {
     };
 
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/signup`, {
-        method: 'POST',
-        mode: 'cors',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(SignUpData),
-    }).then (() => {
-        window.location.assign('/login')
-    })
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(SignUpData),
+    }).then(() => {
+      window.location.assign("/login");
+    });
   }
 
   clear() {
@@ -98,21 +98,27 @@ class Signup extends React.Component {
 
     return (
       <div className="wrapper">
-        <div className="title">
-          <h2>New Volunteer? Sign Up Here!</h2>
-        </div>
+        <h2>
+          <div className="title">New Volunteer? Sign Up Here!</div>
+        </h2>
         <div className="fields" style={{ paddingBottom: "20px" }}>
           <div className="fields-column">
             <div id="first-name-field" className="input">
-              <label for="first-name">First Name</label>
+              <label for="first-name" style={{ fontSize: "1.5em" }}>
+                First Name
+              </label>
               <input id="first-name"></input>
             </div>
             <div id="last-name-field" className="input">
-              <label for="last-name">Last Name</label>
+              <label for="last-name" style={{ fontSize: "1.5em" }}>
+                Last Name
+              </label>
               <input id="last-name"></input>
             </div>
             <div id="volunteer-preferences-field" className="drop-down">
-              <label for="volunteer-preferences">Volunteer Preferences</label>
+              <label for="volunteer-preferences" style={{ fontSize: "1.5em" }}>
+                Volunteer Preferences
+              </label>
               <Select
                 value={volSelected}
                 onChange={this.handleVolChange}
@@ -127,7 +133,7 @@ class Signup extends React.Component {
                     neutral20: "black", // this is border line color
                   },
                   spacing: {
-                    baseUnit: 8,
+                    baseUnit: 3,
                   },
                 })}
               />
@@ -135,15 +141,21 @@ class Signup extends React.Component {
           </div>
           <div className="fields-column">
             <div id="phone-number-field" className="input">
-              <label for="phone-number">Phone Number</label>
+              <label for="phone-number" style={{ fontSize: "1.5em" }}>
+                Phone Number
+              </label>
               <input id="phone-number"></input>
             </div>
             <div id="email-field" className="input">
-              <label for="email">Email</label>
+              <label for="email" style={{ fontSize: "1.5em" }}>
+                Email
+              </label>
               <input id="email"></input>
             </div>
             <div id="location-preference-field" className="drop-down">
-              <label for="location-preference">Location Preference</label>
+              <label for="location-preference" style={{ fontSize: "1.5em" }}>
+                Location Preference
+              </label>
               <Select
                 value={locSelected}
                 onChange={this.handleLocChange}
@@ -158,7 +170,7 @@ class Signup extends React.Component {
                     neutral20: "black", // this is border line color
                   },
                   spacing: {
-                    baseUnit: 8,
+                    baseUnit: 3,
                   },
                 })}
               />
@@ -166,6 +178,7 @@ class Signup extends React.Component {
           </div>
         </div>
         <Button
+          id="sign-up-button"
           onClick={() => {
             this.postSignUpData();
             this.clear();
