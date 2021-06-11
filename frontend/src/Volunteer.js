@@ -27,7 +27,7 @@ class Volunteer extends React.Component {
 						<CalendarPage user={this.state.user}/>
 					</Route>
 					<Route exact path="/profile">
-						<Profile user={this.state.user} />
+						<Profile user={this.state.user} admin={false} />
 					</Route>
             </Switch>
          </BrowserRouter>

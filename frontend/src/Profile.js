@@ -50,9 +50,13 @@ class Profile extends React.Component {
       const locations = data.map( (entry) => {
         return {value: entry.name, label: entry.name}
       })
-      const locSelected = this.populateLocationSelection(this.props.user.location, locations)
-      const volSelected = this.populatePrefSelection(this.props.user.volunteerPreferences, volunteerOptions)
-      this.setState({ 
+      const locSelected = this.props.admin
+          ? null
+          : this.populateLocationSelection(this.props.user.location, locations)
+      const volSelected = this.props.admin
+          ? null
+          : this.populatePrefSelection(this.props.user.volunteerPreferences, volunteerOptions)
+      this.setState({
         locationOptions: locations,
         email: this.props.user.email,
         firstName: this.props.user.name.first,
@@ -63,7 +67,7 @@ class Profile extends React.Component {
       })
     })
   }
-  
+
   populateLocationSelection = (location, locationOptions) => {
     let locArray = null
     for (let option of locationOptions) {
@@ -87,16 +91,16 @@ class Profile extends React.Component {
 
   handleVolChange = (volSelected) => {
     console.log(this.state.volSelected)
-    this.setState({ 
+    this.setState({
       editedVolunteerPreferences: true,
-      volSelected: volSelected 
+      volSelected: volSelected
     });
   };
 
   handleLocChange = (locSelected) => {
     this.setState({
       editedLocation: true,
-      locSelected: locSelected 
+      locSelected: locSelected
     });
   };
 
@@ -141,10 +145,10 @@ class Profile extends React.Component {
   }
 
   handleShowModal = (modalMsg, isError) => {
-    this.setState({ 
-      modalMsg: modalMsg, 
+    this.setState({
+      modalMsg: modalMsg,
       isErrorModal: isError,
-      showModal: true 
+      showModal: true
     })
   }
 
@@ -206,8 +210,8 @@ class Profile extends React.Component {
       !this.state.lastName ||
       !this.state.phoneNumber ||
       !this.state.email ||
-      !this.state.locSelected ||
-      this.state.volSelected.length === 0
+      (!this.props.admin && !this.state.locSelected ) ||
+      (!this.props.admin && this.state.volSelected.length === 0 )
     ) {
       this.handleShowModal("Empty fields are not allowed.", false)
       return
@@ -218,11 +222,11 @@ class Profile extends React.Component {
           first: this.state.firstName,
           last: this.state.lastName
       },
-      volunteerPreferences: this.state.volSelected.map(entry => entry.value),
+      volunteerPreferences: (this.props.admin) ? null : this.state.volSelected.map(entry => entry.value),
       phoneNumber: this.state.phoneNumber,
-      location: this.state.locSelected.value,
+      location: (this.props.admin) ? null : this.state.locSelected.value,
     };
-    
+
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/user/edit`, {
       method: 'POST',
       mode: 'cors',
@@ -263,7 +267,7 @@ class Profile extends React.Component {
                   <FaEdit className="edit-button" onClick={() => this.handleEditBtn('firstName')}/>
                 </div>
                 <InputGroup>
-                  <Form.Control 
+                  <Form.Control
                     required
                     placeholder="Enter your first name..."
                     size="lg"
@@ -273,10 +277,10 @@ class Profile extends React.Component {
                     isValid={this.state.validatedFirstName}
                     isInvalid={this.state.editedFirstName && this.state.firstName && !this.state.validatedFirstName}
                   />
-                  {this.state.editFirstName ? 
+                  {this.state.editFirstName ?
                     <InputGroup.Append>
                       <Button variant="large" onClick={this.handleCancelFirstName}>Cancel</Button>
-                    </InputGroup.Append> 
+                    </InputGroup.Append>
                   : null }
                 </InputGroup>
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -288,7 +292,7 @@ class Profile extends React.Component {
                   <FaEdit className="edit-button" onClick={() => this.handleEditBtn('lastName')}/>
                 </div>
                 <InputGroup>
-                  <Form.Control 
+                  <Form.Control
                     required
                     placeholder="Enter your last name..."
                     size="lg"
@@ -298,10 +302,10 @@ class Profile extends React.Component {
                     isValid={this.state.validatedLastName}
                     isInvalid={this.state.editedLastName && this.state.lastName && !this.state.validatedLastName}
                   />
-                  {this.state.editLastName ? 
+                  {this.state.editLastName ?
                     <InputGroup.Append>
                       <Button variant="large" onClick={this.handleCancelLasttName}>Cancel</Button>
-                    </InputGroup.Append> 
+                    </InputGroup.Append>
                   : null }
                 </InputGroup>
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -316,7 +320,7 @@ class Profile extends React.Component {
                   <FaEdit className="edit-button" onClick={() => this.handleEditBtn('phoneNumber')}/>
                 </div>
                 <InputGroup>
-                  <Form.Control 
+                  <Form.Control
                     required
                     placeholder="(###)-###-####"
                     size="lg"
@@ -326,10 +330,10 @@ class Profile extends React.Component {
                     isValid={this.state.validatedPhoneNumber}
                     isInvalid={this.state.editedPhoneNumber && this.state.phoneNumber && !this.state.validatedPhoneNumber}
                   />
-                  {this.state.editPhoneNumber ? 
+                  {this.state.editPhoneNumber ?
                     <InputGroup.Append>
                       <Button variant="large" onClick={this.handleCancelPhoneNumber}>Cancel</Button>
-                    </InputGroup.Append> 
+                    </InputGroup.Append>
                   : null }
                 </InputGroup>
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -337,7 +341,7 @@ class Profile extends React.Component {
               </Form.Group>
               <Form.Group as={Col} controlId="email">
                 <Form.Label>Gmail</Form.Label>
-                <Form.Control 
+                <Form.Control
                   readOnly
                   size="lg"
                   value={this.state.email}
@@ -345,54 +349,56 @@ class Profile extends React.Component {
               </Form.Group>
               </Row>
               <br />
-              <Row>
-                <Col>
-                  <label htmlFor="volunteer-preferences">Volunteer Preferences</label>
-                  <Select
-                    value={this.state.volSelected}
-                    onChange={this.handleVolChange}
-                    options={volunteerOptions}
-                    isMulti={true}
-                    theme={(theme) => ({
-                      ...theme,
-                      borderRadius: 0,
-                      borderColor: "black",
-                      colors: {
-                        ...theme.colors,
-                        neutral20: "black", // this is border line color
-                      },
-                      spacing: {
-                        baseUnit: 8,
-                      },
-                    })}
-                  />
-                </Col>
-                <Col>
-                  <label htmlFor="location-preference">Location Preference</label>
-                  <Select
-                    value={this.state.locSelected}
-                    onChange={this.handleLocChange}
-                    options={this.state.locationOptions}
-                    theme={(theme) => ({
-                      ...theme,
-                      borderRadius: 0,
-                      borderColor: "black",
-                      colors: {
-                        ...theme.colors,
-                        neutral20: "black", // this is border line color
-                      },
-                      spacing: {
-                        baseUnit: 8,
-                      },
-                    })}
-                  />
-                </Col>
-              </Row>
-              { (this.state.editedFirstName || 
-                this.state.editedLastName || 
+              {this.props.admin ? null :
+                <Row>
+                  <Col>
+                    <label htmlFor="volunteer-preferences">Volunteer Preferences</label>
+                    <Select
+                      value={this.state.volSelected}
+                      onChange={this.handleVolChange}
+                      options={volunteerOptions}
+                      isMulti={true}
+                      theme={(theme) => ({
+                        ...theme,
+                        borderRadius: 0,
+                        borderColor: "black",
+                        colors: {
+                          ...theme.colors,
+                          neutral20: "black", // this is border line color
+                        },
+                        spacing: {
+                          baseUnit: 8,
+                        },
+                      })}
+                    />
+                  </Col>
+                  <Col>
+                    <label htmlFor="location-preference">Location Preference</label>
+                    <Select
+                      value={this.state.locSelected}
+                      onChange={this.handleLocChange}
+                      options={this.state.locationOptions}
+                      theme={(theme) => ({
+                        ...theme,
+                        borderRadius: 0,
+                        borderColor: "black",
+                        colors: {
+                          ...theme.colors,
+                          neutral20: "black", // this is border line color
+                        },
+                        spacing: {
+                          baseUnit: 8,
+                        },
+                      })}
+                    />
+                  </Col>
+                </Row>
+              }
+              { (this.state.editedFirstName ||
+                this.state.editedLastName ||
                 this.state.editedPhoneNumber ||
                 this.state.editedLocation ||
-                this.state.editedVolunteerPreferences) ? 
+                this.state.editedVolunteerPreferences) ?
                   <div className='d-flex justify-content-center'>
                     <Button type="submit" className="edit-profile-button">SAVE</Button>
                   </div>
