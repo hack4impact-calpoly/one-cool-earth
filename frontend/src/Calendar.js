@@ -41,7 +41,7 @@ const sampleEvents = [
     startTime: (new Date("Mon Jun 23 2021 13:30:16 GMT-0700")),
     endTime: (new Date("Mon Jun 23 2021 14:30:16 GMT-0700")),
     location: "San Luis Obispo",
-    description: "This is the decription for Event 3"
+    description: "This is the decription for Event 4"
   }
 ]
 
