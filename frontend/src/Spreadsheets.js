@@ -126,7 +126,8 @@ class Spreadsheets extends React.Component{
             showUserModal: false,
             showEventModal: false,
             userModalData: {},
-            eventModalData: {}
+            eventModalData: {},
+            eventData: []
         }
     }
 
@@ -235,7 +236,7 @@ class Spreadsheets extends React.Component{
                     </tbody>
                     </>
                 )
-            
+
             }}
     }
 
@@ -256,8 +257,8 @@ class Spreadsheets extends React.Component{
                         <Toggle defaultChecked={this.state.tableViewUsers} icons={false} onChange={() => this.handleToggleChange()} />
                         <span style = {{paddingLeft: "5px"}}>Users</span>
                     </Col>
-                    
-                    
+
+
                 </Row>
                 <Row>
                     <Table striped hover>
@@ -268,8 +269,8 @@ class Spreadsheets extends React.Component{
                 <ExportCSV csvData={this.state.tableViewUsers ? userData : eventData} fileName={"One Cool Earth Data"}></ExportCSV>
 
                 </div>
-                
-                
+
+
             </Container>
         </body>
         )
