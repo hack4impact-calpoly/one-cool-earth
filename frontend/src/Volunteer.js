@@ -2,7 +2,7 @@ import React from 'react'
 import Welcome from './Welcome'
 import Header from "./Header";
 import CalendarPage from "./Calendar";
-import EditUser from "./EditUser.js";
+import Profile from "./Profile.js";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 
@@ -26,8 +26,8 @@ class Volunteer extends React.Component {
 					<Route exact path="/calendar">
 						<CalendarPage user={this.state.user}/>
 					</Route>
-					<Route exact path="/edit-user">
-						<EditUser user={this.state.user} />
+					<Route exact path="/profile">
+						<Profile user={this.state.user} />
 					</Route>
             </Switch>
          </BrowserRouter>

@@ -1,5 +1,6 @@
 import React from 'react';
-import logo from './images/oce-logo.png';
+import Logo from './images/oce-logo-landing-page.png';
+import Background from './images/landing-page-background.jpg';
 import {Button} from 'react-bootstrap';
 import './css/LandingPage.css';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -32,10 +33,10 @@ class LandingPage extends React.Component {
          <BrowserRouter>
             <Switch>
                <Route exact path='/'>
-                  <div id='landing-page'>
+                  <div style={{backgroundImage: `url(${Background})`}} id='landing-page'>
                      <div id='landing-page-banner'>
                         <div id='logo'>
-                           <img src={logo} alt='One Cool Earth Education and Preservation: Service Since 2001'/>
+                           <img src={Logo} alt='One Cool Earth Education and Preservation: Service Since 2001'/>
                         </div>
                         <div id='title'>
                            <h2 className='volunteer-opportunities'>Volunteer</h2>

@@ -20,19 +20,36 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 const signUpEndpoint = require('./api/signup.js')
+const announcementEndpoint = require('./api/announcement')
 const authEndpoint = require('./api/auth')
 const adminEndpoint = require('./api/admin')
 const userEndpoint = require('./api/user')
 const eventEndpoint = require('./api/event')
+const locationEndpoint = require('./api/locations')
+const shiftEndpoint = require('./api/shift')
 
 app.use('/api/signup', signUpEndpoint)
+app.use('/api/announcement', announcementEndpoint)
 app.use('/api/auth', authEndpoint.router)
 app.use('/api/admin', adminEndpoint)
 app.use('/api/user', userEndpoint)
 app.use('/api/event', eventEndpoint)
+app.use('/api/location', locationEndpoint)
+app.use('/api/shift', shiftEndpoint)
 
-app.get('/api/logout', async (req, res) => {
-    res.redirect(`${process.env.SERVER_URL}/api/auth/logout`)
+app.get('/api/logout', authEndpoint.auth, async (req, res) => {
+    if (req.user) {
+        const options = { secure: true, httpOnly: true, sameSite: 'none' }
+
+        res.clearCookie('auth_token', options)
+        res.status(200)
+        res.redirect(`${process.env.CLIENT_URL}`)
+    }
 })
 
-app.listen(3001, "localhost")
+if (process.argv.includes('dev')) {
+    const PORT = process.env.PORT || 3001;
+    app.listen(PORT, () => console.log(`server running on port ${PORT}`));
+}
+
+module.exports = app

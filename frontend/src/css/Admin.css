@@ -1,11 +1,34 @@
-.main{
+.admin-homepage{
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	justify-content: space-around;
 }
 
-.adminBox{
-	justify-content: center;
-	padding: 22px;
+.admin-card-row {
+	display: flex;
+	justify-content: space-around;
+}
+
+.admin-card-header {
+	padding: 3%;
+	text-transform: uppercase;
+}
+
+.admin-card {
+	width: 25rem;
+	margin: 3%;
+	text-align: center;
+	box-shadow: 5px 5px 5px lightgray;
+	transition: all .2s ease-in-out; 
+}
+
+.admin-card-body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.admin-card:hover {
+	transform: scale(1.1); 
 }
