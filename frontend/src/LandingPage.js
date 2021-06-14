@@ -19,13 +19,7 @@ class LandingPage extends React.Component {
    }
 
    onClickLogin() {
-      // fetch(`${process.env.REACT_APP_SERVER_URL}/api/login`, {
-      //    mode: 'cors', 
-      //    credentials: "include" 
-      // })
-      // .then( () => {
-         window.location.assign(`${process.env.REACT_APP_SERVER_URL}/api/auth/google`)
-      // })
+      window.location.assign(`${process.env.REACT_APP_SERVER_URL}/api/auth/google`)
    }
 
    render() {
@@ -54,7 +48,7 @@ class LandingPage extends React.Component {
                   </div>
                </Route>
                <Route exact path='/signup'>
-                  <Header signup={true} />
+                  <Header signingUp={true} user={false}/>
                   <SignUp />
                </Route>
                <Route exact path="/auth/login/:token" component={SetAuthToken} />

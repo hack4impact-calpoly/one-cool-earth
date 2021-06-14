@@ -15,7 +15,7 @@ class Admin extends React.Component {
   render() {
     return (
 		<BrowserRouter>
-		<Header user={this.props.user} />
+		<Header signingUp={false} user={this.props.user} />
 			<Switch>
 				<Route exact path="/">
 					<Container className="admin-homepage">
@@ -69,13 +69,13 @@ class Admin extends React.Component {
 					<Spreadsheets user={this.props.user} />
 				</Route>
 				<Route exact path="/profile">
-					<Profile user={this.props.user} />
+					<Profile user={this.props.user} admin={true} />
 				</Route>
 				<Route exact path="/calendar">
-					<CalendarPage user={this.props.user}/>
+					<CalendarPage user={this.props.user} />
 				</Route>
 					<Route exact path="/create-event">
-				<CreateEvent user={this.props.user}/>
+				<CreateEvent user={this.props.user} />
 				</Route>
 			</Switch>
 		</BrowserRouter>
