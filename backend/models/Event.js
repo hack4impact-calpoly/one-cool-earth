@@ -10,7 +10,8 @@ const EventSchema = new mongoose.Schema({
   coordinator: String,
   address: String,
   volunteerType: String,
-  active: Boolean
+  active: Boolean,
+  users: [{ type : mongoose.Schema.Types.ObjectId, ref: 'User' }]
 })
 
 const Event = mongoose.model('events', EventSchema);

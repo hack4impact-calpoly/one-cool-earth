@@ -58,18 +58,24 @@ class CalendarPage extends React.Component{
   }
 
   componentDidMount = () => {
-    this.setState({ events: sampleEvents})
+    //this.setState({ events: sampleEvents});
+    const eventsURL = `${process.env.REACT_APP_SERVER_URL}/api/event/get-all`;
+    fetch(eventsURL, {credentials: 'include'})
+	  .then((res) => res.json())
+	  .then((events) => this.setState({events: events}))
+	  .catch((err) => console.error(err));
   }
 
   getEvents = (date) => {
     let events = []
-    for (let event of sampleEvents) {
-      if(event.date.getDate() === date.getDate() &&
-          event.date.getMonth() === date.getMonth() &&
-          event.date.getFullYear() === date.getFullYear())
+    const allEvents = this.state.events.slice();
+    for (let event of allEvents) {
+      if(new Date(event.startTime).getDate() === new Date(date).getDate() &&
+          new Date(event.startTime).getMonth() === new Date(date).getMonth() &&
+          new Date(event.startTime).getFullYear() === new Date(date).getFullYear())
         events.push(event)
     }
-    return events
+    return events;
   }
 
   showDateModal = () => {
@@ -86,12 +92,12 @@ class CalendarPage extends React.Component{
   }
 
   handleDateClick = (arg) => {
-    const events = this.getEvents(arg.date)
+    const events = this.getEvents(arg.date);
     this.setState({
       dateClickedStr: `${arg.date.getMonth()+1}/${arg.date.getDate()}/${arg.date.getFullYear()}`,
       dateClickedEvents: events
     });
-    this.showDateModal()
+    this.showDateModal();
   }
 
   handleEventClick = (arg) => {
@@ -136,8 +142,8 @@ class CalendarPage extends React.Component{
               this.state.events.map( (event) => {
                 return ({
                   title: event.name,
-                  start: event.startTime.getTime(),
-                  end: event.startTime.getTime()
+                  start: new Date(event.startTime).getTime(),
+                  end: new Date(event.startTime).getTime()
                 })
               })
             }
