@@ -12,6 +12,20 @@ class EventModal extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if(this.state.locations === undefined) {
+      console.log("HERE")
+      const URL = `${process.env.REACT_APP_SERVER_URL}/api/location/get-all`;
+      fetch(URL, {credentials: 'include'})
+          .then((res) => res.json())
+          .then((data) => {
+              this.setState({locations: data})
+          }, (error) => {
+              console.log("Error loading location data: ", error)
+          });
+    }
+  }
+
   handleEditButton() {
     this.setState({
       edit: true
@@ -33,6 +47,13 @@ class EventModal extends React.Component {
     this.props.handleClose()
   }
 
+  getLocationOptions() {
+    let locs = this.state.locations.map((key, value) => {
+       return <option>{key.name}</option>
+    })
+    return locs;
+  }
+
     render () {
         return (
             <>
@@ -51,14 +72,14 @@ class EventModal extends React.Component {
                             <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.name} />
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row}>
+                        {/* <Form.Group as={Row}>
                             <Form.Label column sm="4">
                             Date
                             </Form.Label>
                             <Col sm="8">
                             <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={new Date(this.props.eventData.date).toLocaleDateString()} />
                             </Col>
-                        </Form.Group>
+                        </Form.Group> */}
                         <Form.Group as={Row}>
                             <Form.Label column sm="4">
                             Start Time
@@ -80,7 +101,9 @@ class EventModal extends React.Component {
                             Location
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.location} />
+                            <Form.Control  as={this.state.edit ? "select" : "input"} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.location} >
+                              {this.state.edit ? this.getLocationOptions() : null}
+                            </Form.Control>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -93,10 +116,34 @@ class EventModal extends React.Component {
                         </Form.Group>
                         <Form.Group as={Row}>
                             <Form.Label column sm="4">
-                            Volunteers Needed Per Shift
+                            Volunteers Per Shift
                             </Form.Label>
                             <Col sm="8">
                             <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.volunteersPerShift} />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="4">
+                            Coordinator
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.coordinator} />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="4">
+                            Address
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.address} />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="4">
+                            Type
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.volunteerType} />
                             </Col>
                         </Form.Group>
                         
