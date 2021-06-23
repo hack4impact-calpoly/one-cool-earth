@@ -134,7 +134,7 @@ class Spreadsheets extends React.Component{
     componentDidMount() {
         if(this.state.eventData === undefined || this.state.eventData.length === 0) {
             const URL = `${process.env.REACT_APP_SERVER_URL}/api/event/get-all`;
-            fetch(URL)
+            fetch(URL, {credentials: 'include'})
                 .then((res) => res.json())
                 .then((data) => {
                     this.setState({eventData: data})
