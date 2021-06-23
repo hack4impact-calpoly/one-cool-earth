@@ -215,10 +215,15 @@ class Spreadsheets extends React.Component{
                             <tr>
                                 {/* <th>Id</th> */}
                                 <th>Name</th>
-                                <th>Date</th>
+                                {/* <th>Date</th> */}
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>Location</th>
+                                <th>Description</th>
+                                <th>Volunteers Per Shift</th>
+                                <th>Coordinator</th>
+                                <th>Address</th>
+                                <th>Type</th>
                                 {/* <th>Volunteers</th> */}
                             </tr>
                         </thead>
@@ -227,10 +232,15 @@ class Spreadsheets extends React.Component{
                             <tr onClick={() => this.handleShowEventModal(event)}>
                                 {/* <td>{event.id}</td> */}
                                 <td>{event.name}</td>
-                                <td>{new Date(event.date).toLocaleDateString()}</td>
-                                <td>{event.startTime}</td>
-                                <td>{event.endTime}</td>
+                                {/* <td>{new Date(event.date).toLocaleDateString()}</td> */}
+                                <td>{new Date(event.startTime).toLocaleDateString() + " " + new Date(event.startTime).toLocaleTimeString()}</td>
+                                <td>{new Date(event.endTime).toLocaleDateString() + " " + new Date(event.endTime).toLocaleTimeString()}</td>
                                 <td>{event.location}</td>
+                                <td>{event.description}</td>
+                                <td>{event.volunteersPerShift}</td>
+                                <td>{event.coordinator}</td>
+                                <td>{event.address}</td>
+                                <td>{event.volunteerType}</td>
                             </tr>
                         )) }
                     </tbody>
