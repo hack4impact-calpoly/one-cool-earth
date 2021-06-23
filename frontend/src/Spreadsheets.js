@@ -132,7 +132,7 @@ class Spreadsheets extends React.Component{
     }
 
     componentDidMount() {
-        if(this.state.eventData === undefined) {
+        if(this.state.eventData === undefined || this.state.eventData.length === 0) {
             const URL = `${process.env.REACT_APP_SERVER_URL}/api/event/get-all`;
             fetch(URL)
                 .then((res) => res.json())
@@ -244,7 +244,7 @@ class Spreadsheets extends React.Component{
 
 
     render(){
-        return (<body>
+        return (<>
             <EventModal show={this.state.showEventModal} eventData={this.state.eventModalData} handleClose={this.handleCloseEventModal} ></EventModal>
             <UserModal show={this.state.showUserModal} userData={this.state.userModalData} handleClose={this.handleCloseUserModal}></UserModal>
             <Container>
@@ -272,7 +272,7 @@ class Spreadsheets extends React.Component{
 
 
             </Container>
-        </body>
+        </>
         )
     }
 }
