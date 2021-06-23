@@ -8,7 +8,8 @@ class EventModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      edit: false
+      edit: false,
+      currEventData: {}
     }
   }
 
@@ -33,8 +34,10 @@ class EventModal extends React.Component {
   }
 
   handleCancelEdit() {
+    let c = JSON.parse(JSON.stringify(this.props.eventData))
     this.setState({
-      edit: false
+      edit: false,
+      currEventData: c
     })
   }
 
@@ -53,9 +56,31 @@ class EventModal extends React.Component {
     })
     return locs;
   }
+  
+  handleFieldChange(e, field) {
+    let curr = this.state.currEventData;
+    curr[field] = e.value;
+    this.setState({
+      currEventData: curr
+    })
+  }
+
+  updateEventDataState() {
+    let c = JSON.parse(JSON.stringify(this.props.eventData))
+    this.setState({
+      currEventData: c
+    })
+  }
 
     render () {
+      if(this.props.show && Object.keys(this.state.currEventData).length === 0) {
+        this.updateEventDataState()
+        return null
+      } else {
+
+      
         return (
+          
             <>
               <Modal centered show={this.props.show} onHide={this.props.handleClose}>
                 <Modal.Header>
@@ -69,23 +94,15 @@ class EventModal extends React.Component {
                             Name
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.name} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "name")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.name} />
                             </Col>
                         </Form.Group>
-                        {/* <Form.Group as={Row}>
-                            <Form.Label column sm="4">
-                            Date
-                            </Form.Label>
-                            <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={new Date(this.props.eventData.date).toLocaleDateString()} />
-                            </Col>
-                        </Form.Group> */}
                         <Form.Group as={Row}>
                             <Form.Label column sm="4">
                             Start Time
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.startTime} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "startTime")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.startTime} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -93,7 +110,7 @@ class EventModal extends React.Component {
                             End Time
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.endTime} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "endTime")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.endTime} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -101,7 +118,7 @@ class EventModal extends React.Component {
                             Location
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control  as={this.state.edit ? "select" : "input"} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.location} >
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "location")} as={this.state.edit ? "select" : "input"} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.location} >
                               {this.state.edit ? this.getLocationOptions() : null}
                             </Form.Control>
                             </Col>
@@ -111,7 +128,7 @@ class EventModal extends React.Component {
                             Description
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.description} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "description")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.description} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -119,7 +136,7 @@ class EventModal extends React.Component {
                             Volunteers Per Shift
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.volunteersPerShift} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "volunteersPerShift")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.volunteersPerShift} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -127,7 +144,7 @@ class EventModal extends React.Component {
                             Coordinator
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.coordinator} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "coordinator")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.coordinator} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -135,7 +152,7 @@ class EventModal extends React.Component {
                             Address
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.address} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "address")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.address} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -143,7 +160,7 @@ class EventModal extends React.Component {
                             Type
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.volunteerType} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "volunteerType")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.volunteerType} />
                             </Col>
                         </Form.Group>
                         
@@ -169,7 +186,7 @@ class EventModal extends React.Component {
                 </Modal.Footer>
               </Modal>
             </>
-          );
+          )};
     }
   
     
