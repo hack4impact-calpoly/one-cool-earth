@@ -58,8 +58,9 @@ class EventModal extends React.Component {
   }
   
   handleFieldChange(e, field) {
+    console.log(e)
     let curr = this.state.currEventData;
-    curr[field] = e.value;
+    curr[field] = e.target.value;
     this.setState({
       currEventData: curr
     })
@@ -71,6 +72,28 @@ class EventModal extends React.Component {
       currEventData: c
     })
   }
+
+  updateEvent() {
+    console.log(this.state.currEventData)
+    const URL = `${process.env.REACT_APP_SERVER_URL}/api/event/editEvent`;
+        fetch(URL, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            method: 'POST',
+            body: JSON.stringify(this.state.currEventData),
+            credentials: 'include'
+          })
+            .then((res) => res)
+            .then((data) => {
+                console.log("updated event!: ", data)
+            }, (error) => {
+                console.log("Error updating event: ", error)
+            });
+}
+
+
 
     render () {
       if(this.props.show && Object.keys(this.state.currEventData).length === 0) {
@@ -168,7 +191,7 @@ class EventModal extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                   {this.state.edit ?
-                    <Button onClick={() => this.handleClose()}>
+                    <Button onClick={() => this.updateEvent()}>
                       Save Changes
                     </Button> 
                   : null}
