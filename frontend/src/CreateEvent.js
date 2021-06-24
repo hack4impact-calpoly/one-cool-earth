@@ -17,48 +17,52 @@ class CreateEvent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      volSelected: null,
-      locSelected: null,
-      name: null,
+      volSelected: [],
+      locSelected: {},
+      name: "",
+      date: null,
       startTime: null,
       endTime: null,
-      description: null,
-      volunteersPerShift: null,
-      coordinator: null,
-      address: null,
-      modalMsg: null,
-      isErrorModal: null,
+      description: "",
+      numberOfVolunteers: 0,
+      coordinator: "",
+      address: "",
+      modalMsg: "",
+      isErrorModal: "",
       showModal: false,
       validatedName: null,
       validatedCoordinator: null,
       validatedAddress: null,
+      validatedDate: null,
       validatedStartTime: null,
       validatedEndTime: null,
-      validatedVolunteersPerShift: null,
-      locationOptions: []
+      validatedNumberOfVolunteers: null,
+      locationOptions: [],
     }
   }
 
   clear = () => {
     this.setState({
-      volSelected: null,
-      locSelected: null,
-      name: null,
+      volSelected: [],
+      locSelected: {},
+      name: "",
+      date: null,
       startTime: null,
       endTime: null,
-      description: null,
-      volunteersPerShift: null,
-      coordinator: null,
-      address: null,
-      modalMsg: null,
-      isErrorModal: null,
+      description: "",
+      numberOfVolunteers: 0,
+      coordinator: "",
+      address: "",
+      modalMsg: "",
+      isErrorModal: "",
       showModal: false,
       validatedName: null,
       validatedCoordinator: null,
       validatedAddress: null,
+      validatedDate: null,
       validatedStartTime: null,
       validatedEndTime: null,
-      validatedVolunteersPerShift: null
+      validatedNumberOfVolunteers: null,
     })
   }
 
@@ -78,9 +82,9 @@ class CreateEvent extends React.Component {
 
   handleShowModal = (modalMsg, isError) => {
     this.setState({
-      modalMsg: modalMsg, 
+      modalMsg: modalMsg,
       isErrorModal : isError,
-      showModal: true 
+      showModal: true
     })
   }
 
@@ -134,7 +138,7 @@ class CreateEvent extends React.Component {
   handleAddressChange = (event) => {
     this.setState({ address: event.target.value })
     if(event.target.value &&
-      /^[a-z0-9 .]+$/i.test(event.target.value) &&
+      /^[a-z0-9 .-]+$/i.test(event.target.value) &&
       event.target.value.length > 1) {
       this.setState({ validatedAddress: true})
     }
@@ -143,46 +147,143 @@ class CreateEvent extends React.Component {
     }
   }
 
-  handleStartTimeChange = (event) =>  {
-    const currDate = new Date()
-    const startTime = new Date(event.target.value)
-    this.setState({ startTime: event.target.value })
-    if(event.target.value &&
-      startTime > currDate) {
-      this.setState({ validatedStartTime: true})
+  isValidDate = (date, currDate) => {
+    if (date.getFullYear() >= currDate.getFullYear()) {
+      if (date.getMonth() > currDate.getMonth()) {
+        return true
+      } else if (date.getMonth() === currDate.getMonth()) {
+        return date.getDate() >= currDate.getDate();
+      } else {
+        return false
+      }
     }
-    else {
-      this.setState({ validatedStartTime: false})
-    }  
+    return false
+  }
+
+  checkDate = (date) => {
+    if(date) {
+      const currDate = new Date()
+      if (this.isValidDate(date, currDate)) {
+        this.setState({validatedDate: true})
+      } else {
+        this.setState({validatedDate: false})
+      }
+    }
+  }
+
+  checkStartTime = (currDate, start) => {
+    if(start) {
+      const currDate = new Date()
+      currDate.setSeconds(0)
+      currDate.setMilliseconds(0)
+
+      if (start.getDate() === currDate.getDate() &&
+          start.getMonth() === currDate.getMonth() &&
+          start.getFullYear() === currDate.getFullYear()) {
+        if (start >= currDate) {
+          this.setState({validatedStartTime: true})
+        } else {
+          this.setState({validatedStartTime: false})
+        }
+      } else {
+        this.setState({validatedStartTime: true})
+      }
+    }
+  }
+
+  checkEndTime = (start, end) => {
+    if (end) {
+      if (end > start) {
+        this.setState({validatedEndTime: true})
+      } else {
+        this.setState({validatedEndTime: false})
+      }
+    }
+  }
+
+  handleDateStartEndChange = (date, start, end) => {
+    this.checkDate(date)
+    this.checkStartTime(date, start)
+    this.checkEndTime(start, end)
+  }
+
+  handleDateChange = (event) => {
+    const dateStringArr = event.target.value.split("-")
+    if(dateStringArr.length === 3) {
+      const date = new Date(
+          dateStringArr[0],
+          dateStringArr[1] - 1,
+          dateStringArr[2],
+          0,
+          0,
+          0,
+          0
+      )
+      this.setState({
+        date: date,
+        validatedDate: null,
+        startTime: null,
+        validatedStartTime: null,
+        endTime: null,
+        validatedEndTime: null
+      })
+      document.getElementById('start-time').value = ''
+      document.getElementById('end-time').value = ''
+      this.checkDate(date)
+    }
+  }
+
+  handleStartTimeChange = (event) =>  {
+    const timeStrArr = event.target.value.split(":").map( entry => { return parseInt(entry)})
+    if(this.state.date && timeStrArr.length === 2) {
+      const start = new Date(
+          this.state.date.getFullYear(),
+          this.state.date.getMonth(),
+          this.state.date.getDate(),
+          timeStrArr[0],
+          timeStrArr[1]
+      )
+      this.setState({
+        startTime: start,
+        endTime: null,
+        validatedEndTime: null
+      })
+      document.getElementById('end-time').value = ''
+      this.checkStartTime(this.state.date, start)
+    }
   }
 
   handleEndTimeChange = (event) => {
-    const currDate = new Date()
-    const endTime = new Date(event.target.value)
-    this.setState({ endTime: event.target.value })
-    if(event.target.value &&
-      (endTime > currDate || endTime === currDate)) {
-      this.setState({ validatedEndTime: true})
+    const timeStrArr = event.target.value.split(":").map( entry => { return parseInt(entry)})
+    if(this.state.date && timeStrArr.length === 2) {
+      const end = new Date(
+          this.state.date.getFullYear(),
+          this.state.date.getMonth(),
+          this.state.date.getDate(),
+          timeStrArr[0],
+          timeStrArr[1]
+      )
+      if(this.state.date && this.state.startTime) {
+        this.setState({endTime: end})
+        this.checkEndTime(this.state.startTime, end)
+      }
     }
-    else {
-      this.setState({ validatedEndTime: false})
-    }  
   }
 
   handleDescriptionChange = (event) => {
     this.setState({ description: event.target.value })
   }
 
-  handleVolunteersPerShiftChange = (event) => {
-    this.setState({ volunteersPerShift: event.target.value })
+  handleNumberOfVolunteersChange = (event) => {
+    this.setState({ numberOfVolunteers: event.target.value })
     if(event.target.value &&
       /^[0-9^-]+$/.test(event.target.value) &&
       event.target.value > 0) {
-      this.setState({ validatedVolunteersPerShift: true})
+      this.setState({ validatedNumberOfVolunteers: true})
     }
     else {
-      this.setState({ validatedVolunteersPerShift: false})
-    }  
+      this.setState({ validatedNumberOfVolunteers: false})
+    }
 
   }
 
@@ -197,25 +298,27 @@ class CreateEvent extends React.Component {
       !this.state.address ||
       !this.state.startTime ||
       !this.state.endTime ||
-      !this.state.volunteersPerShift ||
+      !this.state.numberOfVolunteers ||
       this.state.volSelected.length === 0
     ) {
       this.handleShowModal("Please fill out all fields", true)
       return
     }
-    
-    const editEventData = {
+
+    const createEventData = {
       name: this.state.name,
       coordinator: this.state.coordinator,
       address: this.state.address,
       location: this.state.locSelected.value,
-      startTime: this.state.startTime,
-      endTime: this.state.endTime,
-      volunteersPerShift: this.state.volunteersPerShift,
-      volunteerType: this.state.volSelected.value
+      date: this.state.date.toISOString(),
+      startTime: this.state.startTime.toISOString(),
+      endTime: this.state.endTime.toISOString(),
+      numberOfVolunteers: this.state.numberOfVolunteers,
+      volunteerType: this.state.volSelected.value,
+      description: this.state.description
     }
 
-      
+
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/event/create`, {
       method: 'POST',
       mode: 'cors',
@@ -223,16 +326,16 @@ class CreateEvent extends React.Component {
       headers: {
           'Content-Type': 'application/json',
       },
-      body: JSON.stringify(editEventData),
+      body: JSON.stringify(createEventData),
     }).then((response) => {
-      if(response.status === 200)
-        this.handleShowModal('The event has been successfully created!', false);
-      else
-      this.handleShowModal('Attempt to create event was unsuccessful. Please try again.', true);
-    }).catch( (err) => {
+      if(response.status === 200) {
+        this.handleShowModal('The event has been successfully created!', false)
+      } else {
+        this.handleShowModal('Attempt to create event was unsuccessful. Please try again.', true);
+      }
+    }).catch( () => {
       this.handleShowModal('An error occurred. Please try again.', true);
     })
-
   }
 
   render() {
@@ -257,7 +360,7 @@ class CreateEvent extends React.Component {
           <Row>
             <Form.Group as={Col} controlId="event-name">
               <Form.Label>Event Name</Form.Label>
-              <Form.Control 
+              <Form.Control
                 required
                 placeholder="Enter the name of the event..."
                 size="lg"
@@ -266,11 +369,11 @@ class CreateEvent extends React.Component {
                 isInvalid={this.state.name && !this.state.validatedName}
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">Plese enter a valid event name (alphabetical characters only)</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter a valid event name (alphabetical characters only)</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} controlId="coordinator">
               <Form.Label>Coordinator</Form.Label>
-              <Form.Control 
+              <Form.Control
                 required
                 placeholder="Enter the coordinator's name..."
                 size="lg"
@@ -279,7 +382,7 @@ class CreateEvent extends React.Component {
                 isInvalid={this.state.coordinator && !this.state.validatedCoordinator}
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">Plese enter a valid name (alphabetical characters only)</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter a valid name (alphabetical characters only)</Form.Control.Feedback>
             </Form.Group>
           </Row>
           <br />
@@ -309,7 +412,7 @@ class CreateEvent extends React.Component {
           <Row>
             <Form.Group as={Col} controlId="address">
               <Form.Label>Address</Form.Label>
-              <Form.Control 
+              <Form.Control
                 required
                 placeholder="Enter the address of the event..."
                 size="lg"
@@ -318,39 +421,54 @@ class CreateEvent extends React.Component {
                 isInvalid={this.state.address && !this.state.validatedAddress}
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">Plese enter a valid address</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter a valid address</Form.Control.Feedback>
             </Form.Group>
           </Row>
           <br />
           <Row>
+            <Form.Group as={Col} controlId="date">
+              <Form.Label>Date</Form.Label>
+              <Form.Control
+                  required
+                  size="lg"
+                  type="date"
+                  onChange={this.handleDateChange}
+                  isValid={this.state.validatedDate}
+                  isInvalid={this.state.date && !this.state.validatedDate}
+              />
+              <Form.Text muted>Enter the date of the event</Form.Text>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">The event can't take place before today</Form.Control.Feedback>
+            </Form.Group>
             <Form.Group as={Col} controlId="start-time">
               <Form.Label>Start</Form.Label>
-              <Form.Control 
+              <Form.Control
                 required
                 size="lg"
-                type="datetime-local"
+                type="time"
+                disabled={!(this.state.date && this.state.validatedDate)}
                 onChange={this.handleStartTimeChange}
-                isValid={this.state.validatedStartTime}
+                isValid={this.state.date && this.state.validatedDate && this.state.validatedStartTime}
                 isInvalid={this.state.startTime && !this.state.validatedStartTime}
               />
-              <Form.Text muted>Enter the start date/time of the event</Form.Text>
+              <Form.Text muted>Enter the start time of the event</Form.Text>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">The start date/time must take place after the current date/time</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">The start time must take place after the current time</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} controlId="end-time">
               <Form.Label>End</Form.Label>
-              <Form.Control 
+              <Form.Control
                 required
                 size="lg"
-                type="datetime-local"
-                disabled={!(this.state.startTime && this.state.validatedStartTime)}
+                type="time"
+                disabled={!(this.state.startTime && this.state.validatedStartTime && this.state.date && this.state.validatedDate)}
                 onChange={this.handleEndTimeChange}
-                isValid={this.state.validatedEndTime}
+                isValid={this.state.validatedEndTime && this.state.validatedStartTime}
                 isInvalid={this.state.endTime && !this.state.validatedEndTime}
               />
-              <Form.Text muted>Enter the end time/date of the event</Form.Text>
+              <Form.Text muted>Enter the end time of the event</Form.Text>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">The end date/time must take place after the start date/time</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">The end time must take place after the start time</Form.Control.Feedback>
             </Form.Group>
           </Row>
           <br />
@@ -389,18 +507,18 @@ class CreateEvent extends React.Component {
               <Form.Text muted>(Optional)</Form.Text>
             </Form.Group>
             <Form.Group as={Col} controlId="volunteers-per-shift">
-              <Form.Label>Number of Volunteers Per Shift</Form.Label>
+              <Form.Label>Number of Volunteers</Form.Label>
               <Form.Control
                 required
-                placeholder="Enter the # of volunteers allowed per shift..."
+                placeholder="Enter the # of volunteers for the event..."
                 size="lg"
                 type="number"
-                onChange={this.handleVolunteersPerShiftChange}
-                isValid={this.state.validatedVolunteersPerShift}
-                isInvalid={this.state.volunteersPerShift && !this.state.validatedVolunteersPerShift}
+                onChange={this.handleNumberOfVolunteersChange}
+                isValid={this.state.validatedNumberOfVolunteers}
+                isInvalid={this.state.numberOfVolunteers && !this.state.validatedNumberOfVolunteers}
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">Plese enter a valid number grater than 0</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter a valid number grater than 0</Form.Control.Feedback>
             </Form.Group>
           </Row>
           <div className='d-flex justify-content-center'>

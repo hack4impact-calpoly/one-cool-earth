@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 
 const EventSchema = new mongoose.Schema({
   name : String,
+  date: Date,
   startTime: Date,
   endTime: Date,
   location : String,
   description: String,
-  volunteersPerShift: Number,
+  numberOfVolunteers: Number,
   coordinator: String,
   address: String,
   volunteerType: String,
