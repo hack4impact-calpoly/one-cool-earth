@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {Button} from 'react-bootstrap';
 import './css/Welcome.css';
 import BannerImage1 from './images/banner-image-1.jpg';
@@ -33,9 +33,9 @@ class Welcome extends React.Component {
             <div id='welcome'>
                 <h1>Welcome, {this.props.user.name.first}</h1>
                 <div id='images-banner'>
-                    <img className='banner-image' src={BannerImage1}></img>
-                    <img className='banner-image' src={BannerImage2}></img>
-                    <img className='banner-image' src={BannerImage3}></img>
+                    <img className='banner-image' src={BannerImage1} alt="volunteer event" />
+                    <img className='banner-image' src={BannerImage2} alt="volunteer event" />
+                    <img className='banner-image' src={BannerImage3} alt="volunteer event" />
                 </div>
                 <div id='dashboard'>
                     <div id='planning'>
@@ -56,7 +56,7 @@ class Welcome extends React.Component {
                         </div>
                     </div>
                     <div id='news'>
-                        
+
                         <h3>Organization News</h3>
                             {this.state.announcementList.map((e) => (
                                 <div key={e._id} className='announcement'>
