@@ -10,7 +10,6 @@ const sampleEvents = [
   {
     id: 1,
     name: "Event 1",
-    date: new Date("Wed Jun 02 2021"),
     startTime: (new Date("Wed Jun 02 2021 03:30:16 GMT-0700")),
     endTime: (new Date("Wed Jun 02 2021 05:30:16 GMT-0700")),
     location: "Paso Robles",
@@ -19,7 +18,6 @@ const sampleEvents = [
   {
     id: 2,
     name: "Event 2",
-    date: new Date("Wed Jun 10 2021"),
     startTime: (new Date("Fri Jun 10 2021 09:30:16 GMT-0700")),
     endTime: (new Date("Fri Jun 10 2021 10:30:16 GMT-0700")),
     location: "Arroyo Grande",
@@ -28,7 +26,6 @@ const sampleEvents = [
   {
     id: 3,
     name: "Event 3",
-    date: new Date("Wed Jun 23 2021"),
     startTime: (new Date("Mon Jun 23 2021 13:30:16 GMT-0700")),
     endTime: (new Date("Mon Jun 23 2021 14:30:16 GMT-0700")),
     location: "San Luis Obispo",
@@ -37,7 +34,6 @@ const sampleEvents = [
   {
     id: 4,
     name: "Event 4",
-    date: new Date("Wed Jun 23 2021"),
     startTime: (new Date("Mon Jun 23 2021 13:30:16 GMT-0700")),
     endTime: (new Date("Mon Jun 23 2021 14:30:16 GMT-0700")),
     location: "San Luis Obispo",
@@ -69,10 +65,12 @@ class CalendarPage extends React.Component{
   getEvents = (date) => {
     let events = []
     const allEvents = this.state.events.slice();
+    const dateObj = new Date(date);
     for (let event of allEvents) {
-      if(new Date(event.startTime).getDate() === new Date(date).getDate() &&
-          new Date(event.startTime).getMonth() === new Date(date).getMonth() &&
-          new Date(event.startTime).getFullYear() === new Date(date).getFullYear())
+      let eventDate = new Date(event.startTime);
+      if(eventDate.getDate() === dateObj.getDate() &&
+          eventDate.getMonth() === dateObj.getMonth() &&
+          eventDate.getFullYear() === dateObj.getFullYear())
         events.push(event)
     }
     return events;
@@ -102,19 +100,17 @@ class CalendarPage extends React.Component{
 
   handleEventClick = (arg) => {
     let eventClicked = null, events = []
-
-    for (let event of this.state.events) {
+    const stateEvents = this.state.events.slice();
+    for (let event of stateEvents) {
       if(event.name === arg.event.title) {
         eventClicked = event
         break
       }
     }
-
-    events = this.getEvents(eventClicked.date)
-
-    console.log(events)
+    events = this.getEvents(eventClicked.startTime)
+    const eventDate = new Date(eventClicked.startTime);
     this.setState({
-      dateClickedStr: `${eventClicked.date.getMonth()+1}/${eventClicked.date.getDate()}/${eventClicked.date.getFullYear()}`,
+      dateClickedStr: `${eventDate.getMonth()+1}/${eventDate.getDate()}/${eventDate.getFullYear()}`,
       dateClickedEvents: events,
       eventClicked: arg.event.title
     })
@@ -140,10 +136,10 @@ class CalendarPage extends React.Component{
             }}
             events={
               this.state.events.map( (event) => {
-                return ({
+		return ({
                   title: event.name,
-                  start: new Date(event.startTime).getTime(),
-                  end: new Date(event.startTime).getTime()
+                  start: new Date(event.startTime),
+                  end: new Date(event.endTime)
                 })
               })
             }
