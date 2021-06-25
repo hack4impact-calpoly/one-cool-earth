@@ -15,7 +15,7 @@ class Admin extends React.Component {
   render() {
     return (
 		<BrowserRouter>
-		<Header user={this.props.user} />
+		<Header signingUp={false} user={this.props.user} />
 			<Switch>
 				<Route exact path="/">
 					<Container className="admin-homepage">

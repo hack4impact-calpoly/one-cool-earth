@@ -7,7 +7,9 @@ const ShiftSchema = new mongoose.Schema({
   },
   startTime: Date,
   endTime: Date,
-  users: [{ type : mongoose.Schema.Types.ObjectId, ref: 'User' }]
+  users: [{
+    type : mongoose.Schema.Types.ObjectId, ref: 'devs'
+  }]
 })
 
 const Shift = mongoose.model('shifts', ShiftSchema);

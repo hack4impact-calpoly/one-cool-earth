@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
   shifts: [{
     eventId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'events'  
+      ref: 'events'
     },
     startTime: Date,
     endTime: Date
@@ -20,8 +20,6 @@ const UserSchema = new mongoose.Schema({
   location : String,
   volunteerPreferences : [String],
   active : Boolean
-}, {
-  versionKey: false
 })
 
 const User = mongoose.model('devs', UserSchema);

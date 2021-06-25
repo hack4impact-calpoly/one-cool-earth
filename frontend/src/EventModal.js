@@ -96,36 +96,36 @@ class EventModal extends React.Component {
                             Volunteers Needed Per Shift
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.volunteersPerShift} />
+                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.numberOfVolunteers} />
                             </Col>
                         </Form.Group>
-                        
+
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                   {this.state.edit ?
                     <Button onClick={() => this.handleClose()}>
                       Save Changes
-                    </Button> 
+                    </Button>
                   : null}
                   {this.state.edit ?
                     <Button onClick={() => this.handleCancelEdit()}>
                       Cancel
-                    </Button> 
+                    </Button>
                   : null}
                   {!this.state.edit ?
                     <Button onClick={() => this.handleClose()}>
                     Close
                   </Button>
                   : null}
-                  
+
                 </Modal.Footer>
               </Modal>
             </>
           );
     }
-  
-    
+
+
   }
-  
+
 export default EventModal;

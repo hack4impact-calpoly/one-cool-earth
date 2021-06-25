@@ -2,7 +2,6 @@ import './css/Calendar.css';
 import React from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import {Container, Modal, Button} from "react-bootstrap";
 import interactionPlugin from "@fullcalendar/interaction";
 import DateModal from "./DateModal.js";
 

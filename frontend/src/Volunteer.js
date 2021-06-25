@@ -18,7 +18,7 @@ class Volunteer extends React.Component {
    render() {
       return (
          <BrowserRouter>
-         <Header user={this.state.user} />
+         <Header signingUp={false} user={this.state.user} />
             <Switch>
                <Route exact path="/">
                   <Welcome user ={this.state.user}/>
