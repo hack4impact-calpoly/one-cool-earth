@@ -186,33 +186,33 @@ class EventModal extends React.Component {
                             <Form.Control onChange={(e) => this.handleFieldChange(e, "volunteerType")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.volunteerType} />
                             </Col>
                         </Form.Group>
-                        
+
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                   {this.state.edit ?
                     <Button onClick={() => this.updateEvent()}>
                       Save Changes
-                    </Button> 
+                    </Button>
                   : null}
                   {this.state.edit ?
                     <Button onClick={() => this.handleCancelEdit()}>
                       Cancel
-                    </Button> 
+                    </Button>
                   : null}
                   {!this.state.edit ?
                     <Button onClick={() => this.handleClose()}>
                     Close
                   </Button>
                   : null}
-                  
+
                 </Modal.Footer>
               </Modal>
             </>
           )};
     }
-  
-    
+
+
   }
-  
+
 export default EventModal;
