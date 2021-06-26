@@ -56,7 +56,7 @@ class EventModal extends React.Component {
     })
     return locs;
   }
-  
+
   handleFieldChange(e, field) {
     console.log(e)
     let curr = this.state.currEventData;
@@ -101,9 +101,9 @@ class EventModal extends React.Component {
         return null
       } else {
 
-      
+
         return (
-          
+
             <>
               <Modal centered show={this.props.show} onHide={this.props.handleClose}>
                 <Modal.Header>
@@ -159,7 +159,7 @@ class EventModal extends React.Component {
                             Volunteers Per Shift
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control onChange={(e) => this.handleFieldChange(e, "volunteersPerShift")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.volunteersPerShift} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "numberOfVolunteers")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.numberOfVolunteers} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>

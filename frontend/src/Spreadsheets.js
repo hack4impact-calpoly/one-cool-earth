@@ -237,7 +237,7 @@ class Spreadsheets extends React.Component{
                                 <td>{new Date(event.endTime).toLocaleDateString() + " " + new Date(event.endTime).toLocaleTimeString()}</td>
                                 <td>{event.location}</td>
                                 <td>{event.description}</td>
-                                <td>{event.volunteersPerShift}</td>
+                                <td>{event.numberOfVolunteers}</td>
                                 <td>{event.coordinator}</td>
                                 <td>{event.address}</td>
                                 <td>{event.volunteerType}</td>
