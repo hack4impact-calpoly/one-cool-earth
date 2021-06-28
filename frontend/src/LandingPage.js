@@ -11,6 +11,17 @@ import Jotform from './Jotform';
 
 class LandingPage extends React.Component {
 
+   constructor(props) {
+      super(props)
+      this.state = {
+         signedUp: false
+      }
+   }
+
+   handleSignUp = () => {
+      this.setState({signedUp: true})
+   }
+
    onClickLogin = () => {
       window.location.assign(`${process.env.REACT_APP_SERVER_URL}/api/auth/google`)
    }
@@ -41,11 +52,20 @@ class LandingPage extends React.Component {
                   </div>
                </Route>
                <Route exact path='/signup'>
-                  <Header signingUp={true} user={false}/>
-                  <SignUp />
+                  {
+                     this.state.signedUp
+                     ? <Redirect to='/jotform' />
+                     :
+                     <>
+                        <Header signingUp={true} user={false}/>
+                        <SignUp handleSignUp={this.handleSignUp} />
+                     </>
+                  }
                </Route>
                <Route exact path="/auth/login/:token" component={SetAuthToken} />
-               <Route exact path="/jotform" component={Jotform} />
+               <Route exact path="/jotform">
+                  <Jotform showModal={true} />
+               </Route>
             </Switch>
          </BrowserRouter>
       );

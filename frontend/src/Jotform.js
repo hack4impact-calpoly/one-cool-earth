@@ -42,7 +42,7 @@ class Jotform extends React.Component {
           <div>
              <Modal centered show={this.state.showModal} onHide={this.handleClose}>
                 <Modal.Header>
-                   <Modal.Title cenetered style={{textAlign: 'center', textTransform: 'uppercase'}}>Please read!</Modal.Title>
+                   <Modal.Title style={{textTransform: 'uppercase'}}>Please read!</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='d-flex justify-content-center'>You should be redirected shortly after submitting this form.</Modal.Body>
                 <Modal.Footer>

@@ -19,7 +19,8 @@ const UserSchema = new mongoose.Schema({
   }],
   location : String,
   volunteerPreferences : [String],
-  active : Boolean
+  active : Boolean,
+  signedWaiver: Boolean
 })
 
 const User = mongoose.model('devs', UserSchema);

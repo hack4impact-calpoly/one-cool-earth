@@ -1,9 +1,10 @@
 import React from 'react';
-import {Button} from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import './css/Welcome.css';
 import BannerImage1 from './images/banner-image-1.jpg';
 import BannerImage2 from './images/banner-image-2.jpg';
 import BannerImage3 from './images/banner-image-3.jpg';
+import Iframe from 'react-iframe'
 
 class Welcome extends React.Component {
 
@@ -11,7 +12,8 @@ class Welcome extends React.Component {
         super(props);
         this.state = {
             eventList: [],
-            announcementList: []
+            announcementList: [],
+            showModal: null
         }
     }
 
@@ -26,11 +28,27 @@ class Welcome extends React.Component {
             .then((res) => res.json())
             .then((json) => this.setState({announcementList: json}))
             .catch((err) => console.error(err));
+        this.setState({showModal: !this.props.user.signedWaiver})
     }
 
     render() {
         return (
             <div id='welcome'>
+                <Modal centered show={this.state.showModal} onHide={this.handleClose} size='lg'>
+                    <Modal.Header>
+                        <Modal.Title cenetered style={{ textTransform: 'uppercase'}}>Sign Waiver</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Iframe
+                            url='https://form.jotform.com/70895957565174'
+                            width="100%"
+                            height="600px"
+                        />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        The modal will close a few moments after the form has been submitted
+                    </Modal.Footer>
+                </Modal>
                 <h1>Welcome, {this.props.user.name.first}</h1>
                 <div id='images-banner'>
                     <img className='banner-image' src={BannerImage1} alt="volunteer event" />
