@@ -5,11 +5,9 @@
 	background-attachment: fixed;
 	background-position: center;
 	background-size: cover;
-	background-image: url('../images/landing-page-background.JPG');
 	-webkit-background-size: cover;
   	-moz-background-size: cover;
   	-o-background-size: cover;
-	font-family: sans-serif;
 	padding-top: 1%;
 	padding-bottom: 4%;
 	display: flex;
@@ -19,7 +17,7 @@
 	
 }
 
-#banner {
+#landing-page-banner {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;

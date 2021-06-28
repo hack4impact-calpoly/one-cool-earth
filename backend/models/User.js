@@ -2,24 +2,24 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
   googleId: String,
-  admin : Boolean,
-  name : {
-    first : String,
-    last : String
+  admin: Boolean,
+  name: {
+    first: String,
+    last: String
   },
-  password : String,
-  email : String,
-  availableDates : [Date],
+  email: String,
+  phoneNumber: String,
   shifts: [{
-    name: String,
+    eventId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'events'
+    },
     startTime: Date,
     endTime: Date
   }],
   location : String,
   volunteerPreferences : [String],
-  status : Boolean
-}, {
-  versionKey: false
+  active : Boolean
 })
 
 const User = mongoose.model('devs', UserSchema);

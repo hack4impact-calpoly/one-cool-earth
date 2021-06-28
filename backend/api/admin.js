@@ -1,54 +1,81 @@
 const express = require("express");
 const User = require('../models/User');
 const router = express.Router();
+const authEndpoint = require('./auth')
 
-router.post("/", async (req, res) => {
-	const field = req.body.field;
-	const data = req.body[field];
-	let queryFilter = {};
-	queryFilter[field] = data;
-	let users;
-	if(field === "all"){
-		users = await User.find({});
-	}else{
-		users = await User.find(queryFilter);
-	}
-	res.status(200);
-	res.json(users);
-});
+const removeAdmin = async (email) => {
+	User.findOne({"email": email})
+	.then(user => {
+		if (user) {
+			user.active = false
+			user.save()
+		}
+	})
+}
 
-const deactivateUser = async (name, email) => {
-	console.log(name.first);
-    User.findOne({"email": email}).then(function(user) {
-    	console.log(user)
-    	user.status = false
-    	user.save()
-    	console.log(user.status)
+const makeAdmin = async (email) => {
+	User.findOne({"email": email})
+	.then(user => {
+		if (user) {
+			user.active = true
+			user.save()
+		}
+	})
+}
+
+const deactivateUser = async (email) => {
+    User.findOne({"email": email})
+	 .then(user => {
+		if(user) {
+			user.active = false
+			user.save()
+		}
     });
 };
 
-router.post('/deactivateUser', async (req, res) => {
-	if (req.user.admin) {
-		name = req.body.name
+router.post('/deactivateUser', authEndpoint.auth, async (req, res) => {
+	if (req.user && req.user.admin) {
 		email = req.body.email
-		await deactivateUser(name, email)
-		res.send("success")
+		await deactivateUser(email)
+		res.sendStatus(200)
 	}
 	else {
-		res.send("not an admin")
+		res.sendStatus(403)
 	}
 });
 
-router.post('/deleteUser', async (req, res) => {
-	if (req.user.admin) {
-		name = req.body.name
+router.post('/deleteUser', authEndpoint.auth, async (req, res) => {
+	if (req.user && req.user.admin) {
 		email = req.body.email
 		await User.deleteOne({"email": email})
-		res.send("success")
+		res.sendStatus(200)
 	}
 	else {
-		res.send("not an admin")
+		res.sendStatus(403)
 	}
+})
+
+router.post('/makeAdmin', authEndpoint.auth, async (req, res) => {
+	if (req.user && req.user.admin) {
+		email = req.body.email
+		await makeAdmin(email)
+		res.sendStatus(200)
+	}
+	else {
+		res.sendStatus(403)
+	}
+})
+
+router.post('/removeAdmin', authEndpoint.auth, async (req, res) => {
+	if (req.user && req.user.admin) {
+		email = req.body.email
+		await removeAdmin(email)
+		res.sendStatus(200)
+	}
+	else {
+		res.sendStatus(403)
+	}
+
 })
 
 module.exports = router;

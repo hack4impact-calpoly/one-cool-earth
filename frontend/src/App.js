@@ -1,83 +1,56 @@
 import React from "react";
-import Header from "./Header";
 import Admin from "./Admin.js";
-import Signup from "./SignUp.js";
-import EditUser from "./EditUser.js";
-import Welcome from "./Welcome.js";
-import Spreadsheets from "./Spreadsheets.js";
-import CalendarPage from "./Calendar";
+import Volunteer from './Volunteer';
 import LandingPage from "./LandingPage";
-import CreateEvent from "./CreateEvent";
-import EditEvent from "./EditEvent";
-import Jotform from './Jotform'
-import SetAuthToken from "./actions/SetAuthToken";
 import { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Spinner from 'react-bootstrap/Spinner'
+
+const spinnerStyle = {
+  position: 'absolute', left: '50%', top: '50%',
+  transform: 'translate(-50%, -50%)'
+}
 
 function App() {
-  const [user, setUser] = useState();
-  const [StartPage, setStartPage] = useState();
+  const [user, setUser] = useState(null)
+  const [StartPage, setStartPage] = useState(<LandingPage />)
+  const [isAuthenticating, setIsAuthenticating] = useState(true)
+
 
   useEffect(() => {
     const URL = `${process.env.REACT_APP_SERVER_URL}/api/auth`;
     fetch(URL, { credentials: "include" })
       .then((res) => res.json())
-      .then((data) => setUser(data.user))
-      .catch((err) => console.error(err)); // catches when users aren't logged in
-  }, []);
+      .then((data) => {
+        setUser(data.user)
+        setIsAuthenticating(false)
+      })
+      .catch((err) => {
+        console.error(err)
+        setIsAuthenticating(false)
+      }) // catches error
+  }, [])
 
   useEffect(() => {
     setStartPage(
       user ? (
         user.admin ? (
-	      <>
-          <Admin/>
-	      </>
+          <Admin user={user}/>
         ) : (
-        <>
-          <Welcome user={user} />
-        </>
+          <Volunteer user={user} />
         )
       ) : (
-        <LandingPage />
+        <LandingPage user={user} />
       )
     );
-  }, [user]);
+  }, [user])
 
   return (
     <div>
-      <BrowserRouter>
-        <div className="App">
-        <Header user = {user} />
-          <Switch>
-            <Route exact path="/">
-              {StartPage}
-            </Route>
-            <Route path="/spreadsheets">
-              <Spreadsheets />
-            </Route>
-            <Route path="/signup">
-              <Signup />
-            </Route>
-            <Route path="/edit-user">
-              <EditUser />
-            </Route>
-            <Route path="/admin">
-              <Admin />
-            </Route>
-            <Route path="/calendar">
-              <CalendarPage />
-            </Route>
-            <Route path="/create-event">
-              <CreateEvent />
-            </Route>
-            <Route path="/edit-event">
-            </Route>
-            <Route path="/jotform" component={Jotform} />
-            <Route path="/auth/login/:token" component={SetAuthToken} />
-          </Switch>
+      { isAuthenticating ? (
+        <div style={spinnerStyle}>
+          <Spinner animation="border" role="status" />
         </div>
-      </BrowserRouter>
+      ) : StartPage }
     </div>
   );
 }

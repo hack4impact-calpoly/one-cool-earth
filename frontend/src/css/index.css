@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Playfair Display", serif, sans-serif !important;
+  font-weight: 400 !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -12,8 +13,8 @@ code {
     monospace;
 }
 
-html, body, #root {
-  height: 100%;
+html, body, #root, #root>div {
+  height: 100% !important;
   margin: 0;
 }
 
@@ -31,12 +32,10 @@ html, body, #root {
 	text-transform: uppercase !important;
   border: 1px solid black !important;
   border-radius: 0px !important;
-  }
-  
-  
+} 
   
 .btn:hover {
-	background-color:lightgray !important;
+	background-color: #F2F2F2 !important;
 }
   
   
@@ -45,7 +44,7 @@ html, body, #root {
 }
 
 .btn-large {
-	font-size: 1.1em !important;
+	font-size: 1.2em !important;
 }
 
 .btn-white {
@@ -63,4 +62,9 @@ html, body, #root {
   border: 1px solid white !important;
   color: white !important;
   font-size: 10px !important;
+}
+
+input.form-control {
+  border-radius: 0%;
+  border-color: black;
 }

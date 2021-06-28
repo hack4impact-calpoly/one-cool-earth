@@ -4,26 +4,33 @@ const User = require('../models/User');
 const router = express.Router();
 
 router.post('/', async(req, res) => {
-   userEmail = req.body.email
+   email = req.body.email
    userName = req.body.name
    location = req.body.location
-   volunteerPreferences = req.body.preferences
-   await User.findOne({"email": userEmail})
+   volunteerPreferences = req.body.volunteerPreferences
+   phone = req.body.phoneNumber;
+   await User.findOne({"email": email})
    .then( (user) => {
       if (user) {
-         res.status(200);
-         res.send("you already have an account, plaese log in")
+         res.status(200)
+         res.json({status: 'user already exists'})
+
       } else {
          var doc = new User({
-               "email": userEmail, 
-               "name": userName, 
-               "location": location, 
-               "volunteerPreferences": volunteerPreferences, 
-               "admin": false})
+            "email": email, 
+            "name": userName, 
+            "location": location, 
+            "volunteerPreferences": volunteerPreferences, 
+            "admin": false,
+            "phoneNumber": phone,
+            "shifts": [null],
+            active: true
+         })
          doc.save()
-         res.sendStatus(200);
+         res.status(200)
+         res.json({status: 'ok'})
       }
    })
 })
 
-module.exports = router;
+module.exports = router

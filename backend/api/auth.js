@@ -17,7 +17,7 @@ const getUser = async (req, res, next) => {
 
     if (user) {
         const { id } = req.user
-        await User.findById(id, function(err, user) {
+        await User.findById(id).then((user) => {
             req.user = user
         })
     }
@@ -43,14 +43,6 @@ router.get('/google/callback',
     res.redirect(`${process.env.CLIENT_URL}/auth/login/${token}`)
 })
 
-router.get('/logout', async (req, res) => {
-    const options = { secure: true, httpOnly: true, sameSite: 'none' }
-
-    res.clearCookie('auth_token', options)
-    res.status(200)
-    res.redirect(`${process.env.CLIENT_URL}`)
-})
-
 router.post('/token', async (req, res) => {
     const { token } = req.body
     const options = { secure: true, httpOnly: true, sameSite: 'none' }
@@ -59,4 +51,7 @@ router.post('/token', async (req, res) => {
     res.sendStatus(200);
 })
 
-module.exports = router
+module.exports = {
+    router: router,
+    auth: auth
+}
