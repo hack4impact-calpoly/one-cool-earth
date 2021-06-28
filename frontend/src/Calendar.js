@@ -66,7 +66,7 @@ class CalendarPage extends React.Component{
     const allEvents = this.state.events.slice();
     const dateObj = new Date(date);
     for (let event of allEvents) {
-      let eventDate = new Date(event.startTime);
+      let eventDate = new Date(event.date);
       if(eventDate.getDate() === dateObj.getDate() &&
           eventDate.getMonth() === dateObj.getMonth() &&
           eventDate.getFullYear() === dateObj.getFullYear())
@@ -106,8 +106,8 @@ class CalendarPage extends React.Component{
         break
       }
     }
-    events = this.getEvents(eventClicked.startTime)
-    const eventDate = new Date(eventClicked.startTime);
+    events = this.getEvents(eventClicked.date)
+    const eventDate = new Date(eventClicked.date);
     this.setState({
       dateClickedStr: `${eventDate.getMonth()+1}/${eventDate.getDate()}/${eventDate.getFullYear()}`,
       dateClickedEvents: events,
