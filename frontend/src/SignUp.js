@@ -3,8 +3,7 @@ import { Modal, Container, Form, Button, Row, Col, InputGroup } from "react-boot
 import "react-dropdown/style.css";
 import "./css/SignUp.css";
 import Select from "react-select";
-import JotformEmbed from 'react-jotform-embed';
-import Iframe from 'react-iframe'
+import { withRouter } from 'react-router-dom'
 
 // DUMMY: need to replace with backend data
 let volunteerOptions = [
@@ -84,7 +83,7 @@ class Signup extends React.Component {
     this.setState({ email: event.target.value + '@gmail.com' })
     if(/^[a-z0-9.]+$/.test(event.target.value) &&
       event.target.value.length > 5 &&
-      event.target.value.length < 31 && 
+      event.target.value.length < 31 &&
       event.target.value.indexOf('.') !== 0 &&
       !event.target.value.includes(".com") &&
       !event.target.value.includes("gmail"))
@@ -144,7 +143,7 @@ class Signup extends React.Component {
       email: this.state.email,
       location: this.state.locSelected.value,
     };
-  
+
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/signup`, {
         method: 'POST',
         mode: 'cors',
@@ -159,10 +158,8 @@ class Signup extends React.Component {
       if(data.status === 'user already exists') {
         this.handleShowModal('It looks like an account is already associated with this email!');
       } else {
-        window.location.assign('/')
+        this.props.history.push('/jotform')
       }
-    }).catch( (err) => {
-      this.handleShowModal('An error occurred. Please try again.');
     })
   }
 
@@ -207,7 +204,7 @@ class Signup extends React.Component {
             <Row>
               <Form.Group as={Col} controlId="first-name">
                 <Form.Label>First Name</Form.Label>
-                <Form.Control 
+                <Form.Control
                   required
                   placeholder="Enter your first name..."
                   size="lg"
@@ -220,7 +217,7 @@ class Signup extends React.Component {
               </Form.Group>
               <Form.Group as={Col} controlId="last-name">
                 <Form.Label>Last Name</Form.Label>
-                <Form.Control 
+                <Form.Control
                   required
                   placeholder="Enter your last name..."
                   size="lg"
@@ -236,7 +233,7 @@ class Signup extends React.Component {
             <Row>
               <Form.Group as={Col} controlId="phone-number">
                 <Form.Label>Phone Number</Form.Label>
-                <Form.Control 
+                <Form.Control
                   required
                   placeholder="(###)-###-####"
                   size="lg"
@@ -251,7 +248,7 @@ class Signup extends React.Component {
               <Form.Group as={Col}>
                 <Form.Label>Gmail</Form.Label>
                 <InputGroup id="gmail-input-group" size="lg">
-                  <Form.Control 
+                  <Form.Control
                     required
                     placeholder="username"
                     size="lg"
@@ -327,4 +324,4 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+export default withRouter(Signup);
