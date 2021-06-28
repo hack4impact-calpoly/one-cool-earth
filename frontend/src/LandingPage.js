@@ -1,25 +1,35 @@
 import React from 'react';
 import Logo from './images/oce-logo-landing-page.png';
 import Background from './images/landing-page-background.jpg';
-import {Button} from 'react-bootstrap';
+import {Button, Modal} from 'react-bootstrap';
 import './css/LandingPage.css';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import SetAuthToken from "./actions/SetAuthToken";
 import SignUp from "./SignUp.js";
 import Header from './Header';
+import LandingPageModal from './LandingPageModal'
 
 
 class LandingPage extends React.Component {
 
    constructor(props) {
       super(props)
-      this.state = {
-         user: this.props.user
-      }
    }
 
    onClickLogin() {
       window.location.assign(`${process.env.REACT_APP_SERVER_URL}/api/auth/google`)
+   }
+
+   handleTryAgain = () => {
+      this.onClickLogin()
+   }
+
+   handleClose = () => {
+      window.location.assign('/')
+   }
+
+   handleSignUp = () => {
+      window.location.assign('/signup')
    }
 
    render() {
@@ -51,6 +61,14 @@ class LandingPage extends React.Component {
                   <Header signingUp={true} user={false}/>
                   <SignUp />
                </Route>
+               <Route exact path="/fail">
+                  <LandingPageModal
+                      showModal={true}
+                      handleClose={this.handleClose}
+                      handleSignUp={this.handleSignUp}
+                      handleTryAgain={this.handleTryAgain}
+                  />
+               </Route>
                <Route exact path="/auth/login/:token" component={SetAuthToken} />
             </Switch>
          </BrowserRouter>
@@ -58,4 +76,4 @@ class LandingPage extends React.Component {
    }
 }
 
-export default LandingPage;
+export default LandingPage

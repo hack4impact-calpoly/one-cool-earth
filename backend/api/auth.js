@@ -32,10 +32,10 @@ router.get('/', auth, async (req, res) => {
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
-router.get('/google/callback', 
+router.get('/google/callback',
     passport.authenticate('google', {
         session: false,
-        failureRedirect: process.env.CLIENT_URL
+        failureRedirect: `${process.env.CLIENT_URL}/fail`
     }),
     (req, res) => {
     // Successful authentication
