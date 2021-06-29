@@ -54,7 +54,7 @@ router.post('/add-shift', authEndpoint.auth, async(req,res) => {
 
       await User.findOneAndUpdate(
          {email: email},
-         {$push: 
+         {$push:
             {shifts:
                   {
                      name: eventName,
@@ -64,7 +64,7 @@ router.post('/add-shift', authEndpoint.auth, async(req,res) => {
             }
          },
       )
-      
+
       res.sendStatus(200)
    } else {
       res.sendStatus(403)
@@ -80,7 +80,7 @@ router.delete('/delete-shift', authEndpoint.auth, async(req, res) => {
 
       await User.findOneAndUpdate(
          {email: email},
-         {$pull: 
+         {$pull:
             {shifts:{
                   name: eventName,
                   startTime: startTime,
@@ -91,8 +91,18 @@ router.delete('/delete-shift', authEndpoint.auth, async(req, res) => {
 
       res.sendStatus(200)
    } else {
-      res.sensStatus(403)
+      res.sendStatus(403)
    }
+})
+
+router.post('/signed-waiver', async (req, res) => {
+   email = req.body.email
+   User.findOneAndUpdate(
+       { "email": email },
+       { "signedWaiver": true }
+   ).then( (user) => {
+      res.sendStatus(200)
+    })
 })
 
 

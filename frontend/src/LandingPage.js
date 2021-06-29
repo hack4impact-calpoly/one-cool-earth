@@ -3,22 +3,27 @@ import Logo from './images/oce-logo-landing-page.png';
 import Background from './images/landing-page-background.jpg';
 import {Button} from 'react-bootstrap';
 import './css/LandingPage.css';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import SetAuthToken from "./actions/SetAuthToken";
 import SignUp from "./SignUp.js";
 import Header from './Header';
-
+import Jotform from './Jotform';
 
 class LandingPage extends React.Component {
 
    constructor(props) {
       super(props)
       this.state = {
-         user: this.props.user
+         signedUp: false,
+         email: null
       }
    }
 
-   onClickLogin() {
+   handleSignUp = (email) => {
+      this.setState({signedUp: true, email: email})
+   }
+
+   onClickLogin = () => {
       window.location.assign(`${process.env.REACT_APP_SERVER_URL}/api/auth/google`)
    }
 
@@ -48,10 +53,20 @@ class LandingPage extends React.Component {
                   </div>
                </Route>
                <Route exact path='/signup'>
-                  <Header signingUp={true} user={false}/>
-                  <SignUp />
+                  {
+                     this.state.signedUp
+                     ? <Redirect to='/jotform' />
+                     :
+                     <>
+                        <Header signingUp={true} user={false}/>
+                        <SignUp handleSignUp={this.handleSignUp} />
+                     </>
+                  }
                </Route>
                <Route exact path="/auth/login/:token" component={SetAuthToken} />
+               <Route exact path="/jotform">
+                  <Jotform handleLogin={this.onClickLogin} email={this.state.email} />
+               </Route>
             </Switch>
          </BrowserRouter>
       );

@@ -41,8 +41,7 @@
   align-items: center;
 }
 
-#logo,
-#title {
+#logo, #title {
   margin-right: 10%;
 }
 
@@ -51,8 +50,6 @@
   justify-content: center;
   align-items: center;
   font-size: 4em;
-  font-family: sans-serif;
-  font-weight: bold;
   margin: 0px;
   color: white;
 }
@@ -63,18 +60,6 @@
   align-items: center;
   justify-content: center;
 }
-
-/* #options button {
-	cursor: pointer;
-	text-transform: uppercase;
-	height: 50px;
-	width: 150px;
-	font-size: 1.1em;
-	font-stretch: condensed;
-	background-color: transparent;
-	border: 2px solid white;
-	color: white;
-} */
 
 .signup-box {
   justify-content: center;

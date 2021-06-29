@@ -11,6 +11,7 @@ import {
 import "react-dropdown/style.css";
 import "./css/SignUp.css";
 import Select from "react-select";
+import { withRouter } from 'react-router-dom'
 
 // DUMMY: need to replace with backend data
 let volunteerOptions = [
@@ -94,7 +95,7 @@ class Signup extends React.Component {
       /^[a-z0-9.]+$/.test(event.target.value) &&
       event.target.value.length > 5 &&
       event.target.value.length < 31 &&
-      event.target.value.indexOf(".") !== 0 &&
+      event.target.value.indexOf('.') !== 0 &&
       !event.target.value.includes(".com") &&
       !event.target.value.includes("gmail")
     )
@@ -153,13 +154,21 @@ class Signup extends React.Component {
     };
 
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/signup`, {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(SignUpData),
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(SignUpData),
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      if(data.status === 'user already exists') {
+        this.handleShowModal('It looks like an account is already associated with this email!');
+      } else {
+        this.props.handleSignUp(this.state.email)
+      }
     })
       .then((response) => {
         return response.json();
@@ -367,4 +376,4 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+export default withRouter(Signup);
