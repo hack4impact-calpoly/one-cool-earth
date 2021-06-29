@@ -158,7 +158,7 @@ class Signup extends React.Component {
       if(data.status === 'user already exists') {
         this.handleShowModal('It looks like an account is already associated with this email!');
       } else {
-        this.props.handleSignUp()
+        this.props.handleSignUp(this.state.email)
       }
     })
   }

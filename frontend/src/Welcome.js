@@ -6,6 +6,8 @@ import BannerImage2 from './images/banner-image-2.jpg';
 import BannerImage3 from './images/banner-image-3.jpg';
 import Iframe from 'react-iframe'
 
+const apiKey = '44dccd6f10590ce8651f22c3d52a1a6a'
+const formID = '70895957565174'
 class Welcome extends React.Component {
 
     constructor(props) {
@@ -13,7 +15,7 @@ class Welcome extends React.Component {
         this.state = {
             eventList: [],
             announcementList: [],
-            showModal: null
+            showModal: null,
         }
     }
 
@@ -29,14 +31,60 @@ class Welcome extends React.Component {
             .then((json) => this.setState({announcementList: json}))
             .catch((err) => console.error(err));
         this.setState({showModal: !this.props.user.signedWaiver})
+        if(!this.props.user.signedWaiver) {
+            this.getJotFormSubmission()
+            this.timerId = setInterval(() => this.getJotFormSubmission(), 3000)
+        }
+    }
+
+    componentWillUnmount = () => {
+        clearInterval(this.timerId)
+    }
+
+    checkAnswer = (answers) => {
+        for (const [key, value] of Object.entries(answers)) {
+            if (value.name === 'email' && value.answer && value.answer === this.props.user.email) {
+                return true
+            }
+        }
+        return false
+    }
+
+    getJotFormSubmission = () => {
+        const jotformURL = `https://api.jotform.com/form/${formID}/submissions?apiKey=${apiKey}`
+        fetch(jotformURL)
+            .then(response => {
+                return response.json()
+            })
+            .then(data => {
+                data.content.map( (entry)=> {
+                    if (this.checkAnswer(entry.answers)) {
+                        const signedWaiverURL = `${process.env.REACT_APP_SERVER_URL}/api/user/signed-waiver`
+                        fetch(signedWaiverURL, {
+                            method: 'POST',
+                            mode: 'cors',
+                            credentials: 'include',
+                            headers: {
+                                'Content-type': 'application/json'
+                            },
+                            body: JSON.stringify({email: this.props.user.email})
+                        }).then( response => {
+                            if(response.status === 200) {
+                                this.setState({showModal: false})
+                                clearInterval(this.timerId)
+                            }
+                        })
+                    }
+                })
+            })
     }
 
     render() {
         return (
             <div id='welcome'>
-                <Modal centered show={this.state.showModal} onHide={this.handleClose} size='lg'>
+                <Modal centered show={this.state.showModal} size='lg'>
                     <Modal.Header>
-                        <Modal.Title cenetered style={{ textTransform: 'uppercase'}}>Sign Waiver</Modal.Title>
+                        <Modal.Title style={{ textTransform: 'uppercase'}}>Sign Waiver</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Iframe

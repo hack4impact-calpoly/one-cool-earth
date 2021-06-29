@@ -14,12 +14,13 @@ class LandingPage extends React.Component {
    constructor(props) {
       super(props)
       this.state = {
-         signedUp: false
+         signedUp: false,
+         email: null
       }
    }
 
-   handleSignUp = () => {
-      this.setState({signedUp: true})
+   handleSignUp = (email) => {
+      this.setState({signedUp: true, email: email})
    }
 
    onClickLogin = () => {
@@ -64,7 +65,7 @@ class LandingPage extends React.Component {
                </Route>
                <Route exact path="/auth/login/:token" component={SetAuthToken} />
                <Route exact path="/jotform">
-                  <Jotform showModal={true} />
+                  <Jotform handleLogin={this.onClickLogin} email={this.state.email} />
                </Route>
             </Switch>
          </BrowserRouter>
