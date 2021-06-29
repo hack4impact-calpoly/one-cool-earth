@@ -1,42 +1,41 @@
 .signup-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: black;
-    padding-bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+  padding-bottom: 10%;
 }
 
 .signup-title {
-    padding-top: 4%;
-    padding-bottom: 1%;
-    padding-left: 6%;
-    padding-right: 6%;
+  padding-top: 4%;
+  padding-bottom: 1%;
+  padding-left: 6%;
+  padding-right: 6%;
 
-    font-size: xx-large;
-    font-style: normal;
-    font-weight: normal;
-    text-transform: uppercase; 
-    color: #4e5e9a;
+  font-size: xx-large;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: #4e5e9a;
 }
 
 .signup-forms {
-    text-transform: uppercase; 
-    margin-top: 5%;
-    
+  text-transform: uppercase;
+  margin-top: 5%;
 }
 
 .signup-button {
-    margin-top: 3%;
+  margin-top: 3%;
 }
 
 .input-group-append .input-group-text:last-of-type {
-    border-radius: 0;
+  border-radius: 0;
 }
 
 #gmail-form-control {
-    border-radius: 0%;
+  border-radius: 0%;
 }
 
 #gmail-input-group {
-    text-transform: lowercase;
+  text-transform: lowercase;
 }
