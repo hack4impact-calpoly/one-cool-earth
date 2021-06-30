@@ -127,7 +127,8 @@ class Spreadsheets extends React.Component{
             showEventModal: false,
             userModalData: {},
             eventModalData: {},
-            eventData: []
+            eventData: [],
+            userData: []
         }
     }
 
@@ -142,6 +143,15 @@ class Spreadsheets extends React.Component{
                     console.log("Error loading event data: ", error)
                 });
         }
+            const URL = `${process.env.REACT_APP_SERVER_URL}/api/userData/get-all`;
+            fetch(URL)
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+                this.setState({userData: data})
+            }, (error) => {
+                console.log("Error loading user data: ", error);
+            });
     }
 
     handleToggleChange() {
@@ -192,13 +202,13 @@ class Spreadsheets extends React.Component{
                         </tr>
                     </thead>
                 <tbody>
-                    {userData.rows.map(user => (
+                    {this.state.userData.map(user => (
                         <tr onClick={() => this.handleShowUserModal(user)}>
-                            <td>{user.id}</td>
-                            <td>{user.firstName}</td>
-                            <td>{user.lastName}</td>
+                            <td>{user.googleId}</td>
+                            <td>{user.name.first}</td>
+                            <td>{user.name.last}{console.log(user)}</td>
                             <td>{user.email}</td>
-                            <td>{user.phone}</td>
+                            <td>{user.phoneNumber}</td>
                             <td>{user.admin === true ? "Yes" : "No"}</td>
                         </tr>
                     )) }
@@ -266,7 +276,7 @@ class Spreadsheets extends React.Component{
                     </Table>
                 </Row>
                 <div style={{paddingTop: "10px"}}>
-                <ExportCSV csvData={this.state.tableViewUsers ? userData : eventData} fileName={"One Cool Earth Data"}></ExportCSV>
+                <ExportCSV csvData={this.state.tableViewUsers ? this.state.userData : eventData} fileName={"One Cool Earth Data"}></ExportCSV>
 
                 </div>
 
