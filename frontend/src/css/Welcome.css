@@ -1,130 +1,5 @@
-/* .returnHome{
-    grid-area: returnHome;
-    display: flex;
-    padding-right: 5vh;
-}
-
-.logout{
-    padding-right: 5vh;
-    padding-left: 2vh;
-}
-.returnHome button{
-    border: 1px solid #4E5E9A;
-    background-color: white;
-    color: #4E5E9A;
-    margin-top: 3vh;
-    margin-left: 3vh;
-    height: 100%;
-    width: 100%;
-}
-.logout button{
-    border: 1px solid #4E5E9A;
-    background-color: white;
-    color: #4E5E9A;
-    margin-top: 3vh;
-    margin-left: 3vh;
-    height: 100%;
-    width: 100%;
-} */
-
-/* header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-h1 {
-    color: #4E5E9A;
-}
-
-p1 {
-    text-transform: uppercase;
-}
-
-main {
-    display:flex;
-
-    padding-left: 5vh;
-    padding-right: 5vh;
-    margin-left: 10vh;
-    margin-right: 10vh;
-    align-items: center;
-}
-
-#planning{
-    flex: 1;
-    float: left;
-    align-items: center;
-    padding-right: 10vh;
-}
-
-#banner{
-    display: flex;
-    margin-top: 1vh;
-    margin-left: 5vw;
-    margin-right: 5vw;
-    margin-bottom: 1vh;
-
-    height: 200px;
-    width: auto;
-    text-align: center;
-
-    border-style: solid;
-    border-color: gray;
-    border-width: 2px;
-}
-
-#engagements{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    margin-top: 10vh;
-}
-
-#calendar{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-top:15vh;
-    margin-bottom: 15vh;
-}
-
-#calendar button, #engagements button {
-    border: 1px solid #4E5E9A;
-    background-color: white;
-    color: #4E5E9A;
-    margin-top: 3vh;
-    min-width: fit-content;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 25px;
-    padding-right: 25px;
-    text-transform: uppercase;
-}
-
-#news{
-    flex: 1;
-    float: right;
-    display: grid;
-    position: relative;
-}
-
-#news > img{
-    width: auto;
-    height: auto;
-}
-
-#news > #showcase{
-    height: 10vh;
-}
-
-.event {
-    text-transform: uppercase;
-} */
-
-.banner-image {
-    height: 12em;
+ .banner-image {
+    height: 14em;
     width: auto;
 }
 
@@ -134,7 +9,6 @@ main {
     margin-bottom: 3em;
 }
 
-/* selects all banner images immediately following another banner image */
 .banner-image + .banner-image {
     margin-left: 3em;
 }
@@ -177,12 +51,6 @@ main {
     padding-bottom: 4em;
 }
 
-#edit-button, #calendar-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .event, .announcement {
     text-transform: uppercase;
 }
@@ -190,4 +58,8 @@ main {
 .announcement {
     display: flex;
     flex-direction: column;
+}
+
+.event {
+  margin-bottom: 1.5em;
 }

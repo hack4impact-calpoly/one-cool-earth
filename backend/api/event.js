@@ -83,6 +83,7 @@ router.post('/edit', authEndpoint.auth, async (req, res) => {
 
  router.get('/get', authEndpoint.auth, async (req, res) => {
      if(req.user) {
+
         Event.findById(req.query.id, function (err, event) {
             if(err) {
                 res.sendStatus(500);

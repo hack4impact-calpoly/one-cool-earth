@@ -10,12 +10,8 @@ const UserSchema = new mongoose.Schema({
   email: String,
   phoneNumber: String,
   shifts: [{
-    eventId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'events'
-    },
-    startTime: Date,
-    endTime: Date
   }],
   location : String,
   volunteerPreferences : [String],
