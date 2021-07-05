@@ -143,7 +143,7 @@ class Spreadsheets extends React.Component{
                     console.log("Error loading event data: ", error)
                 });
         }
-            const URL = `${process.env.REACT_APP_SERVER_URL}/api/userData/get-all`;
+            const URL = `${process.env.REACT_APP_SERVER_URL}/api/user/get-all`;
             fetch(URL)
             .then((res) => res.json())
             .then((data) => {
@@ -206,7 +206,7 @@ class Spreadsheets extends React.Component{
                         <tr onClick={() => this.handleShowUserModal(user)}>
                             <td>{user.googleId}</td>
                             <td>{user.name.first}</td>
-                            <td>{user.name.last}{console.log(user)}</td>
+                            <td>{user.name.last}</td>
                             <td>{user.email}</td>
                             <td>{user.phoneNumber}</td>
                             <td>{user.admin === true ? "Yes" : "No"}</td>
