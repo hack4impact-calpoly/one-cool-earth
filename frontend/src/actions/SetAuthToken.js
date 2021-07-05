@@ -1,4 +1,6 @@
 import { useParams } from 'react-router-dom'
+import Spinner from 'react-bootstrap/Spinner'
+import React from "react";
 
 const SetAuthToken = () => {
    const { token } = useParams();
@@ -14,7 +16,7 @@ const SetAuthToken = () => {
    })
    .then(() => window.location.assign('/'));
 
-   return <p>Loading...</p>;
+   return <Spinner animation="border" role="status" />
  };
 
 export default SetAuthToken

@@ -76,7 +76,7 @@ class LandingPage extends React.Component {
                      </>
                   }
                </Route>
-               <Route exact path="/fail">
+               <Route exact path="/login/fail">
                   <LandingPageModal
                       showModal={true}
                       handleClose={this.handleClose}
