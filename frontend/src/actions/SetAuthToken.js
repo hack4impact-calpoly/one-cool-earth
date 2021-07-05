@@ -1,8 +1,10 @@
 import { useParams } from 'react-router-dom'
+import Spinner from 'react-bootstrap/Spinner'
+import React from "react";
 
 const SetAuthToken = () => {
-   const { token } = useParams(); // import from react-router-dom
- 
+   const { token } = useParams();
+
    fetch(`${process.env.REACT_APP_SERVER_URL}/api/auth/token`, {
      method: 'POST',
      mode: 'cors',
@@ -13,8 +15,8 @@ const SetAuthToken = () => {
      body: JSON.stringify({token}),
    })
    .then(() => window.location.assign('/'));
- 
-   return <p>Loading...</p>;
+
+   return <Spinner animation="border" role="status" />
  };
 
 export default SetAuthToken

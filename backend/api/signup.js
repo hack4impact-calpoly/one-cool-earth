@@ -17,14 +17,15 @@ router.post('/', async(req, res) => {
 
       } else {
          var doc = new User({
-            "email": email, 
-            "name": userName, 
-            "location": location, 
-            "volunteerPreferences": volunteerPreferences, 
+            "email": email,
+            "name": userName,
+            "location": location,
+            "volunteerPreferences": volunteerPreferences,
             "admin": false,
             "phoneNumber": phone,
             "shifts": [null],
-            active: true
+            "active": true,
+            "signedWaiver": false,
          })
          doc.save()
          res.status(200)

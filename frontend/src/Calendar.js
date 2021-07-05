@@ -2,7 +2,6 @@ import './css/Calendar.css';
 import React from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import {Container, Modal, Button} from "react-bootstrap";
 import interactionPlugin from "@fullcalendar/interaction";
 import DateModal from "./DateModal.js";
 
@@ -10,7 +9,6 @@ const sampleEvents = [
   {
     id: 1,
     name: "Event 1",
-    date: new Date("Wed Jun 02 2021"),
     startTime: (new Date("Wed Jun 02 2021 03:30:16 GMT-0700")),
     endTime: (new Date("Wed Jun 02 2021 05:30:16 GMT-0700")),
     location: "Paso Robles",
@@ -19,7 +17,6 @@ const sampleEvents = [
   {
     id: 2,
     name: "Event 2",
-    date: new Date("Wed Jun 10 2021"),
     startTime: (new Date("Fri Jun 10 2021 09:30:16 GMT-0700")),
     endTime: (new Date("Fri Jun 10 2021 10:30:16 GMT-0700")),
     location: "Arroyo Grande",
@@ -28,7 +25,6 @@ const sampleEvents = [
   {
     id: 3,
     name: "Event 3",
-    date: new Date("Wed Jun 23 2021"),
     startTime: (new Date("Mon Jun 23 2021 13:30:16 GMT-0700")),
     endTime: (new Date("Mon Jun 23 2021 14:30:16 GMT-0700")),
     location: "San Luis Obispo",
@@ -37,11 +33,10 @@ const sampleEvents = [
   {
     id: 4,
     name: "Event 4",
-    date: new Date("Wed Jun 23 2021"),
     startTime: (new Date("Mon Jun 23 2021 13:30:16 GMT-0700")),
     endTime: (new Date("Mon Jun 23 2021 14:30:16 GMT-0700")),
     location: "San Luis Obispo",
-    description: "This is the decription for Event 3"
+    description: "This is the decription for Event 4"
   }
 ]
 
@@ -58,18 +53,26 @@ class CalendarPage extends React.Component{
   }
 
   componentDidMount = () => {
-    this.setState({ events: sampleEvents})
+    //this.setState({ events: sampleEvents});
+    const eventsURL = `${process.env.REACT_APP_SERVER_URL}/api/event/get-all`;
+    fetch(eventsURL, {credentials: 'include'})
+	  .then((res) => res.json())
+	  .then((events) => this.setState({events: events}))
+	  .catch((err) => console.error(err));
   }
 
   getEvents = (date) => {
     let events = []
-    for (let event of sampleEvents) {
-      if(event.date.getDate() === date.getDate() &&
-          event.date.getMonth() === date.getMonth() &&
-          event.date.getFullYear() === date.getFullYear())
+    const allEvents = this.state.events.slice();
+    const dateObj = new Date(date);
+    for (let event of allEvents) {
+      let eventDate = new Date(event.date);
+      if(eventDate.getDate() === dateObj.getDate() &&
+          eventDate.getMonth() === dateObj.getMonth() &&
+          eventDate.getFullYear() === dateObj.getFullYear())
         events.push(event)
     }
-    return events
+    return events;
   }
 
   showDateModal = () => {
@@ -86,29 +89,27 @@ class CalendarPage extends React.Component{
   }
 
   handleDateClick = (arg) => {
-    const events = this.getEvents(arg.date)
+    const events = this.getEvents(arg.date);
     this.setState({
       dateClickedStr: `${arg.date.getMonth()+1}/${arg.date.getDate()}/${arg.date.getFullYear()}`,
       dateClickedEvents: events
     });
-    this.showDateModal()
+    this.showDateModal();
   }
 
   handleEventClick = (arg) => {
     let eventClicked = null, events = []
-
-    for (let event of this.state.events) {
+    const stateEvents = this.state.events.slice();
+    for (let event of stateEvents) {
       if(event.name === arg.event.title) {
         eventClicked = event
         break
       }
     }
-
     events = this.getEvents(eventClicked.date)
-
-    console.log(events)
+    const eventDate = new Date(eventClicked.date);
     this.setState({
-      dateClickedStr: `${eventClicked.date.getMonth()+1}/${eventClicked.date.getDate()}/${eventClicked.date.getFullYear()}`,
+      dateClickedStr: `${eventDate.getMonth()+1}/${eventDate.getDate()}/${eventDate.getFullYear()}`,
       dateClickedEvents: events,
       eventClicked: arg.event.title
     })
@@ -134,10 +135,10 @@ class CalendarPage extends React.Component{
             }}
             events={
               this.state.events.map( (event) => {
-                return ({
+		return ({
                   title: event.name,
-                  start: event.startTime.getTime(),
-                  end: event.startTime.getTime()
+                  start: new Date(event.startTime),
+                  end: new Date(event.endTime)
                 })
               })
             }
