@@ -37,7 +37,7 @@ class Jotform extends React.Component {
    }
 
    getJotFormSubmission = () => {
-      const jotformURL = `https://api.jotform.com/form/${this.process.env.REACT_APP_JOTFORM_FORM_ID}/submissions?apiKey=${this.process.env.REACT_APP_JOTFORM_API_KEY}`
+      const jotformURL = `https://api.jotform.com/form/${process.env.REACT_APP_JOTFORM_FORM_ID}/submissions?apiKey=${process.env.REACT_APP_JOTFORM_API_KEY}`
       fetch(jotformURL)
           .then(response => {
             return response.json()
@@ -81,7 +81,7 @@ class Jotform extends React.Component {
                 </Modal.Footer>
              </Modal>
             <IFrame
-               url={`https://form.jotform.com/${this.process.env.REACT_APP_JOTFORM_FORM_ID}`}
+               url={`https://form.jotform.com/${process.env.REACT_APP_JOTFORM_FORM_ID}`}
                width="100%"
                height="100%"
                position="absolute"
