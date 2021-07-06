@@ -14,7 +14,7 @@ class DateModal extends React.Component {
   convertTo12HourClock = (date) => {
     let time;
     const minutes = date.getMinutes().toLocaleString("en-US", {minimumIntegerDigits: 2});
-    if(date.getHours() == 0){
+    if(date.getHours() === 0){
       time = `12:${minutes}am`;
     }else if(date.getHours() > 12){
       time = `${date.getHours() - 12}:${minutes}pm`;
