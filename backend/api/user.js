@@ -34,11 +34,12 @@ router.post('/edit', authEndpoint.auth, async (req, res) => {
 });
 
 router.get('/:email', authEndpoint.auth, async (req, res) => {
-   if(req.user.email === req.params.email) {
+   if((req.user.email === req.params.email) || req.user.admin) {
       let email = req.params.email
-      User.findOne({"email": email}).then(function(user) {
+      User.findOne({"email": email}).then(user =>{
          if (user) {
-            res.send(user)
+            res.status(200)
+            res.json(user)
          }
       })
    } else {
@@ -89,7 +90,7 @@ router.delete('/delete-shift', authEndpoint.auth, async(req, res) => {
          },
       );
       res.sendStatus(200)
-   } 
+   }
    else {
       res.sendStatus(403)
    }

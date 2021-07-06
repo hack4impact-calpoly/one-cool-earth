@@ -1,37 +1,11 @@
 import React from 'react';
 import {Button, Modal, Form, Row, Col} from 'react-bootstrap';
-import { FaEdit } from 'react-icons/fa';
 
 class UserModal extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      admin: this.props.userData.admin,
-    }
-  }
 
-  handleAdmin() {
-    if(this.state.admin){
-      this.setState({
-        admin: false
-      })
+    handleClose = () => {
+        this.props.handleClose()
     }
-    else{
-      this.setState({
-        admin: true
-      })
-    }
-    return this.state.admin
-  }
-
-  handleClose() {
-    if(this.state.edit === true) {
-      this.setState({
-        edit: false
-      })
-    }
-    this.props.handleClose()
-  }
 
     render () {
         return (
@@ -79,15 +53,15 @@ class UserModal extends React.Component {
                             Admin
                             </Form.Label>
                             <Col sm="8">
-                            <p>{this.state.admin ? "Yes" : "No"}</p>
+                            <p>{this.props.userData.admin ? "Yes" : "No"}</p>
                             </Col>
                         </Form.Group>
-                        
+
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button style={{"marginRight": "190px"}} onClick={() => this.handleAdmin()}>
-                    {this.state.admin ? "Remove Admin" : "Make Admin"}
+                  <Button style={{"marginRight": "190px"}} onClick={this.props.handleAdminChange}>
+                    {this.props.userData.admin ? "Remove Admin" : "Make Admin"}
                   </Button>
                   <Button onClick={() => this.handleClose()}>
                     Close
@@ -97,8 +71,8 @@ class UserModal extends React.Component {
             </>
           );
     }
-  
-    
+
+
   }
-  
+
 export default UserModal;

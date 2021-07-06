@@ -2,6 +2,11 @@ import { useParams } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
 import React from "react";
 
+const spinnerStyle = {
+    position: 'absolute', left: '50%', top: '50%',
+    transform: 'translate(-50%, -50%)'
+}
+
 const SetAuthToken = () => {
    const { token } = useParams();
 
@@ -16,7 +21,11 @@ const SetAuthToken = () => {
    })
    .then(() => window.location.assign('/'));
 
-   return <Spinner animation="border" role="status" />
+   return (
+       <div style={spinnerStyle}>
+           <Spinner animation="border" role="status" />
+       </div>
+   )
  };
 
 export default SetAuthToken

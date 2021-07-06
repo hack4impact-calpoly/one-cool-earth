@@ -15,7 +15,6 @@ class EventModal extends React.Component {
 
   componentDidMount() {
     if(this.state.locations === undefined) {
-      console.log("HERE")
       const URL = `${process.env.REACT_APP_SERVER_URL}/api/location/get-all`;
       fetch(URL, {credentials: 'include'})
           .then((res) => res.json())

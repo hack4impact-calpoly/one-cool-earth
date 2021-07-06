@@ -7,7 +7,7 @@ const removeAdmin = async (email) => {
 	User.findOne({"email": email})
 	.then(user => {
 		if (user) {
-			user.active = false
+			user.admin = false
 			user.save()
 		}
 	})
@@ -17,7 +17,7 @@ const makeAdmin = async (email) => {
 	User.findOne({"email": email})
 	.then(user => {
 		if (user) {
-			user.active = true
+			user.admin = true
 			user.save()
 		}
 	})
@@ -46,7 +46,7 @@ router.post('/deactivateUser', authEndpoint.auth, async (req, res) => {
 
 router.post('/deleteUser', authEndpoint.auth, async (req, res) => {
 	if (req.user && req.user.admin) {
-		email = req.body.email
+		const email = req.body.email
 		await User.deleteOne({"email": email})
 		res.sendStatus(200)
 	}
@@ -57,7 +57,7 @@ router.post('/deleteUser', authEndpoint.auth, async (req, res) => {
 
 router.post('/makeAdmin', authEndpoint.auth, async (req, res) => {
 	if (req.user && req.user.admin) {
-		email = req.body.email
+		const email = req.body.email
 		await makeAdmin(email)
 		res.sendStatus(200)
 	}
@@ -68,7 +68,7 @@ router.post('/makeAdmin', authEndpoint.auth, async (req, res) => {
 
 router.post('/removeAdmin', authEndpoint.auth, async (req, res) => {
 	if (req.user && req.user.admin) {
-		email = req.body.email
+		const email = req.body.email
 		await removeAdmin(email)
 		res.sendStatus(200)
 	}
