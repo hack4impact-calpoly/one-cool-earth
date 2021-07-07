@@ -3,32 +3,6 @@ const Event = require('../models/Event');
 const router = express.Router();
 const authEndpoint = require('./auth')
 
-router.post('/create', authEndpoint.auth, async (req, res) => {
-    if(req.user && req.user.admin) {
-        Event.create(
-            {
-                name: req.body.name,
-                date: req.body.date,
-                startTime: req.body.startTime,
-                endTime: req.body.endTime,
-                location: req.body.location,
-                description: req.body.description,
-                numberOfVolunteers: req.body.numberOfVolunteers,
-                coordinator: req.body.coordinator,
-                address: req.body.address,
-                volunteerType: req.body.volunteerType
-            }, function(err) {
-                if(err) {
-                    res.sendStatus(500)
-                } else {
-                    res.sendStatus(200)
-                }
-        });
-    } else {
-        res.sendStatus(403)
-    }
- });
-
 const editEvent = async (id, name, startTime, endTime, location, description, numberOfVolunteers, coordinator, address, volunteerType) => {
     await Event.findOneAndUpdate({"id": id}).then(function(event) {
         if (name) {
@@ -62,6 +36,32 @@ const editEvent = async (id, name, startTime, endTime, location, description, nu
     });
 };
 
+router.post('/create', authEndpoint.auth, async (req, res) => {
+    if(req.user && req.user.admin) {
+        Event.create(
+            {
+                name: req.body.name,
+                date: req.body.date,
+                startTime: req.body.startTime,
+                endTime: req.body.endTime,
+                location: req.body.location,
+                description: req.body.description,
+                numberOfVolunteers: req.body.numberOfVolunteers,
+                coordinator: req.body.coordinator,
+                address: req.body.address,
+                volunteerType: req.body.volunteerType
+            }, function(err) {
+                if(err) {
+                    res.sendStatus(500)
+                } else {
+                    res.sendStatus(200)
+                }
+        });
+    } else {
+        res.sendStatus(403)
+    }
+ });
+
 router.post('/edit', authEndpoint.auth, async (req, res) => {
     if (req.user && req.user.admin) {
         id = req.body.id
@@ -83,7 +83,6 @@ router.post('/edit', authEndpoint.auth, async (req, res) => {
 
  router.get('/get', authEndpoint.auth, async (req, res) => {
      if(req.user) {
-
         Event.findById(req.query.id, function (err, event) {
             if(err) {
                 res.sendStatus(500);

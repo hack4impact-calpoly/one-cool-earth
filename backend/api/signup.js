@@ -23,7 +23,7 @@ router.post('/', async(req, res) => {
             "volunteerPreferences": volunteerPreferences,
             "admin": false,
             "phoneNumber": phone,
-            "shifts": [null],
+            "shifts": [],
             "active": true,
             "signedWaiver": false,
          })

@@ -12,7 +12,7 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Credentials", 'true');
     next();
 });
 
@@ -27,7 +27,6 @@ const adminEndpoint = require('./api/admin')
 const userEndpoint = require('./api/user')
 const eventEndpoint = require('./api/event')
 const locationEndpoint = require('./api/locations')
-const shiftEndpoint = require('./api/shift')
 
 app.use('/api/signup', signUpEndpoint)
 app.use('/api/announcement', announcementEndpoint)
@@ -36,7 +35,6 @@ app.use('/api/admin', adminEndpoint)
 app.use('/api/user', userEndpoint)
 app.use('/api/event', eventEndpoint)
 app.use('/api/location', locationEndpoint)
-app.use('/api/shift', shiftEndpoint)
 
 app.get('/api/logout', authEndpoint.auth, async (req, res) => {
     if (req.user) {

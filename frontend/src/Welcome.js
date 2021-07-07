@@ -21,7 +21,6 @@ class Welcome extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.user);
         const eventsURL = `${process.env.REACT_APP_SERVER_URL}/api/event/get/?id=`;
         const announcementsURL = `${process.env.REACT_APP_SERVER_URL}/api/announcement/`;
         this.props.user.shifts.forEach((event) => {
@@ -37,7 +36,6 @@ class Welcome extends React.Component {
                         return startDate1 - startDate2;
                       });
                       this.setState({eventList: sortedEventList});
-                      console.log(sortedEventList);
                   }
               })
               .catch(error => console.error(error));
@@ -103,7 +101,6 @@ class Welcome extends React.Component {
 
         /* TODO: make POST request to api/events/edit to remove user's _id from the event's list of users */
 
-        console.log(id);
         const deleteShiftURL = `${process.env.REACT_APP_SERVER_URL}/api/user/delete-shift`;
         const deleteShiftBody = {
             email: this.props.user.email,

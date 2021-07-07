@@ -88,21 +88,16 @@ class EventModal extends React.Component {
             .then((data) => {
                 console.log("updated event!: ", data)
             }, (error) => {
-                console.log("Error updating event: ", error)
+                console.error("Error updating event: ", error)
             });
-}
+  }
 
-
-
-    render () {
+  render () {
       if(this.props.show && Object.keys(this.state.currEventData).length === 0) {
         this.updateEventDataState()
         return null
       } else {
-
-
         return (
-
             <>
               <Modal centered show={this.props.show} onHide={this.props.handleClose}>
                 <Modal.Header>
@@ -208,10 +203,11 @@ class EventModal extends React.Component {
                 </Modal.Footer>
               </Modal>
             </>
-          )};
-    }
-
-
+          )
+      }
   }
+
+
+}
 
 export default EventModal;

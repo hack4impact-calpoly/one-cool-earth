@@ -28,7 +28,6 @@ class Admin extends React.Component {
                     </Card.Text>
                     <Button href="/create-event">Click Here</Button>
                   </Card.Body>
-                  <Card.Footer></Card.Footer>
                 </Card>
                 <Card style={{ borderRadius: "0%" }} className="admin-card">
                   <Card.Header as="h4">Volunteer & Event Data</Card.Header>
@@ -40,7 +39,6 @@ class Admin extends React.Component {
                     </Card.Text>
                     <Button href="/spreadsheets">Click Here</Button>
                   </Card.Body>
-                  <Card.Footer></Card.Footer>
                 </Card>
               </div>
               <div className="admin-card-row">
@@ -53,7 +51,6 @@ class Admin extends React.Component {
                     </Card.Text>
                     <Button href="/profile">Click Here</Button>
                   </Card.Body>
-                  <Card.Footer></Card.Footer>
                 </Card>
                 <Card style={{ borderRadius: "0%" }} className="admin-card">
                   <Card.Header as="h4">Announcements</Card.Header>
@@ -64,7 +61,18 @@ class Admin extends React.Component {
                     </Card.Text>
                     <Button href="/announcements">Click Here</Button>
                   </Card.Body>
-                  <Card.Footer></Card.Footer>
+                </Card>
+              </div>
+              <div className="admin-card-row">
+                <Card style={{ borderRadius: "0%" }} className="admin-card">
+                  <Card.Header as="h4">Calendar</Card.Header>
+                  <Card.Body className="admin-card-body">
+                    <Card.Title>View the Calendar</Card.Title>
+                    <Card.Text style={{ fontSize: "16px" }}>
+                      Would you like to view and/or edit your events from the calendar view?
+                    </Card.Text>
+                    <Button href="/calendar">Click Here</Button>
+                  </Card.Body>
                 </Card>
               </div>
             </Container>

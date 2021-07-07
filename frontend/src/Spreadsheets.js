@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Container, Row, Col} from "react-bootstrap";
+import {Table, Container, Row, Col, Button} from "react-bootstrap";
 import '../src/css/Spreadsheets.css';
 import { ExportCSV } from './ExportCSV.js'
 import Toggle from 'react-toggle'
@@ -34,7 +34,12 @@ class Spreadsheets extends React.Component{
         }
         if(this.state.userData === undefined || this.state.userData.length === 0) {
             const URL = `${process.env.REACT_APP_SERVER_URL}/api/user/get-all`;
-            fetch(URL)
+            fetch(URL,
+                {
+                    method: 'POST',
+                    credentials: 'include',
+                    mode: 'cors'
+                })
                 .then((res) => res.json())
                 .then((data) => {
                     this.setState({userData: data})
@@ -204,7 +209,11 @@ class Spreadsheets extends React.Component{
 
     render(){
         return (<>
-            <EventModal show={this.state.showEventModal} eventData={this.state.eventModalData} handleClose={this.handleCloseEventModal} />
+            <EventModal
+                show={this.state.showEventModal}
+                eventData={this.state.eventModalData}
+                handleClose={this.handleCloseEventModal}
+            />
             <UserModal
                 show={this.state.showUserModal}
                 userData={this.state.userModalData}
@@ -230,11 +239,13 @@ class Spreadsheets extends React.Component{
                     </Table>
                 </Row>
                 <div style={{paddingTop: "10px"}}>
-                <ExportCSV csvData={this.state.tableViewUsers ? this.state.userData : this.state.eventData} fileName={"One Cool Earth Data"} />
-
+                    {
+                        this.state.tableViewUsers
+                            ? null
+                            : <Button href="/calendar">Calendar View</Button>
+                    }
+                    <ExportCSV csvData={this.state.tableViewUsers ? this.state.userData : this.state.eventData} fileName={"One Cool Earth Data"} />
                 </div>
-
-
             </Container>
         </>
         )
