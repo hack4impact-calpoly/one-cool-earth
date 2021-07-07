@@ -27,6 +27,7 @@ const userEndpoint = require('./api/user')
 const eventEndpoint = require('./api/event')
 const locationEndpoint = require('./api/locations')
 const shiftEndpoint = require('./api/shift')
+const filesEndpoint = require('./api/file')
 
 app.use('/api/signup', signUpEndpoint)
 app.use('/api/announcement', announcementEndpoint)
@@ -36,6 +37,7 @@ app.use('/api/user', userEndpoint)
 app.use('/api/event', eventEndpoint)
 app.use('/api/location', locationEndpoint)
 app.use('/api/shift', shiftEndpoint)
+app.use('/api/file', filesEndpoint)
 
 app.get('/api/logout', authEndpoint.auth, async (req, res) => {
     if (req.user) {
@@ -47,9 +49,11 @@ app.get('/api/logout', authEndpoint.auth, async (req, res) => {
     }
 })
 
-if (process.argv.includes('dev')) {
-    const PORT = process.env.PORT || 3001;
-    app.listen(PORT, () => console.log(`server running on port ${PORT}`));
-}
+// if (process.argv.includes('dev')) {
+//     const PORT = process.env.PORT || 3001;
+//     app.listen(PORT, () => console.log(`server running on port ${PORT}`));
+// }
+
+app.listen(3001, "localhost");
 
 module.exports = app
