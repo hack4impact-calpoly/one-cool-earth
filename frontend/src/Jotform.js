@@ -2,8 +2,6 @@ import React from 'react'
 import IFrame from 'react-iframe';
 import {Button, Modal} from 'react-bootstrap'
 
-const apiKey = '44dccd6f10590ce8651f22c3d52a1a6a'
-const formID = '70895957565174'
 class Jotform extends React.Component {
 
    constructor(props) {
@@ -39,7 +37,7 @@ class Jotform extends React.Component {
    }
 
    getJotFormSubmission = () => {
-      const jotformURL = `https://api.jotform.com/form/${formID}/submissions?apiKey=${apiKey}`
+      const jotformURL = `https://api.jotform.com/form/${process.env.REACT_APP_JOTFORM_FORM_ID}/submissions?apiKey=${process.env.REACT_APP_JOTFORM_API_KEY}`
       fetch(jotformURL)
           .then(response => {
             return response.json()
@@ -82,8 +80,8 @@ class Jotform extends React.Component {
                    </Button>
                 </Modal.Footer>
              </Modal>
-            <IFrame 
-               url={`https://form.jotform.com/${formID}`} 
+            <IFrame
+               url={`https://form.jotform.com/${process.env.REACT_APP_JOTFORM_FORM_ID}`}
                width="100%"
                height="100%"
                position="absolute"

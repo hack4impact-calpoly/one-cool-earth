@@ -65,7 +65,7 @@ class Welcome extends React.Component {
     }
 
     getJotFormSubmission = () => {
-        const jotformURL = `https://api.jotform.com/form/${formID}/submissions?apiKey=${apiKey}`
+        const jotformURL = `https://api.jotform.com/form/${process.env.REACT_APP_JOTFORM_FORM_ID}/submissions?apiKey=${process.env.REACT_APP_JOTFORM_API_KEY}`
         fetch(jotformURL)
             .then(response => {
                 return response.json()
