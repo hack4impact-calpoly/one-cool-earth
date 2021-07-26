@@ -95,6 +95,17 @@ router.post('/edit', authEndpoint.auth, async (req, res) => {
      }
  })
 
+router.get('/get-specific', authEndpoint.auth, async (req, res) => {
+  if(req.user) {
+    Event.find({location: req.user.location, volunteerType: req.user.volunteerPreferences})
+      .then(events => {
+        res.status(200);
+	res.json(events);
+      });
+  }else {
+    res.sendStatus(403);
+  }
+})
 
  router.post('/delete', authEndpoint.auth, async (req, res) => {
     if(req.user && req.user.admin) {

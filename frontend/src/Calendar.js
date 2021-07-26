@@ -53,8 +53,7 @@ class CalendarPage extends React.Component{
   }
 
   componentDidMount = () => {
-    //this.setState({ events: sampleEvents});
-    const eventsURL = `${process.env.REACT_APP_SERVER_URL}/api/event/get-all`;
+    const eventsURL = `${process.env.REACT_APP_SERVER_URL}/api/event/get-specific`;
     fetch(eventsURL, {credentials: 'include'})
 	  .then((res) => res.json())
 	  .then((events) => this.setState({events: events}))
