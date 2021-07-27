@@ -2,124 +2,126 @@ import './css/Calendar.css';
 import React from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import {Container, Modal, Button} from "react-bootstrap";
 import interactionPlugin from "@fullcalendar/interaction";
-import DateModal from "./DateModal.js";
-
-const sampleEvents = [
-  {
-    id: 1,
-    name: "Event 1",
-    date: new Date("Wed Jun 02 2021"),
-    startTime: (new Date("Wed Jun 02 2021 03:30:16 GMT-0700")),
-    endTime: (new Date("Wed Jun 02 2021 05:30:16 GMT-0700")),
-    location: "Paso Robles",
-    description: "This is the decription for Event 1"
-  },
-  {
-    id: 2,
-    name: "Event 2",
-    date: new Date("Wed Jun 10 2021"),
-    startTime: (new Date("Fri Jun 10 2021 09:30:16 GMT-0700")),
-    endTime: (new Date("Fri Jun 10 2021 10:30:16 GMT-0700")),
-    location: "Arroyo Grande",
-    description: "This is the decription for Event 2. This has a lot of lines to check the wrap around of the modal."
-  },
-  {
-    id: 3,
-    name: "Event 3",
-    date: new Date("Wed Jun 23 2021"),
-    startTime: (new Date("Mon Jun 23 2021 13:30:16 GMT-0700")),
-    endTime: (new Date("Mon Jun 23 2021 14:30:16 GMT-0700")),
-    location: "San Luis Obispo",
-    description: "This is the decription for Event 3"
-  },
-  {
-    id: 4,
-    name: "Event 4",
-    date: new Date("Wed Jun 23 2021"),
-    startTime: (new Date("Mon Jun 23 2021 13:30:16 GMT-0700")),
-    endTime: (new Date("Mon Jun 23 2021 14:30:16 GMT-0700")),
-    location: "San Luis Obispo",
-    description: "This is the decription for Event 3"
-  }
-]
+import DateModal from './DateModal'
+import EventModal from './EventModal'
 
 class CalendarPage extends React.Component{
+
   constructor(props){
     super(props);
-    this.state={
+    this.state = {
       showModal: false,
       events: [],
       dateClickedStr: "",
       dateClickedEvents: [],
-      eventClicked: null
+      eventClicked: "",
+      eventModalData: {},
+      userShifts: []
     }
   }
 
-  componentDidMount = () => {
-    this.setState({ events: sampleEvents})
+  componentDidMount() {
+    const eventsURL = `${process.env.REACT_APP_SERVER_URL}/api/event/get-all`
+    fetch(eventsURL,
+        {
+          credentials: 'include',
+          mode: 'cors'
+        })
+        .then((res) => res.json())
+        .then((events) => this.setState({events: events}))
+        .catch((err) => console.error(err))
+    const shiftsURL = `${process.env.REACT_APP_SERVER_URL}/api/user/shifts`
+    fetch(shiftsURL,
+        {
+          method: 'POST',
+          credentials: 'include',
+          mode: 'cors'
+        })
+        .then(res => res.json())
+        .then(userShifts => this.setState({userShifts: userShifts}))
+        .catch(err => console.error(err))
   }
 
   getEvents = (date) => {
     let events = []
-    for (let event of sampleEvents) {
-      if(event.date.getDate() === date.getDate() &&
-          event.date.getMonth() === date.getMonth() &&
-          event.date.getFullYear() === date.getFullYear())
+    const allEvents = this.state.events.slice();
+    const dateObj = new Date(date);
+    for (let event of allEvents) {
+      let eventDate = new Date(event.date);
+      if(eventDate.getDate() === dateObj.getDate() &&
+          eventDate.getMonth() === dateObj.getMonth() &&
+          eventDate.getFullYear() === dateObj.getFullYear())
         events.push(event)
     }
-    return events
+    return events;
   }
 
-  showDateModal = () => {
+  handleShowModal = () => {
     this.setState({showModal: true});
   }
 
-  hideDateModal = () => {
+  handleHideModal = () => {
     this.setState({
       showModal: false,
       dateClickedStr: "",
       dateClickedEvents: [],
-      eventClicked: ""
+      eventClicked: "",
+      eventModalData: {}
     });
   }
 
   handleDateClick = (arg) => {
-    const events = this.getEvents(arg.date)
+    const events = this.getEvents(arg.date);
     this.setState({
       dateClickedStr: `${arg.date.getMonth()+1}/${arg.date.getDate()}/${arg.date.getFullYear()}`,
       dateClickedEvents: events
     });
-    this.showDateModal()
+    this.handleShowModal();
   }
 
-  handleEventClick = (arg) => {
+  handleEventClickFromCalendar = (arg) => {
     let eventClicked = null, events = []
-
-    for (let event of this.state.events) {
-      if(event.name === arg.event.title) {
+    const stateEvents = this.state.events.slice();
+    for (let event of stateEvents) {
+      if(event._id === arg.event.id) {
         eventClicked = event
         break
       }
     }
+    if (eventClicked) {
+      events = this.getEvents(eventClicked.date)
+      const eventDate = new Date(eventClicked.date)
+      this.setState({
+        dateClickedStr: `${eventDate.getMonth() + 1}/${eventDate.getDate()}/${eventDate.getFullYear()}`,
+        dateClickedEvents: events,
+        eventClicked: arg.event.id,
+        eventModalData: this.props.user.admin ? eventClicked : {}
+      })
+      this.handleShowModal()
+    }
+  }
 
-    events = this.getEvents(eventClicked.date)
+  handleEventClickFromModal = (event) => {
+    this.setState({eventClicked: event._id})
+  }
 
-    console.log(events)
-    this.setState({
-      dateClickedStr: `${eventClicked.date.getMonth()+1}/${eventClicked.date.getDate()}/${eventClicked.date.getFullYear()}`,
-      dateClickedEvents: events,
-      eventClicked: arg.event.title
-    })
-    this.showDateModal()
+  handleShiftAdd = () => {
+    let newUserShifts = this.state.userShifts
+    newUserShifts.push(this.state.eventClicked)
+    this.setState({userShifts: newUserShifts})
+  }
 
+  handleShiftRemove = () => {
+    let newUserShifts = this.state.userShifts
+    newUserShifts = newUserShifts.filter(shift => shift !== this.state.eventClicked)
+    this.setState({userShifts: newUserShifts})
   }
 
   render () {
     return (
       <div id='calendar-page'>
-        <div id="calendar-container">
+        <div className={`calendar-container ${this.props.user.admin ? 'admin' : 'volunteer-calendar'}`}>
           <FullCalendar
             plugins={[ dayGridPlugin, interactionPlugin ]}
             headerToolbar={{
@@ -134,30 +136,45 @@ class CalendarPage extends React.Component{
             }}
             events={
               this.state.events.map( (event) => {
-                return ({
+		      return ({
                   title: event.name,
-                  start: event.startTime.getTime(),
-                  end: event.startTime.getTime()
+                  start: new Date(event.startTime),
+                  end: new Date(event.endTime),
+                  id: event._id
                 })
               })
             }
-            eventClick={this.handleEventClick}
+            eventClick={this.handleEventClickFromCalendar}
             initialView = 'dayGridMonth'
             fixedWeekCount={false}
-            dateClick= {this.handleDateClick}
+            dateClick={this.props.user.admin ? null : this.handleDateClick}
             height='100%'
           />
         </div>
-        <DateModal
-            show={this.state.showModal}
-            onHide={this.hideDateModal}
-            dateStr={this.state.dateClickedStr}
-            events={this.state.dateClickedEvents}
-            eventToggled={this.state.eventClicked}
-        />
+        {
+          this.props.user.admin
+              ?
+              <EventModal
+                  show={this.state.showModal}
+                  eventData={this.state.eventModalData}
+                  handleClose={this.handleHideModal}
+              />
+              :
+              <DateModal
+                  show={this.state.showModal}
+                  onHide={this.handleHideModal}
+                  dateStr={this.state.dateClickedStr}
+                  events={this.state.dateClickedEvents}
+                  eventToggled={this.state.eventClicked}
+                  shifts={this.state.userShifts}
+                  handleShiftAdd={this.handleShiftAdd}
+                  handleShiftRemove={this.handleShiftRemove}
+                  handleEventClick={this.handleEventClickFromModal}
+              />
+        }
       </div>
     );
   }
 }
 
-export default CalendarPage;
+export default CalendarPage

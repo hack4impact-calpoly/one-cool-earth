@@ -1,11 +1,11 @@
 
 const testEvent = {
-    name: 'Event One', 
-    startTime: new Date(), 
-    endTime: new Date(), 
-    location: 'SLO', 
+    name: 'Event One',
+    startTime: new Date(),
+    endTime: new Date(),
+    location: 'SLO',
     description: 'description!',
-    volunteersPerShift: 3,
+    numberOfVolunteers: 3,
     coordinator: 'Coordinator 1',
     address: '123 Grand Ave',
     volunteerType: 'Type'

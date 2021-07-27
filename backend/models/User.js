@@ -10,18 +10,13 @@ const UserSchema = new mongoose.Schema({
   email: String,
   phoneNumber: String,
   shifts: [{
-    eventId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'events'  
-    },
-    startTime: Date,
-    endTime: Date
+      ref: 'events'
   }],
   location : String,
   volunteerPreferences : [String],
-  active : Boolean
-}, {
-  versionKey: false
+  active : Boolean,
+  signedWaiver: Boolean
 })
 
 const User = mongoose.model('devs', UserSchema);
