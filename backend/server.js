@@ -37,7 +37,6 @@ app.use('/api/admin', adminEndpoint)
 app.use('/api/user', userEndpoint)
 app.use('/api/event', eventEndpoint)
 app.use('/api/location', locationEndpoint)
-app.use('/api/shift', shiftEndpoint)
 app.use('/api/file', filesEndpoint)
 
 
