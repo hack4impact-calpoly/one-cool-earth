@@ -27,7 +27,6 @@ const adminEndpoint = require('./api/admin')
 const userEndpoint = require('./api/user')
 const eventEndpoint = require('./api/event')
 const locationEndpoint = require('./api/locations')
-const shiftEndpoint = require('./api/shift')
 const filesEndpoint = require('./api/file')
 
 app.use('/api/signup', signUpEndpoint)
