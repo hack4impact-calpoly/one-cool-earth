@@ -4,12 +4,13 @@ import "./css/Profile.css";
 import Select from "react-select";
 import { FaEdit } from 'react-icons/fa'
 
-// // DUMMY: need to replace with backend data
 const volunteerOptions = [
-  { value: "garden workday", label: "Garden Workday Volunteer" },
-  { value: "special events", label: "Special Events Volunteer" },
-  { value: "garden educator", label: "Garden Educator Assistant" },
-  { value: "office/remote", label: "Office/Remote Volunteer" },
+  { value: "Garden Workday Volunteer", label: "Garden Workday Volunteer" },
+  { value: "Special Events Volunteer", label: "Special Events Volunteer" },
+  { value: "Garden Educator Assistant", label: "Garden Educator Assistant" },
+  { value: "Office Volunteer", label: "Office Volunteer" },
+  { value: "Family Cooking Night Volunteer", label: "Family Cooking Night Volunteer" },
+  { value: "Waste Audit Volunteer", label: "Waste Audit Volunteer" }
 ];
 
 class Profile extends React.Component {
@@ -90,7 +91,6 @@ class Profile extends React.Component {
   }
 
   handleVolChange = (volSelected) => {
-    console.log(this.state.volSelected)
     this.setState({
       editedVolunteerPreferences: true,
       volSelected: volSelected
@@ -400,7 +400,7 @@ class Profile extends React.Component {
                 this.state.editedLocation ||
                 this.state.editedVolunteerPreferences) ?
                   <div className='d-flex justify-content-center'>
-                    <Button type="submit" className="edit-profile-button">SAVE</Button>
+                    <Button type="submit" className="edit-profile-button">Save Changes</Button>
                   </div>
                 : null
               }

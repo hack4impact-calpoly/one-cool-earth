@@ -4,12 +4,13 @@ import "./css/CreateEvent.css";
 import { Modal, Container, Form, Button, Row, Col } from "react-bootstrap";
 import Select from "react-select";
 
-// DUMMY: need to replace with backend data
 const volunteerOptions = [
-  { value: "garden workday", label: "Garden Workday Volunteer" },
-  { value: "special events", label: "Special Events Volunteer" },
-  { value: "garden educator", label: "Garden Educator Assistant" },
-  { value: "office/remote", label: "Office/Remote Volunteer" },
+  { value: "Garden Workday Volunteer", label: "Garden Workday Volunteer" },
+  { value: "Special Events Volunteer", label: "Special Events Volunteer" },
+  { value: "Garden Educator Assistant", label: "Garden Educator Assistant" },
+  { value: "Office Volunteer", label: "Office Volunteer" },
+  { value: "Family Cooking Night Volunteer", label: "Family Cooking Night Volunteer" },
+  { value: "Waste Audit Volunteer", label: "Waste Audit Volunteer" }
 ];
 
 class CreateEvent extends React.Component {
@@ -201,12 +202,6 @@ class CreateEvent extends React.Component {
     }
   }
 
-  handleDateStartEndChange = (date, start, end) => {
-    this.checkDate(date)
-    this.checkStartTime(date, start)
-    this.checkEndTime(start, end)
-  }
-
   handleDateChange = (event) => {
     const dateStringArr = event.target.value.split("-")
     if(dateStringArr.length === 3) {
@@ -317,7 +312,6 @@ class CreateEvent extends React.Component {
       volunteerType: this.state.volSelected.value,
       description: this.state.description
     }
-
 
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/event/create`, {
       method: 'POST',
@@ -476,6 +470,7 @@ class CreateEvent extends React.Component {
             <Col>
               <Form.Label htmlFor="volunteer-type">Volunteer Type</Form.Label>
               <Select
+                closeMenuOnSelect={false}
                 value={this.volSelected}
                 onChange={this.handleVolChange}
                 options={volunteerOptions}

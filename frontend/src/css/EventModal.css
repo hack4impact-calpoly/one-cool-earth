@@ -1,0 +1,9 @@
+.event-modal-row {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#edit-button:hover {
+    cursor:pointer;
+    transform: scale(1.1);
+}

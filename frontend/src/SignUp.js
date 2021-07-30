@@ -13,12 +13,13 @@ import "./css/SignUp.css";
 import Select from "react-select";
 import { withRouter } from 'react-router-dom'
 
-// DUMMY: need to replace with backend data
-let volunteerOptions = [
-  { value: "garden workday", label: "Garden Workday Volunteer" },
-  { value: "special events", label: "Special Events Volunteer" },
-  { value: "garden educator", label: "Garden Educator Assistant" },
-  { value: "office/remote", label: "Office/Remote Volunteer" },
+const volunteerOptions = [
+  { value: "Garden Workday Volunteer", label: "Garden Workday Volunteer" },
+  { value: "Special Events Volunteer", label: "Special Events Volunteer" },
+  { value: "Garden Educator Assistant", label: "Garden Educator Assistant" },
+  { value: "Office Volunteer", label: "Office Volunteer" },
+  { value: "Family Cooking Night Volunteer", label: "Family Cooking Night Volunteer" },
+  { value: "Waste Audit Volunteer", label: "Waste Audit Volunteer" }
 ];
 
 class Signup extends React.Component {
@@ -244,7 +245,7 @@ class Signup extends React.Component {
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
-                  Plese enter a valid first name
+                  Please enter a valid first name
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group as={Col} controlId="last-name">
@@ -319,6 +320,7 @@ class Signup extends React.Component {
                   Volunteer Preferences
                 </label>
                 <Select
+                  closeMenuOnSelect={false}
                   value={this.state.volSelected}
                   onChange={this.handleVolChange}
                   options={volunteerOptions}

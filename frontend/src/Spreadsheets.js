@@ -117,10 +117,16 @@ class Spreadsheets extends React.Component{
         })
     }
 
+    handleEventModalChange = (eventData) => {
+        let newEventData = this.state.eventData
+        newEventData.splice(newEventData.findIndex( entry => entry._id === eventData._id), 1, eventData)
+        this.setState({eventModalData: eventData, eventData: newEventData})
+    }
+
     updateUserAdminStatus = (email) => {
         let newUserData = this.state.userData
         newUserData = newUserData.map( user => {
-            if(user.email === email){
+            if (user.email === email) {
                 const newUser = user
                 newUser.admin = !user.admin
                 return newUser
@@ -129,7 +135,6 @@ class Spreadsheets extends React.Component{
             }
         })
         this.setState({userData: newUserData})
-
     }
 
     getTableDataRows = () => {
@@ -148,7 +153,7 @@ class Spreadsheets extends React.Component{
                     </thead>
                 <tbody>
                     {this.state.userData.map(user => (
-                        <tr onClick={() => this.handleShowUserModal(user)}>
+                        <tr onClick={() => this.handleShowUserModal(user)} className="data-row">
                             <td>{user.name.first}</td>
                             <td>{user.name.last}</td>
                             <td>{user.email}</td>
@@ -167,33 +172,36 @@ class Spreadsheets extends React.Component{
                     <>
                     <thead>
                             <tr>
-                                {/* <th>Id</th> */}
                                 <th>Name</th>
-                                {/* <th>Date</th> */}
+                                 <th>Date</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>Location</th>
-                                <th>Description</th>
-                                <th>Volunteers Per Shift</th>
-                                <th>Coordinator</th>
                                 <th>Address</th>
+                                <th># of Volunteers</th>
+                                <th>Coordinator</th>
                                 <th>Type</th>
-                                {/* <th>Volunteers</th> */}
                             </tr>
                         </thead>
                     <tbody>
                         {this.state.eventData.map(event => (
-                            <tr onClick={() => this.handleShowEventModal(event)}>
-                                {/* <td>{event.id}</td> */}
+                            <tr onClick={() => this.handleShowEventModal(event)} className="data-row">
                                 <td>{event.name}</td>
-                                {/* <td>{new Date(event.date).toLocaleDateString()}</td> */}
-                                <td>{new Date(event.startTime).toLocaleDateString() + " " + new Date(event.startTime).toLocaleTimeString()}</td>
-                                <td>{new Date(event.endTime).toLocaleDateString() + " " + new Date(event.endTime).toLocaleTimeString()}</td>
+                                <td>{new Date(event.date).toLocaleDateString()}</td>
+                                <td>
+                                    {new Date(event.startTime).toLocaleTimeString().substr(0, 4) +
+                                    ' ' +
+                                    new Date(event.startTime).toLocaleTimeString().substr(-2, 2)}
+                                </td>
+                                <td>
+                                    {new Date(event.endTime).toLocaleTimeString().substr(0, 4) +
+                                    ' ' +
+                                    new Date(event.endTime).toLocaleTimeString().substr(-2, 2)}
+                                </td>
+                                <td>{event.address}</td>
                                 <td>{event.location}</td>
-                                <td>{event.description}</td>
                                 <td>{event.numberOfVolunteers}</td>
                                 <td>{event.coordinator}</td>
-                                <td>{event.address}</td>
                                 <td>{event.volunteerType}</td>
                             </tr>
                         )) }
@@ -209,11 +217,14 @@ class Spreadsheets extends React.Component{
 
     render(){
         return (<>
-            <EventModal
-                show={this.state.showEventModal}
-                eventData={this.state.eventModalData}
-                handleClose={this.handleCloseEventModal}
-            />
+            {this.state.showEventModal ?
+                <EventModal
+                    show={this.state.showEventModal}
+                    eventData={this.state.eventModalData}
+                    handleClose={this.handleCloseEventModal}
+                    handleChange={this.handleEventModalChange}
+                /> : null
+            }
             <UserModal
                 show={this.state.showUserModal}
                 userData={this.state.userModalData}
@@ -252,4 +263,4 @@ class Spreadsheets extends React.Component{
     }
 }
 
-export default Spreadsheets;
+export default Spreadsheets

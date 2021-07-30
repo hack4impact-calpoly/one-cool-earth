@@ -3,10 +3,13 @@ const Event = require('../models/Event');
 const router = express.Router();
 const authEndpoint = require('./auth')
 
-const editEvent = async (id, name, startTime, endTime, location, description, numberOfVolunteers, coordinator, address, volunteerType) => {
-    await Event.findOneAndUpdate({"id": id}).then(function(event) {
+const editEvent = async (id, name, date, startTime, endTime, location, description, numberOfVolunteers, coordinator, address, volunteerType) => {
+    await Event.findById(id).then(function(event) {
         if (name) {
             event.name = name
+        }
+        if (date) {
+            event.date = date
         }
         if (startTime) {
             event.startTime = startTime
@@ -64,17 +67,18 @@ router.post('/create', authEndpoint.auth, async (req, res) => {
 
 router.post('/edit', authEndpoint.auth, async (req, res) => {
     if (req.user && req.user.admin) {
-        id = req.body.id
-        name = req.body.name
-        startTime = req.body.startTime
-        endTime = req.body.endTime
-        location = req.body.location
-        description = req.body.description
-        numberOfVolunteers = req.body.numberOfVolunteers
-        coordinator = req.body.coordinator
-        address = req.body.address
-        volunteerType = req.body.volunteerType
-        await editEvent(id, name, startTime, endTime, location, description, numberOfVolunteers, coordinator, address, volunteerType)
+        const _id = req.body._id
+        const name = req.body.name
+        const date = req.body.date
+        const startTime = req.body.startTime
+        const endTime = req.body.endTime
+        const location = req.body.location
+        const description = req.body.description
+        const numberOfVolunteers = req.body.numberOfVolunteers
+        const coordinator = req.body.coordinator
+        const address = req.body.address
+        const volunteerType = req.body.volunteerType
+        await editEvent(_id, name, date, startTime, endTime, location, description, numberOfVolunteers, coordinator, address, volunteerType)
         res.sendStatus(200)
     } else {
         res.sendStatus(403)

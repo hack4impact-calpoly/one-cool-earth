@@ -118,6 +118,12 @@ class CalendarPage extends React.Component{
     this.setState({userShifts: newUserShifts})
   }
 
+  handleEventModalChange = (eventData) => {
+    let newEventData = this.state.events
+    newEventData.splice(newEventData.findIndex( entry => entry._id === eventData._id), 1, eventData)
+    this.setState({eventModalData: eventData, events: newEventData})
+  }
+
   render () {
     return (
       <div id='calendar-page'>
@@ -154,11 +160,13 @@ class CalendarPage extends React.Component{
         {
           this.props.user.admin
               ?
-              <EventModal
-                  show={this.state.showModal}
-                  eventData={this.state.eventModalData}
-                  handleClose={this.handleHideModal}
-              />
+              this.state.showModal ?
+                <EventModal
+                    show={this.state.showModal}
+                    eventData={this.state.eventModalData}
+                    handleClose={this.handleHideModal}
+                    handleChange={this.handleEventModalChange}
+                /> : null
               :
               <DateModal
                   show={this.state.showModal}

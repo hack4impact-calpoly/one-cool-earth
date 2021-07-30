@@ -15,12 +15,12 @@
    font-size: xx-large;
    font-style: normal;
    font-weight: normal;
-   text-transform: uppercase; 
+   text-transform: uppercase;
    color: #4e5e9a;
 }
 
 .edit-profile-forms {
-   text-transform: uppercase; 
+   text-transform: uppercase;
    margin-top: 5%;
 }
 
@@ -31,8 +31,8 @@
 }
 
 .edit-button:hover {
-   background-color:lightgray !important;
-   cursor:pointer
+   cursor:pointer;
+   transform: scale(1.1);
 }
 
 .edit-profile-button {
