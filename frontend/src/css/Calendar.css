@@ -17,11 +17,16 @@
 .Collapsible:hover {
   cursor: pointer;
 }
-/* body{
-  height: 100vh;
+
+#check-title {
+  display: flex;
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 2.5fr;
-  grid-template-areas: 'box1 .' 'box2 .';
-} */
+  justify-content: center;
+}
+
+#check-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 2% 10%;
+}
