@@ -8,7 +8,21 @@ class EventModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      edit: false
+      edit: false,
+      currEventData: {}
+    }
+  }
+
+  componentDidMount() {
+    if(this.state.locations === undefined) {
+      const URL = `${process.env.REACT_APP_SERVER_URL}/api/location/get-all`;
+      fetch(URL, {credentials: 'include'})
+          .then((res) => res.json())
+          .then((data) => {
+              this.setState({locations: data})
+          }, (error) => {
+              console.log("Error loading location data: ", error)
+          });
     }
   }
 
@@ -19,8 +33,10 @@ class EventModal extends React.Component {
   }
 
   handleCancelEdit() {
+    let c = JSON.parse(JSON.stringify(this.props.eventData))
     this.setState({
-      edit: false
+      edit: false,
+      currEventData: c
     })
   }
 
@@ -33,7 +49,54 @@ class EventModal extends React.Component {
     this.props.handleClose()
   }
 
-    render () {
+  getLocationOptions() {
+    let locs = this.state.locations.map((key, value) => {
+       return <option>{key.name}</option>
+    })
+    return locs;
+  }
+
+  handleFieldChange(e, field) {
+    console.log(e)
+    let curr = this.state.currEventData;
+    curr[field] = e.target.value;
+    this.setState({
+      currEventData: curr
+    })
+  }
+
+  updateEventDataState() {
+    let c = JSON.parse(JSON.stringify(this.props.eventData))
+    this.setState({
+      currEventData: c
+    })
+  }
+
+  updateEvent() {
+    console.log(this.state.currEventData)
+    const URL = `${process.env.REACT_APP_SERVER_URL}/api/event/editEvent`;
+        fetch(URL, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            method: 'POST',
+            body: JSON.stringify(this.state.currEventData),
+            credentials: 'include'
+          })
+            .then((res) => res)
+            .then((data) => {
+                console.log("updated event!: ", data)
+            }, (error) => {
+                console.error("Error updating event: ", error)
+            });
+  }
+
+  render () {
+      if(this.props.show && Object.keys(this.state.currEventData).length === 0) {
+        this.updateEventDataState()
+        return null
+      } else {
         return (
             <>
               <Modal centered show={this.props.show} onHide={this.props.handleClose}>
@@ -48,15 +111,7 @@ class EventModal extends React.Component {
                             Name
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.name} />
-                            </Col>
-                        </Form.Group>
-                        <Form.Group as={Row}>
-                            <Form.Label column sm="4">
-                            Date
-                            </Form.Label>
-                            <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={new Date(this.props.eventData.date).toLocaleDateString()} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "name")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.name} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -64,7 +119,7 @@ class EventModal extends React.Component {
                             Start Time
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.startTime} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "startTime")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.startTime} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -72,7 +127,7 @@ class EventModal extends React.Component {
                             End Time
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.endTime} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "endTime")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.endTime} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -80,7 +135,9 @@ class EventModal extends React.Component {
                             Location
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.location} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "location")} as={this.state.edit ? "select" : "input"} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.location} >
+                              {this.state.edit ? this.getLocationOptions() : null}
+                            </Form.Control>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -88,15 +145,39 @@ class EventModal extends React.Component {
                             Description
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.description} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "description")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.description} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
                             <Form.Label column sm="4">
-                            Volunteers Needed Per Shift
+                            Volunteers Per Shift
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.eventData.numberOfVolunteers} />
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "numberOfVolunteers")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.numberOfVolunteers} />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="4">
+                            Coordinator
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "coordinator")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.coordinator} />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="4">
+                            Address
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "address")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.address} />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="4">
+                            Type
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Control onChange={(e) => this.handleFieldChange(e, "volunteerType")} plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} value={this.state.currEventData.volunteerType} />
                             </Col>
                         </Form.Group>
 
@@ -104,7 +185,7 @@ class EventModal extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                   {this.state.edit ?
-                    <Button onClick={() => this.handleClose()}>
+                    <Button onClick={() => this.updateEvent()}>
                       Save Changes
                     </Button>
                   : null}
@@ -122,10 +203,11 @@ class EventModal extends React.Component {
                 </Modal.Footer>
               </Modal>
             </>
-          );
-    }
-
-
+          )
+      }
   }
+
+
+}
 
 export default EventModal;

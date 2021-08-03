@@ -4,42 +4,8 @@ import {Button} from 'react-bootstrap';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
-import DateModal from "./DateModal.js";
-
-const sampleEvents = [
-  {
-    id: 1,
-    name: "Event 1",
-    startTime: (new Date("Wed Jun 02 2021 03:30:16 GMT-0700")),
-    endTime: (new Date("Wed Jun 02 2021 05:30:16 GMT-0700")),
-    location: "Paso Robles",
-    description: "This is the decription for Event 1"
-  },
-  {
-    id: 2,
-    name: "Event 2",
-    startTime: (new Date("Fri Jun 10 2021 09:30:16 GMT-0700")),
-    endTime: (new Date("Fri Jun 10 2021 10:30:16 GMT-0700")),
-    location: "Arroyo Grande",
-    description: "This is the decription for Event 2. This has a lot of lines to check the wrap around of the modal."
-  },
-  {
-    id: 3,
-    name: "Event 3",
-    startTime: (new Date("Mon Jun 23 2021 13:30:16 GMT-0700")),
-    endTime: (new Date("Mon Jun 23 2021 14:30:16 GMT-0700")),
-    location: "San Luis Obispo",
-    description: "This is the decription for Event 3"
-  },
-  {
-    id: 4,
-    name: "Event 4",
-    startTime: (new Date("Mon Jun 23 2021 13:30:16 GMT-0700")),
-    endTime: (new Date("Mon Jun 23 2021 14:30:16 GMT-0700")),
-    location: "San Luis Obispo",
-    description: "This is the decription for Event 4"
-  }
-]
+import DateModal from './DateModal'
+import EventModal from './EventModal'
 
 function getVolTypeQuery(obj) {
   var volString = "?" + Object.keys(obj).map((key) => {
@@ -62,14 +28,17 @@ function Check(props) {
 }
 
 class CalendarPage extends React.Component{
+
   constructor(props){
     super(props);
-    this.state={
+    this.state = {
       showModal: false,
       events: [],
       dateClickedStr: "",
       dateClickedEvents: [],
-      eventClicked: null,
+      eventClicked: "",
+      eventModalData: {},
+      userShifts: [],
       preferences: props.user.volunteerPreferences,
       gardenWorkday: props.user.volunteerPreferences.includes("garden workday"),
       specialEvents: props.user.volunteerPreferences.includes("special events"),
@@ -80,7 +49,7 @@ class CalendarPage extends React.Component{
 
   updateCalendar = () => {
     const eventsURL = `${process.env.REACT_APP_SERVER_URL}/api/event/get-specific${getVolTypeQuery(this.state.preferences)}`;
-    fetch(eventsURL, {credentials: 'include'})
+    fetch(eventsURL, {credentials: 'include', mode: 'cors'})
           .then((res) => res.json())
           .then((events) => this.setState({events: events}))
           .catch((err) => console.error(err));
@@ -88,6 +57,16 @@ class CalendarPage extends React.Component{
 
   componentDidMount() {
     this.updateCalendar();
+    const shiftsURL = `${process.env.REACT_APP_SERVER_URL}/api/user/shifts`
+    fetch(shiftsURL,
+        {
+          method: 'POST',
+          credentials: 'include',
+          mode: 'cors'
+        })
+        .then(res => res.json())
+        .then(userShifts => this.setState({userShifts: userShifts}))
+        .catch(err => console.error(err))
   }
 
   getEvents = (date) => {
@@ -104,16 +83,17 @@ class CalendarPage extends React.Component{
     return events;
   }
 
-  showDateModal = () => {
+  handleShowModal = () => {
     this.setState({showModal: true});
   }
 
-  hideDateModal = () => {
+  handleHideModal = () => {
     this.setState({
       showModal: false,
       dateClickedStr: "",
       dateClickedEvents: [],
-      eventClicked: ""
+      eventClicked: "",
+      eventModalData: {}
     });
   }
 
@@ -123,27 +103,29 @@ class CalendarPage extends React.Component{
       dateClickedStr: `${arg.date.getMonth()+1}/${arg.date.getDate()}/${arg.date.getFullYear()}`,
       dateClickedEvents: events
     });
-    this.showDateModal();
+    this.handleShowModal();
   }
 
-  handleEventClick = (arg) => {
+  handleEventClickFromCalendar = (arg) => {
     let eventClicked = null, events = []
     const stateEvents = this.state.events.slice();
     for (let event of stateEvents) {
-      if(event.name === arg.event.title) {
+      if(event._id === arg.event.id) {
         eventClicked = event
         break
       }
     }
-    events = this.getEvents(eventClicked.date)
-    const eventDate = new Date(eventClicked.date);
-    this.setState({
-      dateClickedStr: `${eventDate.getMonth()+1}/${eventDate.getDate()}/${eventDate.getFullYear()}`,
-      dateClickedEvents: events,
-      eventClicked: arg.event.title
-    });
-    this.showDateModal();
-
+    if(eventClicked){
+      events = this.getEvents(eventClicked.date)
+      const eventDate = new Date(eventClicked.date);
+      this.setState({
+        dateClickedStr: `${eventDate.getMonth()+1}/${eventDate.getDate()}/${eventDate.getFullYear()}`,
+        dateClickedEvents: events,
+        eventClicked: arg.event.id,
+	eventModalData: this.props.user.admin ? eventClicked: {}
+      });
+      this.handleShowModal();
+    }
   }
 
   updateChecks = () => {
@@ -161,6 +143,22 @@ class CalendarPage extends React.Component{
       newPrefs.push("office/remote");
     }
     this.setState({preferences: newPrefs}, this.updateCalendar);
+  }
+
+  handleEventClickFromModal = (event) => {
+    this.setState({eventClicked: event._id})
+  }
+
+  handleShiftAdd = () => {
+    let newUserShifts = this.state.userShifts
+    newUserShifts.push(this.state.eventClicked)
+    this.setState({userShifts: newUserShifts})
+  }
+
+  handleShiftRemove = () => {
+    let newUserShifts = this.state.userShifts
+    newUserShifts = newUserShifts.filter(shift => shift !== this.state.eventClicked)
+    this.setState({userShifts: newUserShifts})
   }
 
   render () {
@@ -192,6 +190,8 @@ class CalendarPage extends React.Component{
 	      checked={this.state.officeRemote}
 	    />
 	  </div>
+	</div>
+        <div className={`calendar-container ${this.props.user.admin ? 'admin' : 'volunteer-calendar'}`}>
           <FullCalendar
             plugins={[ dayGridPlugin, interactionPlugin ]}
             headerToolbar={{
@@ -206,30 +206,45 @@ class CalendarPage extends React.Component{
             }}
             events={
               this.state.events.map( (event) => {
-		return ({
+		      return ({
                   title: event.name,
                   start: new Date(event.startTime),
-                  end: new Date(event.endTime)
+                  end: new Date(event.endTime),
+                  id: event._id
                 })
               })
             }
-            eventClick={this.handleEventClick}
+            eventClick={this.handleEventClickFromCalendar}
             initialView = 'dayGridMonth'
             fixedWeekCount={false}
-            dateClick= {this.handleDateClick}
+            dateClick={this.props.user.admin ? null : this.handleDateClick}
             height='100%'
           />
         </div>
-        <DateModal
-            show={this.state.showModal}
-            onHide={this.hideDateModal}
-            dateStr={this.state.dateClickedStr}
-            events={this.state.dateClickedEvents}
-            eventToggled={this.state.eventClicked}
-        />
+        {
+          this.props.user.admin
+              ?
+              <EventModal
+                  show={this.state.showModal}
+                  eventData={this.state.eventModalData}
+                  handleClose={this.handleHideModal}
+              />
+              :
+              <DateModal
+                  show={this.state.showModal}
+                  onHide={this.handleHideModal}
+                  dateStr={this.state.dateClickedStr}
+                  events={this.state.dateClickedEvents}
+                  eventToggled={this.state.eventClicked}
+                  shifts={this.state.userShifts}
+                  handleShiftAdd={this.handleShiftAdd}
+                  handleShiftRemove={this.handleShiftRemove}
+                  handleEventClick={this.handleEventClickFromModal}
+              />
+        }
       </div>
     );
   }
 }
 
-export default CalendarPage;
+export default CalendarPage

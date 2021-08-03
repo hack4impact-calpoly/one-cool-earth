@@ -1,35 +1,11 @@
 import React from 'react';
 import {Button, Modal, Form, Row, Col} from 'react-bootstrap';
-import { FaEdit } from 'react-icons/fa';
 
 class UserModal extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      edit: false
+
+    handleClose = () => {
+        this.props.handleClose()
     }
-  }
-
-  handleEditButton() {
-    this.setState({
-      edit: true
-    })
-  }
-
-  handleCancelEdit() {
-    this.setState({
-      edit: false
-    })
-  }
-
-  handleClose() {
-    if(this.state.edit === true) {
-      this.setState({
-        edit: false
-      })
-    }
-    this.props.handleClose()
-  }
 
     render () {
         return (
@@ -37,7 +13,6 @@ class UserModal extends React.Component {
               <Modal centered show={this.props.show} onHide={this.props.handleClose}>
                 <Modal.Header>
                   <Modal.Title>Volunteer Details</Modal.Title>
-                  <FaEdit onClick={() => this.handleEditButton()}/>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -46,7 +21,7 @@ class UserModal extends React.Component {
                             First Name
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.userData.firstName} />
+                            <Form.Control plaintext={true} readOnly={true} defaultValue={this.props.userData.name ? this.props.userData.name.first : "..."} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -54,7 +29,7 @@ class UserModal extends React.Component {
                             Last Name
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.userData.lastName} />
+                            <Form.Control plaintext={true} readOnly={true} defaultValue={this.props.userData.name ? this.props.userData.name.last : "..."} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -62,7 +37,7 @@ class UserModal extends React.Component {
                             Email
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.userData.email} />
+                            <Form.Control plaintext={true} readOnly={true} defaultValue={this.props.userData.email} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -70,7 +45,7 @@ class UserModal extends React.Component {
                             Phone
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.userData.phone} />
+                            <Form.Control plaintext={true} readOnly={true} defaultValue={this.props.userData.phoneNumber} />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row}>
@@ -78,35 +53,26 @@ class UserModal extends React.Component {
                             Admin
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Control plaintext={this.state.edit ? false : true} readOnly={this.state.edit ? false : true} defaultValue={this.props.userData.admin === true ? "Yes" : "No"} />
+                            <p>{this.props.userData.admin ? "Yes" : "No"}</p>
                             </Col>
                         </Form.Group>
-                        
+
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                {this.state.edit ?
-                    <Button onClick={() => this.handleClose()}>
-                      Save Changes
-                    </Button> 
-                  : null}
-                  {this.state.edit ?
-                    <Button onClick={() => this.handleCancelEdit()}>
-                      Cancel
-                    </Button> 
-                  : null}
-                  {!this.state.edit ?
-                    <Button onClick={() => this.handleClose()}>
+                  <Button style={{"marginRight": "190px"}} onClick={this.props.handleAdminChange}>
+                    {this.props.userData.admin ? "Remove Admin" : "Make Admin"}
+                  </Button>
+                  <Button onClick={() => this.handleClose()}>
                     Close
                   </Button>
-                  : null}
                 </Modal.Footer>
               </Modal>
             </>
           );
     }
-  
-    
+
+
   }
-  
+
 export default UserModal;

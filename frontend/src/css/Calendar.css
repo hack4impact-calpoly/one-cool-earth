@@ -1,8 +1,8 @@
 #calendar-page {
-  height: 92vh;
+  height: 91vh;
 }
 
-#calendar-container {
+.calendar-container {
   height: 100%;
   padding-top: 1em;
   padding-left: 1em;
@@ -10,7 +10,11 @@
   padding-bottom: 1em;
 }
 
-.fc-daygrid-day:hover {
+.volunteer.calendar-container .fc-daygrid-day:hover {
+  cursor: pointer;
+}
+
+.admin.calendar-container .fc-daygrid-event-harness:hover {
   cursor: pointer;
 }
 
