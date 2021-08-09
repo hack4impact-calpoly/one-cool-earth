@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Announcement = require('../models/Announcement.js');
 const authEndpoint = require('./auth');
 const express = require('express');
 const router = express.Router();
@@ -19,7 +18,7 @@ router.get('/',  authEndpoint.auth,  // retrieves all announcements
                 else {
                     response.status(200).json(announcements);
                 }
-            }); 
+            });
         }
         else if (!request.user)
             response.sendStatus(401);  // Unauthorized (user identity not known)

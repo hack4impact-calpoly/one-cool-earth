@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Col, Form, Modal, Row} from 'react-bootstrap';
+import {Container, Table, Button, Col, Form, Modal, Row} from 'react-bootstrap';
 import {FaEdit} from 'react-icons/fa';
 import Select from 'react-select'
 import './css/EventModal.css'
@@ -22,6 +22,7 @@ class EventModal extends React.Component {
       currEventData: {},
       date: '',
       locations: [],
+      currentVolunteersNames: []
     }
   }
 
@@ -42,6 +43,26 @@ class EventModal extends React.Component {
               });
       }
       this.updateEventDataState()
+  }
+
+  getNameFromUserId = userId => {
+      let currentVolunteerNames = this.state.currentVolunteersNames
+      const URL = `${process.env.REACT_APP_SERVER_URL}/api/admin/get-user-name/${userId}`
+      const res = fetch(URL, {credentials: 'include'})
+          .then( res => {
+              if (res.status === 200) {
+                  return res.json()
+              } else {
+                  return null
+              }
+          })
+          .then( data => {
+              if (data) {
+                  const name = data.first + " " + data.last
+                  currentVolunteerNames.push(name)
+              }
+              this.setState({currentVolunteerNames: currentVolunteerNames})
+          })
   }
 
   timeToInput = parameter => {
@@ -110,7 +131,16 @@ class EventModal extends React.Component {
                 0
             )
             curr[field] = date.toISOString()
-            console.log(curr["startTime"])
+            const newStartTime = new Date(curr["startTime"])
+            newStartTime.setFullYear(date.getFullYear())
+            newStartTime.setMonth(date.getMonth())
+            newStartTime.setDate(date.getDate())
+            curr["startTime"] = newStartTime
+            const newEndTime = new Date(curr["endTime"])
+            newEndTime.setFullYear(date.getFullYear())
+            newEndTime.setMonth(date.getMonth())
+            newEndTime.setDate(date.getDate())
+            curr["endTime"] = newEndTime
         }
     } else {
         curr[field] = e.target.value;
@@ -126,11 +156,16 @@ class EventModal extends React.Component {
       this.setState({currEventData: curr})
   }
 
-  updateEventDataState() {
+  updateEventDataState = () => {
     let c = JSON.parse(JSON.stringify(this.props.eventData))
+    if (c.users.length) {
+        c.users.map(userId => {
+            this.getNameFromUserId(userId)
+        })
+    }
     this.setState({
       currEventData: c,
-      date: this.dateToInput(c.date)
+      date: this.dateToInput(c.date),
     })
   }
 
@@ -170,6 +205,9 @@ class EventModal extends React.Component {
   }
 
   render () {
+    const currentVolunteersNames = this.state.currentVolunteersNames.length ? this.state.currentVolunteersNames.map(volunteer => {
+        return (<tr className="current-volunteer" key={volunteer}><td>{volunteer}</td></tr>)
+    }) : []
     return (
         <>
           <Modal centered show={this.props.show} onHide={this.props.handleClose}>
@@ -271,20 +309,6 @@ class EventModal extends React.Component {
                     </Form.Group>
                     <Form.Group as={Row} className="event-modal-row">
                         <Form.Label column sm="4">
-                        # of Volunteers
-                        </Form.Label>
-                        <Col sm="8">
-                        <Form.Control
-                            type="number"
-                            onChange={(e) => this.handleFieldChange(e, "numberOfVolunteers")}
-                            plaintext={!this.state.edit}
-                            readOnly={!this.state.edit}
-                            value={this.state.currEventData.numberOfVolunteers}
-                        />
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="event-modal-row">
-                        <Form.Label column sm="4">
                             Coordinator
                         </Form.Label>
                         <Col sm="8">
@@ -331,6 +355,33 @@ class EventModal extends React.Component {
                             />
                         </Col>
                     </Form.Group>
+                    <Form.Group as={Row} className="event-modal-row">
+                        <Form.Label column sm="4">
+                            # of Volunteers
+                        </Form.Label>
+                        <Col sm="8">
+                            <Form.Control
+                                type="number"
+                                onChange={(e) => this.handleFieldChange(e, "numberOfVolunteers")}
+                                plaintext={!this.state.edit}
+                                readOnly={!this.state.edit}
+                                value={this.state.currEventData.numberOfVolunteers}
+                            />
+                        </Col>
+                    </Form.Group>
+                    {
+                        Object.keys(this.state.currEventData).length && this.state.currEventData.users.length
+                            ?
+                            <Form.Group as={Row} className="event-modal-row">
+                                <Container fluid>
+                                    <Table striped hover size="sm">
+                                        <thead><tr><th>Current Volunteers</th></tr></thead>
+                                        <tbody>{currentVolunteersNames}</tbody>
+                                    </Table>
+                                </Container>
+                            </Form.Group>
+                            : null
+                    }
                 </Form>
             </Modal.Body>
             <Modal.Footer>
@@ -358,4 +409,4 @@ class EventModal extends React.Component {
 
 }
 
-export default EventModal;
+export default EventModal

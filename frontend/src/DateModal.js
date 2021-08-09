@@ -54,7 +54,7 @@ class DateModal extends React.Component {
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify({shiftId: event._id}),
+          body: JSON.stringify({eventId: event._id}),
       }).then(response => {
           if(response.status === 200) {
               this.props.handleShiftAdd()
@@ -71,7 +71,7 @@ class DateModal extends React.Component {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({shiftId: event._id}),
+            body: JSON.stringify({eventId: event._id}),
         }).then(response => {
             if(response.status === 200) {
                 this.props.handleShiftRemove()

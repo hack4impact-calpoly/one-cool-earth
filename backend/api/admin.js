@@ -35,7 +35,7 @@ const deactivateUser = async (email) => {
 
 router.post('/deactivateUser', authEndpoint.auth, async (req, res) => {
 	if (req.user && req.user.admin) {
-		email = req.body.email
+		const email = req.body.email
 		await deactivateUser(email)
 		res.sendStatus(200)
 	}
@@ -76,6 +76,23 @@ router.post('/removeAdmin', authEndpoint.auth, async (req, res) => {
 		res.sendStatus(403)
 	}
 
+})
+
+router.get('/get-user-name/:id', authEndpoint.auth, async (req, res) => {
+	if (req.user && req.user.admin) {
+		const userId = req.params.id
+		User.findById(userId)
+			.then( user => {
+			if (user) {
+				res.status(200)
+				res.json(user.name)
+			} else {
+				res.sendStatus(404)
+			}
+		})
+	} else {
+		res.sendStatus(403)
+	}
 })
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
+const Event = require('../models/Event')
 const router = express.Router();
 const authEndpoint = require('./auth')
 
@@ -52,19 +53,25 @@ router.post('/shifts', authEndpoint.auth, (req, res) => {
    }
 })
 
-router.post('/add-shift', authEndpoint.auth, async(req,res) => {
+router.post('/add-shift', authEndpoint.auth, async (req,res) => {
    if(req.user) {
-      const email = req.user.email
-      const shiftId = req.body.shiftId
-      User.findOneAndUpdate(
-          {'email': email},
+      const eventId = req.body.eventId
+      const userId = req.user._id
+      await User.findByIdAndUpdate(
+          req.user._id,
           {
              $push:
-                 {shifts: shiftId}
-          },
-      ).then(() => {
-            res.sendStatus(200)
-      })
+                 {shifts: eventId}
+          }
+      )
+      await Event.findByIdAndUpdate(
+          eventId,
+          {
+             $push:
+                 {users: userId}
+          }
+       )
+      res.sendStatus(200)
    } else {
       res.sendStatus(403)
    }
@@ -72,14 +79,21 @@ router.post('/add-shift', authEndpoint.auth, async(req,res) => {
 
 router.delete('/delete-shift', authEndpoint.auth, async(req, res) => {
    if(req.user) {
-      const email = req.user.email;
-      const shiftId = req.body.shiftId;
-      await User.findOneAndUpdate(
-         {email: email},
+      const eventId = req.body.eventId
+      const userId = req.user._id
+      await User.findByIdAndUpdate(
+         req.user._id,
          {$pull:
-            {shifts: shiftId}
+            {shifts: eventId}
          },
-      );
+      )
+      await Event.findByIdAndUpdate(
+          eventId,
+          {
+             $pull:
+                 {users: userId}
+          }
+      )
       res.sendStatus(200)
    }
    else {
@@ -88,7 +102,7 @@ router.delete('/delete-shift', authEndpoint.auth, async(req, res) => {
 })
 
 router.post('/signed-waiver', async (req, res) => {
-   email = req.body.email
+   const email = req.body.email
    User.findOneAndUpdate(
        { "email": email },
        { "signedWaiver": true }

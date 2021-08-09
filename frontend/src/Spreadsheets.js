@@ -173,7 +173,7 @@ class Spreadsheets extends React.Component{
                     <thead>
                             <tr>
                                 <th>Name</th>
-                                 <th>Date</th>
+                                <th>Date</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>Location</th>
@@ -223,6 +223,7 @@ class Spreadsheets extends React.Component{
                     eventData={this.state.eventModalData}
                     handleClose={this.handleCloseEventModal}
                     handleChange={this.handleEventModalChange}
+                    handleVolunteerClick={this.handleVolunteerClick}
                 /> : null
             }
             <UserModal
@@ -241,15 +242,13 @@ class Spreadsheets extends React.Component{
                         <Toggle defaultChecked={this.state.tableViewUsers} icons={false} onChange={() => this.handleToggleChange()} />
                         <span style = {{paddingLeft: "5px"}}>Users</span>
                     </Col>
-
-
                 </Row>
                 <Row>
                     <Table striped hover>
                         {this.getTableDataRows()}
                     </Table>
                 </Row>
-                <div style={{paddingTop: "10px"}}>
+                <div style={{paddingTop: "10px", paddingBottom: "20px"}}>
                     {
                         this.state.tableViewUsers
                             ? null

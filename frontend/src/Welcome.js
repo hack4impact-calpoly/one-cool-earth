@@ -104,7 +104,7 @@ class Welcome extends React.Component {
         const deleteShiftURL = `${process.env.REACT_APP_SERVER_URL}/api/user/delete-shift`;
         const deleteShiftBody = {
             email: this.props.user.email,
-            shiftId: id
+            eventId: id
         };
         fetch(deleteShiftURL, {
             method: 'DELETE',

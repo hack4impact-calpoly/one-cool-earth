@@ -19,5 +19,5 @@ const UserSchema = new mongoose.Schema({
   signedWaiver: Boolean
 })
 
-const User = mongoose.model('devs', UserSchema);
+const User = mongoose.model('users', UserSchema);
 module.exports = User;

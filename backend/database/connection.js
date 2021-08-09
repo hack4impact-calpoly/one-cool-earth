@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-const uri = 'mongodb+srv://dev:iLOVEonecoolearth@cluster0.2afzw.mongodb.net/devTest?retryWrites=true&w=majority'
+const URL = process.env.MONGO_URL
 
-mongoose.connect(uri, {
+mongoose.connect(URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
@@ -11,7 +11,7 @@ mongoose.connect(uri, {
 });
 
 mongoose.connection.on('connected', () => {
-    console.log(`mongoose connection open to ${uri}`);
+    console.log(`mongoose connection open to ${URL}`);
 });
 
 mongoose.connection.on('error', (err) => {
