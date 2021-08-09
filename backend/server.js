@@ -27,6 +27,7 @@ const adminEndpoint = require('./api/admin')
 const userEndpoint = require('./api/user')
 const eventEndpoint = require('./api/event')
 const locationEndpoint = require('./api/locations')
+const filesEndpoint = require('./api/file')
 
 app.use('/api/signup', signUpEndpoint)
 app.use('/api/announcement', announcementEndpoint)
@@ -35,6 +36,8 @@ app.use('/api/admin', adminEndpoint)
 app.use('/api/user', userEndpoint)
 app.use('/api/event', eventEndpoint)
 app.use('/api/location', locationEndpoint)
+app.use('/api/file', filesEndpoint)
+
 
 app.get('/api/logout', authEndpoint.auth, async (req, res) => {
     if (req.user) {

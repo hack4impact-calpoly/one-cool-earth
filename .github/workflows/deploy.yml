@@ -27,6 +27,7 @@ jobs:
         SERVER_URL: 'https://2ht6f910k6.execute-api.us-west-1.amazonaws.com/prod'
         CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
         CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        MONGO_URL: ${{ secrets.MONGO_URL }}
 
     - run: echo API is at ${{ steps.backend-deployment.outputs.api-url }}
       shell: bash
