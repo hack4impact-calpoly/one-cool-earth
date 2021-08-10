@@ -33,7 +33,8 @@ class Signup extends React.Component {
       phoneNumber: null,
       email: null,
       errorMsg: null,
-      showModal: false,
+      showErrorModal: false,
+      showSuccessModal: false,
       validatedEmail: null,
       validatedPhoneNumber: null,
       validatedFirstName: null,
@@ -101,30 +102,67 @@ class Signup extends React.Component {
       !event.target.value.includes("gmail")
     )
       this.setState({ validatedEmail: true });
-    else this.setState({ validatedEmail: false });
+    else
+      this.setState({ validatedEmail: false });
+  };
+
+  stringInsert = (index, string, ogString)  => {
+    if (index > 0) {
+      return ogString.substring(0, index) + string + ogString.substr(index);
+    }
+    return string + ogString;
   };
 
   handlePhoneChange = (event) => {
-    let index = 0;
-    this.setState({ phoneNumber: event.target.value });
-    if (event.target.value.length === 14) {
-      if (event.target.value.indexOf("-", index) === 5) {
-        index = 6;
-        if (event.target.value.indexOf("-", index) === 9) {
-          index = 10;
-          this.setState({ validatedPhoneNumber: true });
-        }
+    let phoneNumber = event.target.value.replace('(', '')
+    phoneNumber = phoneNumber.replace(')', '')
+    phoneNumber = phoneNumber.replace('-', '')
+    this.setState({ phoneNumber: phoneNumber });
+    let nums = (event.target.value.match(/[0-9]/g) || []).length
+    if (nums < 4) {
+      if (event.target.value.includes('(') || event.target.value.includes(')')) {
+        let temp = event.target.value.replace('(', '')
+        document.getElementById("phone-number").value = temp.replace(')', '')
       }
-    } else this.setState({ validatedPhoneNumber: false });
+    } else if (nums >= 4 && !(event.target.value.includes(')') && event.target.value.includes('(')) ) {
+      let temp = this.stringInsert(0, "(", event.target.value)
+      document.getElementById("phone-number").value = this.stringInsert(4, ")", temp)
+    } else if (nums < 7)  {
+      if (event.target.value.includes('-')) {
+        document.getElementById("phone-number").value = event.target.value.replace('-', '')
+      }
+    } else if (nums >= 7 && !event.target.value.includes('-')) {
+      document.getElementById("phone-number").value = this.stringInsert(8, "-", event.target.value)
+    }
+    if (
+        nums === 10 &&
+        event.target.value.length === 13 &&
+        event.target.value.indexOf('(') === 0 &&
+        event.target.value.indexOf(')') === 4 &&
+        event.target.value.indexOf('-') === 8
+    ) {
+      this.setState({ validatedPhoneNumber: true });
+    } else
+      this.setState({ validatedPhoneNumber: false });
   };
 
-  handleShowModal = (errorMsg) => {
-    this.setState({ errorMsg: errorMsg, showModal: true });
+  handleShowErrorModal = (errorMsg) => {
+    this.setState({ errorMsg: errorMsg, showErrorModal: true });
   };
 
-  handleClose = () => {
-    this.setState({ showModal: false });
+  handleErrorModalClose = () => {
+    this.setState({ showErrorModal: false });
     this.clear();
+  };
+
+  handleShowSuccessModal = () => {
+    this.setState({ showSuccessModal: true });
+  };
+
+  handleSuccessModalClose = () => {
+    this.setState({ showSuccessModal: false });
+    this.clear();
+    this.props.handleSignUp(this.state.email)
   };
 
   handleSignUp = (event) => {
@@ -139,7 +177,7 @@ class Signup extends React.Component {
       !this.state.locSelected ||
       this.state.volSelected === []
     ) {
-      this.handleShowModal("Please fill out all fields");
+      this.handleShowErrorModal("Please fill out all fields");
       return;
     }
 
@@ -162,30 +200,15 @@ class Signup extends React.Component {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(SignUpData),
-    }).then((response) => {
-      return response.json();
-    }).then((data) => {
-      if(data.status === 'user already exists') {
-        this.handleShowModal('It looks like an account is already associated with this email!');
-      } else {
-        this.props.handleSignUp(this.state.email)
+    }).then(res => {
+      if (res.status === 404)
+        this.handleShowErrorModal('It looks like an account is already associated with this email!');
+      else {
+        this.handleShowSuccessModal()
       }
+    }).catch(err => {
+      this.handleShowErrorModal('Unknown error. Please try again.');
     })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        if (data.status === "user already exists") {
-          this.handleShowModal(
-            "It looks like an account is already associated with this email!"
-          );
-        } else {
-          window.location.assign("/");
-        }
-      })
-      .catch((err) => {
-        this.handleShowModal("An error occurred. Please try again.");
-      });
   };
 
   clear() {
@@ -201,7 +224,7 @@ class Signup extends React.Component {
       phoneNumber: null,
       email: null,
       errorMsg: null,
-      showModal: false,
+      showErrorModal: false,
       validatedEmail: null,
       validatedPhoneNumber: null,
       validatedFirstName: null,
@@ -212,18 +235,29 @@ class Signup extends React.Component {
   render() {
     return (
       <div className="signup-wrapper">
-        <Modal centered show={this.state.showModal} onHide={this.handleClose}>
+        <Modal centered show={this.state.showErrorModal} onHide={this.handleErrorModalClose}>
           <Modal.Header>
-            <Modal.Title className="d-flex justify-content-center">
-              Error
-            </Modal.Title>
+            <Modal.Title className="d-flex justify-content-center">Error!</Modal.Title>
           </Modal.Header>
           <Modal.Body className="d-flex justify-content-center">
             {this.state.errorMsg}
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={this.handleClose}>
+            <Button variant="primary" onClick={this.handleErrorModalClose}>
               Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal centered show={this.state.showSuccessModal} onHide={this.handleSuccessModalClose}>
+          <Modal.Header>
+            <Modal.Title className="d-flex justify-content-center">Success!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="d-flex justify-content-center">
+            Your account has been successfully created!
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={this.handleSuccessModalClose}>
+              Continue
             </Button>
           </Modal.Footer>
         </Modal>
@@ -262,7 +296,7 @@ class Signup extends React.Component {
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
-                  Plese enter a valid last name
+                  Please enter a valid last name
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
@@ -272,7 +306,7 @@ class Signup extends React.Component {
                 <Form.Label>Phone Number</Form.Label>
                 <Form.Control
                   required
-                  placeholder="(###)-###-####"
+                  placeholder="(###)###-####"
                   size="lg"
                   onChange={this.handlePhoneChange}
                   isValid={this.state.validatedPhoneNumber}
@@ -282,9 +316,8 @@ class Signup extends React.Component {
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
-                  Plese enter a valid phone number
+                  Please enter a valid phone number
                 </Form.Control.Feedback>
-                <Form.Text muted>Exact format is required</Form.Text>
               </Form.Group>
               <Form.Group as={Col}>
                 <Form.Label>Gmail</Form.Label>
@@ -308,7 +341,7 @@ class Signup extends React.Component {
                 </InputGroup>
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
-                  Plese enter a valid gmail
+                  Please enter a valid gmail
                 </Form.Control.Feedback>
                 <Form.Text muted>Gmail is required</Form.Text>
               </Form.Group>

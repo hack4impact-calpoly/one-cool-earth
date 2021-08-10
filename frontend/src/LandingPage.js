@@ -36,7 +36,7 @@ class LandingPage extends React.Component {
       window.location.assign('/')
    }
 
-   handleSignUp = () => {
+   handleSignUpClick = () => {
       window.location.assign('/signup')
    }
 
@@ -80,7 +80,7 @@ class LandingPage extends React.Component {
                   <LandingPageModal
                       showModal={true}
                       handleClose={this.handleClose}
-                      handleSignUp={this.handleSignUp}
+                      handleSignUp={this.handleSignUpClick}
                       handleTryAgain={this.handleTryAgain}
                   />
                </Route>

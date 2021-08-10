@@ -3,20 +3,18 @@ const User = require('../models/User');
 
 const router = express.Router();
 
-router.post('/', async(req, res) => {
-   email = req.body.email
-   userName = req.body.name
-   location = req.body.location
-   volunteerPreferences = req.body.volunteerPreferences
-   phone = req.body.phoneNumber;
-   await User.findOne({"email": email})
-   .then( (user) => {
+router.post('/', async (req, res) => {
+   const email = req.body.email
+   const userName = req.body.name
+   const location = req.body.location
+   const volunteerPreferences = req.body.volunteerPreferences
+   const phone = req.body.phoneNumber;
+   User.findOne({"email": email}).then( user => {
       if (user) {
-         res.status(200)
-         res.json({status: 'user already exists'})
-
+         console.log(user)
+         res.sendStatus(404)
       } else {
-         var doc = new User({
+         let doc = new User({
             "email": email,
             "name": userName,
             "location": location,
@@ -28,8 +26,7 @@ router.post('/', async(req, res) => {
             "signedWaiver": false,
          })
          doc.save()
-         res.status(200)
-         res.json({status: 'ok'})
+         res.sendStatus(200)
       }
    })
 })
