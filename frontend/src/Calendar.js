@@ -1,10 +1,31 @@
 import './css/Calendar.css';
 import React from 'react';
+import {Button} from 'react-bootstrap';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
 import DateModal from './DateModal'
 import EventModal from './EventModal'
+
+function getVolTypeQuery(obj) {
+  var volString = "?" + Object.keys(obj).map((key) => {
+    return "volType=" + encodeURIComponent(obj[key])
+  }).join("&");
+  return volString;
+}
+
+function Check(props) {
+  return (
+    <div>
+      <input 
+	  type="checkbox" 
+	  onChange={props.update} 
+	  checked={props.checked}
+      />
+      <label>{props.name}</label>
+    </div>
+  );
+}
 
 class CalendarPage extends React.Component{
 
@@ -17,20 +38,25 @@ class CalendarPage extends React.Component{
       dateClickedEvents: [],
       eventClicked: "",
       eventModalData: {},
-      userShifts: []
+      userShifts: [],
+      preferences: props.user.volunteerPreferences,
+      gardenWorkday: props.user.volunteerPreferences.includes("garden workday"),
+      specialEvents: props.user.volunteerPreferences.includes("special events"),
+      gardenEducator: props.user.volunteerPreferences.includes("garden educator"),
+      officeRemote: props.user.volunteerPreferences.includes("office/remote")
     }
   }
 
+  updateCalendar = () => {
+    const eventsURL = `${process.env.REACT_APP_SERVER_URL}/api/event/get-specific${getVolTypeQuery(this.state.preferences)}`;
+    fetch(eventsURL, {credentials: 'include', mode: 'cors'})
+          .then((res) => res.json())
+          .then((events) => this.setState({events: events}))
+          .catch((err) => console.error(err));
+  }
+
   componentDidMount() {
-    const eventsURL = `${process.env.REACT_APP_SERVER_URL}/api/event/get-all`
-    fetch(eventsURL,
-        {
-          credentials: 'include',
-          mode: 'cors'
-        })
-        .then((res) => res.json())
-        .then((events) => this.setState({events: events}))
-        .catch((err) => console.error(err))
+    this.updateCalendar();
     const shiftsURL = `${process.env.REACT_APP_SERVER_URL}/api/user/shifts`
     fetch(shiftsURL,
         {
@@ -89,17 +115,34 @@ class CalendarPage extends React.Component{
         break
       }
     }
-    if (eventClicked) {
+    if(eventClicked){
       events = this.getEvents(eventClicked.date)
-      const eventDate = new Date(eventClicked.date)
+      const eventDate = new Date(eventClicked.date);
       this.setState({
-        dateClickedStr: `${eventDate.getMonth() + 1}/${eventDate.getDate()}/${eventDate.getFullYear()}`,
+        dateClickedStr: `${eventDate.getMonth()+1}/${eventDate.getDate()}/${eventDate.getFullYear()}`,
         dateClickedEvents: events,
         eventClicked: arg.event.id,
-        eventModalData: this.props.user.admin ? eventClicked : {}
-      })
-      this.handleShowModal()
+	eventModalData: this.props.user.admin ? eventClicked: {}
+      });
+      this.handleShowModal();
     }
+  }
+
+  updateChecks = () => {
+    let newPrefs = [];
+    if(this.state.gardenWorkday){
+      newPrefs.push("garden workday");
+    }
+    if(this.state.gardenEducator){
+      newPrefs.push("garden educator");
+    }
+    if(this.state.specialEvents){
+      newPrefs.push("special events");
+    }
+    if(this.state.officeRemote){
+      newPrefs.push("office/remote");
+    }
+    this.setState({preferences: newPrefs}, this.updateCalendar);
   }
 
   handleEventClickFromModal = (event) => {
@@ -127,6 +170,33 @@ class CalendarPage extends React.Component{
   render () {
     return (
       <div id='calendar-page'>
+        <div id="calendar-container">
+	  <div id="check-title">
+	    <h5>Types of visible shifts:</h5>
+	  </div>
+	  <div id="check-container">
+            <Check
+	      name="Garden Workday Volunteer"
+	      update={() => this.setState({gardenWorkday: !this.state.gardenWorkday}, this.updateChecks)}
+	      checked={this.state.gardenWorkday}
+	    />
+	    <Check
+              name="Special Events Volunteer"
+              update={() => this.setState({specialEvents: !this.state.specialEvents}, this.updateChecks)}
+              checked={this.state.specialEvents}
+            />
+	    <Check
+	      name="Garden Educator Assistant"
+	      update={() => this.setState({gardenEducator: !this.state.gardenEducator}, this.updateChecks)}
+	      checked={this.state.gardenEducator}
+	    />
+	    <Check
+	      name="Office/Remote Volunteer"
+	      update={() => this.setState({officeRemote: !this.state.officeRemote}, this.updateChecks)}
+	      checked={this.state.officeRemote}
+	    />
+	  </div>
+	</div>
         <div className={`calendar-container ${this.props.user.admin ? 'admin' : 'volunteer-calendar'}`}>
           <FullCalendar
             plugins={[ dayGridPlugin, interactionPlugin ]}

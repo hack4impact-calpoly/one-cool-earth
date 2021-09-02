@@ -21,3 +21,16 @@
 .Collapsible:hover {
   cursor: pointer;
 }
+
+#check-title {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+#check-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 2% 10%;
+}
