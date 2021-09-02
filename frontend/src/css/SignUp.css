@@ -28,9 +28,9 @@
   margin-top: 3%;
 }
 
-.input-group-append .input-group-text:last-of-type {
-  border-radius: 0;
-}
+/*.input-group-append .input-group-text:last-of-type {*/
+/*  border-radius: 0;*/
+/*}*/
 
 #gmail-form-control {
   border-radius: 0%;

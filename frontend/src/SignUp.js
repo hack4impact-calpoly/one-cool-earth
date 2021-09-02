@@ -92,14 +92,12 @@ class Signup extends React.Component {
   };
 
   handleEmailChange = (event) => {
-    this.setState({ email: event.target.value + "@gmail.com" });
+    this.setState({ email: event.target.value});
     if (
-      /^[a-z0-9.]+$/.test(event.target.value) &&
-      event.target.value.length > 5 &&
-      event.target.value.length < 31 &&
+      /^[a-z0-9.@]+$/.test(event.target.value) &&
       event.target.value.indexOf('.') !== 0 &&
-      !event.target.value.includes(".com") &&
-      !event.target.value.includes("gmail")
+      event.target.value.includes('@') &&
+      event.target.value.includes('.com')
     )
       this.setState({ validatedEmail: true });
     else
@@ -324,24 +322,20 @@ class Signup extends React.Component {
                 <InputGroup id="gmail-input-group" size="lg">
                   <Form.Control
                     required
-                    placeholder="username"
+                    placeholder="Enter your email address..."
                     size="lg"
                     onChange={this.handleEmailChange}
                     isValid={this.state.validatedEmail}
                     isInvalid={
                       this.state.email &&
-                      this.state.email !== "@gmail.com" &&
                       !this.state.validatedEmail
                     }
                     id="gmail-form-control"
                   />
-                  <InputGroup.Append className="input-group-lg">
-                    <InputGroup.Text>@gmail.com</InputGroup.Text>
-                  </InputGroup.Append>
                 </InputGroup>
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
-                  Please enter a valid gmail
+                  Please enter a valid email
                 </Form.Control.Feedback>
                 <Form.Text muted>Gmail is required</Form.Text>
               </Form.Group>
