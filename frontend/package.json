@@ -18,7 +18,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.0.0",
     "file-saver": "^2.0.5",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.2",
     "react-calendar": "^3.3.1",
